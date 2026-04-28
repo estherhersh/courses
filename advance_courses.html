@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advance School of Business — Course Reference</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Roboto', sans-serif; background: #F6F6F4; color: #2D2D2D; font-size: 14px; }
+
+header { background: #2D2D2D; }
+.header-top { display: flex; align-items: center; justify-content: space-between; padding: 16px 32px; border-bottom: 3px solid #7A1219; }
+.header-logo { color: white; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; font-style: italic; }
+.header-logo span { font-weight: 400; }
+.header-sub { color: #9B9B99; font-size: 12px; margin-top: 3px; }
+
+nav { display: flex; background: #1a1a1a; padding: 0 32px; }
+nav button { background: none; border: none; color: #9B9B99; font-size: 14px; font-family: inherit; font-weight: 500; padding: 14px 20px; cursor: pointer; border-bottom: 3px solid transparent; }
+nav button:hover { color: white; }
+nav button.active { color: white; border-bottom-color: #7A1219; }
+
+.page { display: none; padding: 28px 32px; max-width: 1100px; margin: 0 auto; }
+.page.active { display: block; }
+
+.course-hero { background: #2D2D2D; color: white; border-radius: 8px; padding: 24px 28px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+.course-hero h1 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+.course-hero p { font-size: 13px; color: #B0AFA8; line-height: 1.6; }
+.course-meta { text-align: right; flex-shrink: 0; }
+.badge { background: #7A1219; color: white; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 4px; display: inline-block; margin-bottom: 6px; }
+.course-meta p { font-size: 12px; color: #9B9B99; }
+
+.week-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+.week-tab { background: white; border: 1px solid #E8E8E8; border-radius: 6px; padding: 7px 14px; font-size: 13px; font-weight: 500; cursor: pointer; color: #5F5E5A; font-family: inherit; }
+.week-tab:hover { border-color: #7A1219; color: #7A1219; }
+.week-tab.active { background: #7A1219; border-color: #7A1219; color: white; }
+
+.week-content { display: none; }
+.week-content.active { display: block; }
+.week-title { font-size: 17px; font-weight: 700; margin-bottom: 18px; color: #2D2D2D; }
+
+.card { background: white; border: 1px solid #E8E8E8; border-radius: 8px; margin-bottom: 12px; overflow: hidden; }
+.card-header { padding: 14px 18px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+.card-header:hover { background: #F6F6F4; }
+.card-title { font-size: 14px; font-weight: 700; }
+.card-right { display: flex; align-items: center; gap: 10px; }
+.tag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 3px; text-transform: uppercase; letter-spacing: 0.4px; }
+.tag-out { background: #E8E8E8; color: #5F5E5A; }
+.tag-read { background: #FBEAEA; color: #7A1219; }
+.tag-disc { background: #E1F5EE; color: #0F6E56; }
+.tag-asgn { background: #E6F1FB; color: #185FA5; }
+.tag-pod { background: #F0E8F8; color: #6B2FA0; }
+.chev { font-size: 11px; color: #9B9B99; transition: transform 0.18s; }
+.chev.open { transform: rotate(180deg); }
+
+.card-body { display: none; padding: 0 18px 18px; border-top: 1px solid #F0F0F0; }
+.card-body.open { display: block; }
+
+/* Outcomes */
+.out-list { list-style: none; padding: 14px 0 0; }
+.out-list li { padding: 5px 0; line-height: 1.6; border-bottom: 1px solid #F6F6F4; display: flex; align-items: flex-start; gap: 8px; }
+.out-list li:last-child { border-bottom: none; }
+.out-list li::before { content: ""; display: block; width: 6px; height: 6px; border-radius: 50%; background: #7A1219; margin-top: 7px; flex-shrink: 0; }
+.out-code { font-size: 11px; color: #7A1219; font-weight: 700; white-space: nowrap; }
+
+/* Readings */
+.read-list { padding: 14px 0 0; }
+.read-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid #F6F6F4; }
+.read-item:last-child { border-bottom: none; }
+.read-badge { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 3px; white-space: nowrap; flex-shrink: 0; margin-top: 1px; }
+.rb-ch { background: #E8E8E8; color: #5F5E5A; }
+.rb-vid { background: #FBEAEA; color: #7A1219; }
+.read-item a { color: #185FA5; text-decoration: none; line-height: 1.5; }
+.read-item a:hover { text-decoration: underline; }
+
+/* Discussion */
+.disc-list { padding: 14px 0 0; counter-reset: dq; }
+.disc-item { counter-increment: dq; display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid #F6F6F4; line-height: 1.6; }
+.disc-item:last-child { border-bottom: none; }
+.disc-item::before { content: counter(dq); font-weight: 700; color: #7A1219; min-width: 18px; flex-shrink: 0; }
+
+/* Assignment */
+.asgn-block { padding: 14px 0 0; }
+.asgn-meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.meta-pill { background: #F6F6F4; border: 1px solid #E8E8E8; border-radius: 4px; padding: 3px 10px; font-size: 12px; }
+.meta-pill strong { color: #7A1219; }
+.asgn-overview { line-height: 1.7; margin-bottom: 14px; color: #2D2D2D; }
+.note-box { background: #F6F6F4; border-left: 3px solid #7A1219; padding: 8px 12px; font-size: 13px; line-height: 1.6; margin: 10px 0; color: #5F5E5A; }
+.sub-head { font-size: 12px; font-weight: 700; color: #7A1219; text-transform: uppercase; letter-spacing: 0.5px; margin: 14px 0 8px; }
+.inst-list { counter-reset: inst; }
+.inst-list li { counter-increment: inst; display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid #F6F6F4; line-height: 1.6; list-style: none; }
+.inst-list li:last-child { border-bottom: none; }
+.inst-list li::before { content: counter(inst); background: #7A1219; color: white; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+
+/* Rubric */
+.rubric-wrap { overflow-x: auto; margin-top: 10px; }
+.rubric { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 500px; }
+.rubric th { background: #2D2D2D; color: white; padding: 8px 10px; text-align: left; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.rubric td { padding: 7px 10px; border-bottom: 1px solid #F0F0F0; vertical-align: top; line-height: 1.5; }
+.rubric tr:nth-child(even) td { background: #FAFAFA; }
+.rubric tr:last-child td { border-bottom: none; }
+.rubric td:first-child { font-weight: 700; color: #2D2D2D; min-width: 120px; }
+.rubric td:nth-child(2) { color: #7A1219; font-weight: 700; min-width: 80px; }
+.divider { border-top: 1px solid #E8E8E8; margin: 16px 0; }
+
+@media (max-width: 680px) {
+  .page { padding: 16px; }
+  .header-top { padding: 12px 16px; }
+  nav { padding: 0 16px; }
+  .course-hero { flex-direction: column; }
+  .course-meta { text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div>
+      <div class="header-logo"><span>AD</span>VANCE</div>
+      <div class="header-sub">School of Business — Professor Course Reference</div>
+    </div>
+  </div>
+  <nav>
+    <button class="active" onclick="showCourse('bus102',this)">BUS-102: Introduction to Business</button>
+    <button onclick="showCourse('bus300',this)">BUS-300: Marketing</button>
+  </nav>
+</header>
+
+<div id="bus102" class="page active"></div>
+<div id="bus300" class="page"></div>
+
+<script>
+const IB = 'https://openstax.org/books/introduction-business/pages/';
+const MK = 'https://openstax.org/books/principles-marketing/pages/';
+
+// Verified first-section URLs for every chapter — confirmed live in browser
+const ibCh = n => IB + n + '-introduction';
+const mkCh = {
+  1:  MK+'1-1-marketing-and-the-marketing-process',
+  2:  MK+'2-1-developing-a-strategic-plan',
+  3:  MK+'3-1-understanding-consumer-markets-and-buying-behavior',
+  4:  MK+'4-1-the-business-to-business-b2b-market',
+  5:  MK+'5-1-market-segmentation-and-consumer-markets',
+  6:  MK+'6-1-marketing-research-and-big-data',
+  7:  MK+'7-1-the-global-market-and-advantages-of-international-trade',
+  8:  MK+'8-1-strategic-marketing-standardization-versus-adaptation',
+  9:  MK+'9-1-products-services-and-experiences',
+  10: MK+'10-1-new-products-from-a-customers-perspective',
+  11: MK+'11-1-classification-of-services',
+  12: MK+'12-1-pricing-and-its-role-in-the-marketing-mix',
+  13: MK+'13-1-the-promotion-mix-and-its-elements',
+  14: MK+'14-1-advertising-in-the-promotion-mix',
+  15: MK+'15-1-personal-selling-and-its-role-in-the-promotion-mix',
+  16: MK+'16-1-traditional-direct-marketing',
+  17: MK+'17-1-the-use-and-value-of-marketing-channels',
+  18: MK+'18-1-retailing-and-the-role-of-retailers-in-the-distribution-channel',
+  19: MK+'19-1-sustainable-marketing'
+};
+
+function chLink(url, label) {
+  return `<a href="${url}" target="_blank">${label}</a>`;
+}
+
+function showCourse(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function toggle(el) {
+  const body = el.nextElementSibling;
+  const chev = el.querySelector('.chev');
+  body.classList.toggle('open');
+  chev.classList.toggle('open');
+}
+
+function showWeek(courseId, n) {
+  document.querySelectorAll('#'+courseId+' .week-content').forEach(w => w.classList.remove('active'));
+  document.querySelectorAll('#'+courseId+' .week-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(courseId+'-w'+n).classList.add('active');
+  document.getElementById(courseId+'-t'+n).classList.add('active');
+}
+
+function card(tag, tagClass, title, bodyHtml) {
+  return `<div class="card">
+    <div class="card-header" onclick="toggle(this)">
+      <span class="card-title">${title}</span>
+      <span class="card-right"><span class="tag ${tagClass}">${tag}</span><span class="chev">&#9660;</span></span>
+    </div>
+    <div class="card-body">${bodyHtml}</div>
+  </div>`;
+}
+
+function outcomes(list) {
+  return '<ul class="out-list">'+list.map(o=>`<li><span>${o}</span></li>`).join('')+'</ul>';
+}
+
+function readings(list) {
+  return '<div class="read-list">'+list.map(r=>`<div class="read-item"><span class="read-badge ${r.vid?'rb-vid':'rb-ch'}">${r.vid?'Watch':'Chapter'}</span><span>${r.link?`<a href="${r.link}" target="_blank">${r.label}</a>`:r.label}</span></div>`).join('')+'</div>';
+}
+
+function discussion(list) {
+  return '<div class="disc-list">'+list.map(q=>`<div class="disc-item"><span>${q}</span></div>`).join('')+'</div>';
+}
+
+function rubric(headers, rows) {
+  if(!headers||!headers.length) return '';
+  const ths = headers.map(h=>`<th>${h}</th>`).join('');
+  const trs = rows.map(r=>'<tr>'+r.map(c=>`<td>${c}</td>`).join('')+'</tr>').join('');
+  return `<div class="sub-head">Grading Rubric</div><div class="rubric-wrap"><table class="rubric"><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table></div>`;
+}
+
+function assignment(a, extra) {
+  let inst = a.instructions&&a.instructions.length ? `<div class="sub-head">Instructions</div><ol class="inst-list">${a.instructions.map(i=>`<li><span>${i}</span></li>`).join('')}</ol>` : '';
+  let note = a.note ? `<div class="note-box">${a.note}</div>` : '';
+  let rub = rubric(a.rh, a.rr);
+  let ext = extra||'';
+  return `<div class="asgn-block">
+    <div class="asgn-meta"><div class="meta-pill"><strong>Points:</strong> ${a.pts}</div><div class="meta-pill"><strong>Length:</strong> ${a.len}</div></div>
+    <div class="asgn-overview">${a.overview}</div>
+    ${note}${inst}${rub}${ext}
+  </div>`;
+}
+
+// ── BUS-102 ──────────────────────────────────────────────────────────────────
+
+const bus102 = [
+  {
+    title: 'Week 1: The Business Environment',
+    outcomes: [
+      '<span class="out-code">BUS-102-1a</span> Define the functions of business',
+      '<span class="out-code">BUS-102-1b</span> Discuss ethics and social responsibility',
+      '<span class="out-code">BUS-102-1c</span> Assess economic and global conditions'
+    ],
+    readings: [
+      {label:'Chapter 1: Understanding Economic Systems and Business', link: ibCh(1)},
+      {label:'Chapter 2: Making Ethical Decisions and Managing a Socially Responsible Business', link: ibCh(2)},
+      {label:'Chapter 3: Competing in the Global Marketplace', link: ibCh(3)}
+    ],
+    discussion: [
+      'How do economic growth, full employment, price stability, and inflation indicate a nation\'s economic health?',
+      'How does the government use monetary policy and fiscal policy to achieve its macroeconomic goals?',
+      'Which trends are reshaping the business, microeconomic, and macroeconomic environments and competitive arena?',
+      'How can organizations encourage ethical business behavior?',
+      'How do businesses meet their social responsibilities to various stakeholders?',
+      'What are the trends in ethics and social responsibility?',
+      'Why do nations trade?',
+      'What are the barriers to international trade?',
+      'How do companies enter the global marketplace?',
+      'What are the trends in the global marketplace?'
+    ],
+    assignment: {
+      title: 'Case Study Analysis: Walmart & Uber',
+      pts: '10', len: '250–500 words per case',
+      overview: 'Complete two case study analyses. Answer the questions at the end of each case in 250–500 words.',
+      instructions: [
+        'Read <strong>Chapter 1</strong> Case: <a href="https://openstax.org/books/introduction-business/pages/1-critical-thinking-case" target="_blank">Walmart Gets Serious about E-Commerce</a>',
+        'Read <strong>Chapter 2</strong> Case: <a href="https://openstax.org/books/introduction-business/pages/2-critical-thinking-case" target="_blank">Uber Hits a Bumpy Road</a>',
+        'Answer all questions at the end of each case',
+        'Submit as Word document or PDF by Wednesday at midnight'
+      ],
+      rh: ['Criteria','Excellent (2)','Proficient (1.5)','Basic (1)','Limited (0.5)','Inadequate (0)'],
+      rr: [
+        ['Understanding of Case Content','Excellent grasp of key facts, challenges, and context of both cases','Good understanding of key facts and context','Understands basics but misses important points','Limited understanding; key facts missing','Misinterprets or lacks understanding'],
+        ['Analysis and Critical Thinking','Thoughtful, well-reasoned; clearly connects facts to business concepts','Clear and generally well-reasoned with some connection to concepts','Some analysis but lacks depth','Minimal analysis; mostly descriptive','No meaningful analysis'],
+        ['Completeness of Responses','All questions answered fully and directly for both cases','Most questions answered clearly','Some questions only partially answered','Many questions unanswered or vague','Incomplete or missing'],
+        ['Use of Evidence or Examples','Effectively uses evidence from case or course concepts','Uses some case evidence or relevant examples','Limited use of evidence','Minimal supporting evidence','No evidence provided'],
+        ['Clarity, Organization, Mechanics','Clear, well-organized, virtually error-free','Mostly clear and organized with few errors','Understandable but may lack clarity','Unclear or poorly organized','Difficult to understand']
+      ]
+    }
+  },
+  {
+    title: 'Week 2: Entrepreneurship & Business Ownership',
+    outcomes: [
+      '<span class="out-code">BUS-102-2a</span> Discuss forms of business ownership',
+      '<span class="out-code">BUS-102-2b</span> Describe entrepreneurship and business planning'
+    ],
+    readings: [
+      {label:'Chapter 4: Forms of Business Ownership', link: ibCh(4)},
+      {label:'Chapter 5: Entrepreneurship — Starting and Managing Your Own Business', link: ibCh(5)}
+    ],
+    discussion: [
+      'What are the advantages and disadvantages of the sole proprietorship form of business operation?',
+      'What are the advantages of operating as a partnership, and what downside risks should partners consider?',
+      'How does the corporate structure provide advantages and disadvantages to a company, and what are the major types of corporations?',
+      'What makes franchising an appropriate form of organization for some types of business, and why does it continue to grow in importance?',
+      'What current trends will affect the business organizations of the future?',
+      'Why do people become entrepreneurs?',
+      'Which characteristics do successful entrepreneurs share?',
+      'What are the advantages and disadvantages facing owners of small businesses?',
+      'What trends shape entrepreneurship and small-business ownership?'
+    ],
+    assignment: {
+      title: 'Understanding Your Organization in Context',
+      pts: '10', len: '500–750 words',
+      overview: 'Select an organization you know well — a publicly traded company or one you have personal experience with. Assess one area where the organization excels in meeting stakeholder needs and one area where it could improve.',
+      instructions: [
+        '<strong>Introduction:</strong> Name, type, size, industry, and scale of the organization',
+        '<strong>Identify Stakeholders:</strong> Define stakeholder; identify at least 3 key groups and explain each group\'s role',
+        '<strong>Area of Strength:</strong> Identify one area the organization handles well; provide specific examples; connect to course concepts',
+        '<strong>Area for Improvement:</strong> Identify one gap; explain why; offer a suggestion using course concepts',
+        '<strong>Conclusion:</strong> Summarize insights; reflect on the business-stakeholder relationship',
+        '<strong>Sources:</strong> Cite textbook and any other sources in APA or MLA'
+      ],
+      rh: ['Criteria','Excellent (2)','Proficient (1.5)','Basic (1)','Limited (0.5)','Inadequate (0)'],
+      rr: [
+        ['Introduction to Organization','Clear, concise overview with relevant context','Adequate overview with some context','Basic overview with limited details','Vague or missing key info','None'],
+        ['Identification of Stakeholders','Defines clearly; identifies 3+ relevant groups with explanation','Includes definition and identifies 2–3 with general explanation','Limited definition or identification','Unclear or missing explanation','None'],
+        ['Strength Area','Clearly identifies and explains; connects to concepts with strong examples','Identifies with some connection to concepts','Somewhat identifies; limited explanation','Minimal analysis or connection','Missing or incorrect'],
+        ['Improvement Area','Clearly identifies; well-reasoned with suggestion','Identifies and suggests a reasonable action','Somewhat identifies; minimal suggestion','Minimal or unclear idea','None identified'],
+        ['Organization & Mechanics','Clear writing, well-organized, no errors','Mostly clear; few errors','Adequate; some issues','Hard to follow; frequent errors','Disorganized'],
+        ['Sources & Citations','Cites correctly in-text and in reference list','Minor citation or formatting issues','One or two sources with citation errors','Few or unclear citations','No sources']
+      ]
+    }
+  },
+  {
+    title: 'Week 3: Management & Leadership',
+    outcomes: [
+      '<span class="out-code">BUS-102-3a</span> Discuss the characteristics of effective management',
+      '<span class="out-code">BUS-102-3b</span> Define different organizational structures',
+      '<span class="out-code">BUS-102-3c</span> Assess production and quality improvement measures'
+    ],
+    readings: [
+      {label:'Chapter 6: Management and Leadership in Today\'s Organizations', link: ibCh(6)},
+      {label:'Chapter 7: Designing Organizational Structures', link: ibCh(7)},
+      {label:'Chapter 8: Managing Human Resources and Labor Relations', link: ibCh(8)},
+      {label:'Chapter 9: Motivating Employees', link: ibCh(9)},
+      {label:'Chapter 10: Achieving World-Class Operations Management', link: ibCh(10)}
+    ],
+    discussion: [
+      'Based on the reading this week, how would you define management?',
+      'What roles do managers take on in different organizational settings?',
+      'What types of power do you see in your organization?',
+      'Based on your reading, how would you describe your organization\'s structure?',
+      'What trends are influencing the way businesses organize?',
+      'Reflecting on your reading, how does your organization\'s hiring process compare? Which trends do you see?',
+      'Select one of the theories from chapter 9 and present an overview of the theory.',
+      'What initiatives are organizations using today to motivate and retain employees?',
+      'Why are resource-planning tasks like inventory management and supplier relations critical to production?',
+      'Based on your reading, how would you define operations management?'
+    ],
+    assignment: {
+      title: 'Management Functions in Practice',
+      pts: '10', len: '500–750 words',
+      overview: 'Reflect on your own work experience or your observation of management in an organization you know well. Apply the four primary functions of management to a real-world context.',
+      note: 'If not currently employed, use a past job or organization you know well — sports team, volunteer group, family business, etc.',
+      instructions: [
+        '<strong>Describe the Organization:</strong> What it does, your relationship to it, size or type of team',
+        '<strong>Planning:</strong> Define and provide a specific example — how managers set goals or prepare for future changes',
+        '<strong>Organizing:</strong> Define and provide a specific example — how tasks are divided and structured',
+        '<strong>Leading:</strong> Define and provide a specific example — how managers motivate and guide employees',
+        '<strong>Controlling:</strong> Define and provide a specific example — how managers track progress and evaluate results',
+        '<strong>Conclusion:</strong> Summarize what you learned; reflect on what the organization does well and what could improve'
+      ],
+      rh: ['Criteria','Excellent','Proficient','Basic','Limited'],
+      rr: [
+        ['Organization Description','Clear and detailed; provides helpful context','Adequate description with some context','Basic overview','Minimal or unclear info'],
+        ['Planning Function','Well-defined with strong example','Defined with clear example','Somewhat defined; weak example','Minimal definition/example'],
+        ['Organizing Function','Well-defined with strong example','Defined with clear example','Somewhat defined; weak example','Minimal definition/example'],
+        ['Leading Function','Well-defined with strong example','Defined with clear example','Somewhat defined; weak example','Minimal definition/example'],
+        ['Controlling Function','Well-defined with strong example','Defined with clear example','Somewhat defined; weak example','Minimal definition/example']
+      ]
+    }
+  },
+  {
+    title: 'Week 4: Marketing & Customers',
+    outcomes: [
+      '<span class="out-code">BUS-102-4a</span> Discuss products and pricing strategies to meet customers\' needs',
+      '<span class="out-code">BUS-102-4b</span> Describe distribution and promotion strategies'
+    ],
+    readings: [
+      {label:'Chapter 11: Creating Products and Pricing Strategies to Meet Customers\' Needs', link: ibCh(11)},
+      {label:'Chapter 12: Distributing and Promoting Products and Services', link: ibCh(12)}
+    ],
+    discussion: [
+      'How do managers create a marketing strategy?',
+      'How do consumers and organizations make buying decisions?',
+      'How do organizations create new products?',
+      'What strategies are used for pricing products?',
+      'What are the different kinds of retail operations?',
+      'How can supply chain management increase efficiency and customer satisfaction?',
+      'Based on your reading this week, how would you define promotion?',
+      'How does public relations fit into the promotional mix?'
+    ],
+    assignment: {
+      title: 'Succession Planning: Replacing Yourself',
+      pts: '10', len: '500–750 words',
+      overview: 'Imagine you have just been promoted. Create a plan to replace yourself. This exercise requires critical thinking about job roles, hiring, training, and evaluation.',
+      instructions: [
+        '<strong>Introduction:</strong> Explain why succession planning is important; introduce your current role (real or hypothetical)',
+        '<strong>Job Description:</strong> Draft essential responsibilities, skills, and qualifications; explain how the role contributes to organizational goals',
+        '<strong>Hiring Process:</strong> Describe how the organization would recruit and select a replacement; justify why the process is effective',
+        '<strong>Training and Onboarding:</strong> Outline onboarding steps, mentorship opportunities, and professional development',
+        '<strong>Evaluation and Performance Review:</strong> Identify key metrics; explain how supervisors measure success in year one; connect to organizational goals',
+        '<strong>Conclusion:</strong> Summarize the plan; reflect on how succession planning benefits organizational stability',
+        '<strong>Sources:</strong> Cite textbook and at least one other credible source in APA or MLA'
+      ],
+      rh: ['Criteria','Excellent (2)','Proficient (1.5)','Basic (1)','Limited (0.5)','Inadequate (0)'],
+      rr: [
+        ['Introduction','Clear explanation of succession planning and role context','Adequate explanation and role context','Basic overview with minimal context','Vague or unclear','None'],
+        ['Job Description','Well-developed with detailed responsibilities, skills, and link to goals','Adequate description with some details','Basic description, limited connection to goals','Minimal job description','None'],
+        ['Hiring Process','Clearly explains effective process with justification','Adequate process with some rationale','Basic description, limited reasoning','Minimal process provided','None'],
+        ['Training & Onboarding','Detailed, practical plan','Adequate plan with some detail','Basic plan with minimal detail','Minimal or unclear training plan','None'],
+        ['Evaluation & Review','Clear, measurable plan tied to goals','Adequate plan with some link to goals','Basic evaluation plan','Minimal or unclear evaluation criteria','None'],
+        ['Organization & Mechanics','Clear, well-organized, error-free','Mostly clear; few errors','Adequate; some errors','Hard to follow; frequent errors','Disorganized'],
+        ['Sources & Citations','Correct use of citations and references','Minor citation errors','One or two sources with errors','Few or unclear citations','No sources']
+      ]
+    }
+  },
+  {
+    title: 'Week 5: Technology & Financial Information',
+    outcomes: [
+      '<span class="out-code">BUS-102-5a</span> Describe how organizations use technology to manage information',
+      '<span class="out-code">BUS-102-5b</span> Discuss how organizations use financial information and accounting'
+    ],
+    readings: [
+      {label:'Chapter 13: Using Technology to Manage Information', link: ibCh(13)},
+      {label:'Chapter 14: Using Financial Information and Accounting', link: ibCh(14)}
+    ],
+    discussion: [
+      'How has information technology transformed business and managerial decision making?',
+      'How does your organization use information technology?',
+      'Based on your reading, how would you define information technology?',
+      'What are the leading trends in information technology?',
+      'Who in an organization needs access to financial reporting?',
+      'How does a balance sheet describe an organization?',
+      'How can ratio analysis be used to identify a firm\'s financial strengths and weaknesses?',
+      'How does the income statement report a firm\'s profitability?'
+    ],
+    assignment: {
+      title: 'Case Study Analysis: Novartis & Accountingfly',
+      pts: '10', len: '250–500 words per case',
+      overview: 'Complete two case study analyses. Answer the questions at the end of each case in 250–500 words.',
+      instructions: [
+        'Read <strong>Chapter 13</strong> Case: <a href="https://openstax.org/books/introduction-business/pages/13-critical-thinking-case" target="_blank">Novartis\'s Prescription for Invoice Processing</a>',
+        'Read <strong>Chapter 14</strong> Case: <a href="https://openstax.org/books/introduction-business/pages/14-critical-thinking-case" target="_blank">Accountingfly Changes How CPAs Get Hired</a>',
+        'Answer all questions at the end of each case',
+        'Submit as Word document or PDF by Wednesday at midnight'
+      ],
+      rh: ['Criteria','Excellent (2)','Proficient (1.5)','Basic (1)','Limited (0.5)','Inadequate (0)'],
+      rr: [
+        ['Understanding of Case Content','Excellent grasp of key facts, challenges, and context of both cases','Good understanding of key facts and context','Understands basics but misses important points','Limited understanding; key facts missing','Misinterprets or lacks understanding'],
+        ['Analysis and Critical Thinking','Thoughtful, well-reasoned; clearly connects facts to business concepts','Clear and generally well-reasoned with some connection to concepts','Some analysis but lacks depth','Minimal analysis; mostly descriptive','No meaningful analysis'],
+        ['Completeness of Responses','All questions answered fully and directly for both cases','Most questions answered clearly','Some questions only partially answered','Many questions unanswered or vague','Incomplete or missing'],
+        ['Use of Evidence or Examples','Effectively uses evidence from case or course concepts','Uses some case evidence or relevant examples','Limited use of evidence','Minimal supporting evidence','No evidence provided'],
+        ['Clarity, Organization, Mechanics','Clear, well-organized, virtually error-free','Mostly clear and organized with few errors','Understandable but may lack clarity','Unclear or poorly organized','Difficult to understand']
+      ]
+    }
+  },
+  {
+    title: 'Week 6: Business Strategy & Integration',
+    outcomes: [
+      '<span class="out-code">BUS-102-6a</span> Describe financial institutions and their relationship to organizations',
+      '<span class="out-code">BUS-102-6b</span> Discuss how organizations manage finances'
+    ],
+    readings: [
+      {label:'Chapter 15: Understanding Money and Financial Institutions', link: ibCh(15)},
+      {label:'Chapter 16: Understanding Financial Management and Securities Markets', link: ibCh(16)},
+      {label:'Chapter 17: Developing a Career in Business', link: ibCh(17)}
+    ],
+    discussion: [
+      'What trends are reshaping financial institutions?',
+      'What role do U.S. banks play in the international marketplace?',
+      'Why would a company need additional capital? What are options for obtaining it?',
+      'How do finance and the financial manager affect the firm\'s overall strategy?',
+      'What are the current developments in financial management and the securities market?',
+      'What types of short-term and long-term expenditures does a firm make?',
+      'Reflecting on the course as a whole, what are areas that you would like to focus on in future courses?'
+    ],
+    assignment: {
+      title: 'Final Exam',
+      pts: '25', len: '50 questions',
+      overview: '50-question auto-graded final exam covering all course outcomes from weeks 1 through 6. Covers BUS-102-1, BUS-102-2, and BUS-102-3.',
+      rh: [], rr: []
+    }
+  }
+];
+
+// ── BUS-300 ──────────────────────────────────────────────────────────────────
+
+const bus300 = [
+  {
+    title: 'Week 1: Foundations of Marketing',
+    outcomes: [
+      '<span class="out-code">BUS-300-1a</span> Define the role of marketing in delivering customer value and supporting organizational strategy',
+      '<span class="out-code">BUS-300-1b</span> Explain the components of the marketing mix and how they align with consumer needs',
+      '<span class="out-code">BUS-300-1c</span> Describe key factors that influence consumer behavior and decision-making',
+      '<span class="out-code">BUS-300-1d</span> Analyze a company\'s strategic position using SWOT and basic marketing principles'
+    ],
+    readings: [
+      {label:'Chapter 1: Marketing and Customer Value', link: mkCh[1]},
+      {label:'Chapter 2: Strategic Planning in Marketing', link: mkCh[2]},
+      {label:'Chapter 3: Consumer Markets and Purchasing Behavior', link: mkCh[3]},
+      {label:'Introduction to Marketing', link:'https://www.youtube.com/watch?v=i1xz5Kv-7VY', vid:true},
+      {label:'The 4Ps of Marketing Explained with Example', link:'https://www.youtube.com/watch?v=zz1RNy2rYYg', vid:true}
+    ],
+    discussion: [
+      'The marketing mix has been compared to a toolbelt. Describe a recent product you purchased online — where you bought it (place), how you found it (promotion), and whether the price was competitive.',
+      'How do we determine what a customer wants or needs?',
+      'How does the external environment impact marketing?',
+      'What role does marketing have in strategic planning?',
+      'What is the purpose of a marketing plan?',
+      'Businesses send thousands of marketing messages each day. Which messages are most influential in your life right now? Provide an example of selective attention for each: social, personal, psychological, cultural, situational.',
+      'Provide a recent example of a purchase and describe your progress through the stages of the consumer decision process model.'
+    ],
+    assignment: {
+      title: 'Assignment 1: Foundations of Your Marketing Plan',
+      pts: '10', len: 'Varies (use provided template)',
+      overview: 'Begin building your marketing plan using the template provided. You will use the same company for all assignments and the final capstone project.',
+      note: 'Company must be one you work for or have worked for, a realistic startup idea, or a publicly traded company with accessible data. No AI tools.',
+      instructions: [
+        '<strong>Company Profile:</strong> Name, size, industry, products or services, key markets, brief history or competitive position',
+        '<strong>Mission Statement:</strong> Clear, focused mission statement reflecting core values and purpose — avoid vague statements',
+        '<strong>SWOT Analysis:</strong> Identify 3–4 Strengths, Weaknesses, Opportunities, and Threats; include a narrative analysis (at least 1 paragraph) summarizing implications',
+        '<strong>Marketing Goals and Objectives:</strong> Set 3 marketing goals for the next 3–5 years; include 2–3 measurable objectives per goal, trackable within 6–18 months'
+      ],
+      rh: ['Criteria','Excellent','Proficient','Basic','Limited','Inadequate (0)'],
+      rr: [
+        ['Company Profile (1 pt)','1 — Thorough and detailed','0.75 — Most details included','0.5 — Some relevant info','0.25 — Minimal info','Missing'],
+        ['Mission Statement (1 pt)','1 — Clear and purposeful','0.75 — Mostly clear','0.5 — Adequate','0.25 — Vague or unclear','Missing'],
+        ['SWOT Analysis (2 pts)','2 — Comprehensive + strong narrative','1.5 — All parts with narrative','1 — Adequate with weak analysis','0.5 — Superficial','Missing'],
+        ['Marketing Goals (3 pts)','3 — Ambitious and aligned','2–2.5 — Reasonable and mostly aligned','1.5 — Somewhat aligned','0.5–1 — Limited or unclear','Missing'],
+        ['Measurable Objectives (2 pts)','2 — Clear and trackable','1.5 — Mostly measurable','1 — Vague metrics','0.5 — Limited measurability','Missing'],
+        ['Clarity & Organization (1 pt)','1 — Clear and professional','0.75 — Mostly clear','0.5 — Some flow issues','0.25 — Disorganized','Unreadable']
+      ]
+    }
+  },
+  {
+    title: 'Week 2: Understanding Your Market',
+    outcomes: [
+      '<span class="out-code">BUS-300-2a</span> Distinguish between B2C and B2B markets and analyze their unique buying behaviors',
+      '<span class="out-code">BUS-300-2b</span> Apply market segmentation strategies to identify and describe potential target markets',
+      '<span class="out-code">BUS-300-2c</span> Develop buyer personas that reflect key segments of your marketing audience',
+      '<span class="out-code">BUS-300-2d</span> Explain how market research supports marketing decisions and enhances customer value',
+      '<span class="out-code">BUS-300-2e</span> Describe ethical considerations in marketing research and data collection'
+    ],
+    readings: [
+      {label:'Chapter 4: Business Markets and Purchasing Behavior', link: mkCh[4]},
+      {label:'Chapter 5: Market Segmentation, Targeting, and Positioning', link: mkCh[5]},
+      {label:'Chapter 6: Marketing Research and Market Intelligence', link: mkCh[6]},
+      {label:'Four Types of Buying Behavior', link:'https://www.youtube.com/watch?v=Bnrdv-7ndFo', vid:true},
+      {label:'Market Segmentation (with Real World Examples)', link:'https://www.youtube.com/watch?v=IrJ1cNIfmsk', vid:true},
+      {label:'How to Do Market Research', link:'https://www.youtube.com/watch?v=b-hDg7699S0', vid:true}
+    ],
+    discussion: [
+      'Distinguish characteristics of the B2B market versus the B2C market.',
+      'Based on your reading, what influences B2B buyer behavior?',
+      'Discuss methods of segmenting consumer markets.',
+      'Why would a local hair salon choose geographic segmentation and a narrow, concentrated strategy rather than other segmentation types? Might multi-segment marketing be more effective?',
+      'What is a target market? How does it relate to product positioning?',
+      'As a consumer, how do you feel about companies tracing your digital footprint? As a marketer, what value do you see in tracing consumers\' online activities?',
+      'Why might quantitative research be better for measuring attitudes toward new products than qualitative data? Why might qualitative data provide deeper insights into consumer behavior?'
+    ],
+    assignment: {
+      title: 'Assignment 2: Segmentation, Target Market, Buyer Personas, and Positioning',
+      pts: '20', len: 'Use provided template',
+      overview: 'Define your market — who you are selling to, why they need your product or service, and how you will position your brand. Use the same company from Assignment 1.',
+      instructions: [
+        '<strong>Market Segmentation:</strong> Describe customer problems your product addresses; provide a general customer profile; identify several segments then select 1–3 to target; explain why and discuss growth potential',
+        '<strong>Target Market:</strong> Define the group you intend to serve; segment by demographic, geographic, psychographic, or behavioral characteristics; provide analysis of why this is your best strategic choice',
+        '<strong>Buyer Personas:</strong> Create 2–3 personas each with a fictional name, job/role/background, personality traits, interests, and buying behaviors — written as short narrative profiles',
+        '<strong>Positioning Strategy:</strong> Describe how you want your product perceived; create a positioning map using two key attributes; place your brand and competitors on a two-axis graph; analyze and identify opportunities'
+      ],
+      rh: ['Criteria','Excellent','Proficient','Basic','Limited','Inadequate (0)'],
+      rr: [
+        ['Company Profile (1 pt)','1 — Fully detailed','0.75 — Mostly clear','0.5 — Basic info','0.25 — Minimal','Missing'],
+        ['Market Segmentation (5 pts)','5 — Deep insight & strong analysis','3.75 — Well-developed','2.5 — Adequate','1.25 — Limited','Missing'],
+        ['Target Market (5 pts)','5 — Clear rationale & strategic segmentation','3.75 — Strong explanation','2.5 — Adequate clarity','1.25 — Vague or weak','Missing'],
+        ['Buyer Personas (5 pts)','5 — Detailed, creative, insightful','3.75 — Proficient and clear','2.5 — Somewhat detailed','1.25 — Vague or generic','Missing'],
+        ['Positioning Strategy (4 pts)','4 — Clear, focused, excellent map','3 — Strong strategy, good map','2 — Some clarity, limited map','1 — Vague strategy/map','Missing'],
+        ['Clarity & Organization (1 pt)','1 — Exceptionally clear & logical','0.75 — Well-organized','0.5 — Adequate','0.25 — Disorganized','Unclear']
+      ]
+    }
+  },
+  {
+    title: 'Week 3: Global & Diversity Marketing',
+    outcomes: [
+      '<span class="out-code">BUS-300-3a</span> Explain the key challenges and strategies involved in entering and operating in global markets',
+      '<span class="out-code">BUS-300-3b</span> Analyze the impact of cultural, legal, and economic differences on international marketing decisions',
+      '<span class="out-code">BUS-300-3c</span> Identify and evaluate diversity marketing strategies that address demographic and cultural shifts',
+      '<span class="out-code">BUS-300-3d</span> Assess ethical and strategic considerations when marketing to diverse and global consumer groups'
+    ],
+    readings: [
+      {label:'Chapter 7: Marketing in a Global Environment', link: mkCh[7]},
+      {label:'Chapter 8: Marketing in a Diverse Marketplace', link: mkCh[8]},
+      {label:'What is Global Marketing?', link:'https://www.youtube.com/watch?v=Q3wwD4NsGHw', vid:true},
+      {label:'Diversity Marketing with Examples', link:'https://www.youtube.com/watch?v=buN8lug6vp4', vid:true}
+    ],
+    discussion: [
+      'Are global markets something that you should consider targeting in your marketing plan?',
+      'How can you effectively assess global markets? What should you consider?',
+      'What strategies are used in global competition?',
+      'When should you use diversity marketing as an adaptation strategy?',
+      'What are the benefits and challenges of a diverse marketplace?',
+      'How does culture impact marketing?'
+    ],
+    assignment: {
+      title: 'Assignment 3: Current Market Situation / Situation Analysis',
+      pts: '15', len: 'Use provided template',
+      overview: 'Complete the Current Market Situation section of your marketing plan. Provide a detailed snapshot of your organization\'s current standing in the marketplace, the challenges it faces, and how it compares to competitors.',
+      instructions: [
+        '<strong>Market Description:</strong> Describe overall target market; include market size, growth trajectory, and factors driving change; support with data or citations',
+        '<strong>Product Review:</strong> Overview of main products or services including key features, current pricing strategies, sales performance, and gross margin or profitability assumptions',
+        '<strong>Competitive Analysis:</strong> Identify top 2–3 competitors; for each describe their products, pricing and quality, sales strategies, and market share or positioning',
+        '<strong>Comparison to Company Offerings:</strong> Strengths and differentiators, room to improve, and market gaps you can exploit'
+      ],
+      rh: ['Criteria','Excellent','Proficient','Basic','Limited','Inadequate (0)'],
+      rr: [
+        ['Market Description (4 pts)','4 — Detailed, data-supported, insightful','3 — Well-explained with good detail','2 — Adequate but shallow','1 — Limited or vague','Missing'],
+        ['Product Review (4 pts)','4 — Comprehensive and specific','3 — Well-detailed','2 — Covers basics only','1 — Vague or limited','Missing'],
+        ['Top Competitors (3 pts)','3 — Thorough and insightful','2.25 — Clear and informative','1.5 — Basic description','0.75 — Vague or shallow','Missing'],
+        ['Comparison to Company (3 pts)','3 — Strong comparative insight','2.25 — Clear and logical comparison','1.5 — General comparison','0.75 — Minimal insight','Missing'],
+        ['Clarity & Organization (1 pt)','1 — Clear, logical, well-written','0.75 — Mostly clear and organized','0.5 — Somewhat organized','0.25 — Hard to follow','Disorganized']
+      ]
+    }
+  },
+  {
+    title: 'Week 4: Product Strategy & Pricing',
+    outcomes: [
+      '<span class="out-code">BUS-300-4a</span> Explain how products and services are classified and how they evolve over the product life cycle',
+      '<span class="out-code">BUS-300-4b</span> Evaluate the role of innovation in developing and maintaining a competitive product strategy',
+      '<span class="out-code">BUS-300-4c</span> Analyze the unique characteristics of services and how they affect marketing and customer experience',
+      '<span class="out-code">BUS-300-4d</span> Apply pricing strategies appropriate to a product\'s life cycle, competition, and market position',
+      '<span class="out-code">BUS-300-4e</span> Identify ethical considerations related to pricing and service marketing'
+    ],
+    readings: [
+      {label:'Chapter 9: Products — Consumer Offerings', link: mkCh[9]},
+      {label:'Chapter 10: Maintaining a Competitive Edge with New Offerings', link: mkCh[10]},
+      {label:'Chapter 11: Services — The Intangible Product', link: mkCh[11]},
+      {label:'Chapter 12: Pricing Products and Services', link: mkCh[12]},
+      {label:'What\'s Product Development?', link:'https://www.youtube.com/watch?v=jLvMGnAYicY', vid:true},
+      {label:'Pricing Strategy', link:'https://www.youtube.com/watch?v=sF6AMj3H0jg', vid:true}
+    ],
+    discussion: [
+      'What is the product life cycle?',
+      'How do companies create brand loyalty?',
+      'What are some of the issues your text describes about packaging?',
+      'What should we know about new product development and marketing?',
+      'How do we classify services?',
+      'What are some of the ethical considerations when providing services?',
+      'What are elements we should consider when pricing a product or service?',
+      'Does the strategy for pricing change when something is a new product?',
+      'What is the promotion mix?'
+    ],
+    assignment: {
+      title: 'Assignment 3B: Pricing and Promotion Strategies',
+      pts: '15', len: 'Narrative paragraphs using provided template',
+      overview: 'Develop the Pricing Strategy and Promotion Strategy sections of your marketing plan. Write in paragraph form — not bullet points.',
+      instructions: [
+        '<strong>Pricing Strategy:</strong> Describe your current or intended pricing strategy; compare to competitors; analyze price sensitivity (elasticity) of your target market; select and justify a pricing approach (e.g., competition-based, cost-plus, value-based, dynamic, penetration, price skimming)',
+        '<strong>Promotion Strategy:</strong> List methods to raise awareness (advertising, social media, influencer marketing, trade shows, PR, etc.); for each method explain its advantages and disadvantages; estimate costs or resource requirements and explain why you chose it'
+      ],
+      rh: ['Criteria','Excellent (2)','Proficient (1.5)','Basic (1)','Limited (0.5)','Inadequate (0)'],
+      rr: [
+        ['Current Pricing Description','Detailed and insightful','Clear and accurate','Adequate','Limited','Missing'],
+        ['Comparison to Competitors','Strong comparison','Clear insights','General comparison','Weak comparison','Missing'],
+        ['Price Sensitivity','Deep analysis','Clear understanding','Adequate insight','Superficial','Missing'],
+        ['Optimum Pricing Approach','Justified and relevant','Clear rationale','Some support','Vague','Missing'],
+        ['Methods for Awareness','Comprehensive list','Strong variety','Basic list','Few or weak methods','Missing'],
+        ['Advantages & Disadvantages','Strong, detailed reasoning','Clear analysis','Some insights','Limited','Missing'],
+        ['Cost & Resource Allocation','Realistic and thorough','Clear and appropriate','Some explanation','Weak or vague','Missing'],
+        ['Clarity & Organization (1 pt)','Well-written and organized','Mostly clear','Some structure issues','Poor structure','Disorganized']
+      ]
+    }
+  },
+  {
+    title: 'Week 5: Promotion & Distribution',
+    outcomes: [
+      '<span class="out-code">BUS-300-5a</span> Explain the purpose and components of integrated marketing communications (IMC) in delivering a unified brand message',
+      '<span class="out-code">BUS-300-5b</span> Compare and contrast the elements of the promotion mix and describe when each is most appropriate',
+      '<span class="out-code">BUS-300-5c</span> Analyze the steps and ethical considerations involved in personal selling and sales promotion',
+      '<span class="out-code">BUS-300-5d</span> Evaluate the role of direct, digital, and social media marketing in reaching and engaging target audiences',
+      '<span class="out-code">BUS-300-5e</span> Apply key promotional strategies to align distribution and communication with marketing objectives'
+    ],
+    readings: [
+      {label:'Chapter 13: Integrated Marketing Communications', link: mkCh[13]},
+      {label:'Chapter 14: The Promotion Mix — Advertising and Public Relations', link: mkCh[14]},
+      {label:'Chapter 15: Personal Selling and Sales Promotion', link: mkCh[15]},
+      {label:'Chapter 16: Direct, Online, Social Media, and Mobile Marketing', link: mkCh[16]},
+      {label:'Chapter 17: Distribution — Delivering Customer Value', link: mkCh[17]},
+      {label:'The Promotion Mix', link:'https://www.youtube.com/watch?v=rVQQ_M8t254', vid:true},
+      {label:'Integrated Marketing Communication', link:'https://www.youtube.com/watch?v=oPTg6Iz-3t4', vid:true}
+    ],
+    discussion: [
+      'What are some of the ethical issues in marketing communication we should consider?',
+      'What are some factors we should consider when implementing a promotion mix?',
+      'What are elements that should be considered in advertising?',
+      'What is the role of public relations in the promotion mix?',
+      'What are things to consider in the personal selling process?',
+      'What are the main types of sales promotions?',
+      'What are some of the forms of traditional direct marketing?',
+      'What are some considerations in social media marketing or other technology-assisted marketing?',
+      'What is the role of distribution in a marketing plan?'
+    ],
+    assignment: {
+      title: 'Assignment 4: Product Strategy',
+      pts: '10', len: 'Full paragraphs using provided template',
+      overview: 'Complete the Product section of your marketing plan. Explain what your company offers, how it solves problems, and where it stands in the product life cycle. Write in full paragraphs.',
+      instructions: [
+        '<strong>Company/Brand Overview:</strong> What the company does, what it offers, and what makes the brand distinct',
+        '<strong>Benefits & Problem-Solving:</strong> How the product drives revenue or builds loyalty; what customer problem it addresses',
+        '<strong>Impact on Customers and the Business:</strong> What difference it makes in customers\' lives; how it contributes to the business\'s overall success',
+        '<strong>Product Life Cycle Stage:</strong> Identify which stage (Introduction, Growth, Maturity, or Decline) and explain why',
+        '<strong>Alignment with Target Market Values:</strong> How well it delivers what your target market values; which features matter most',
+        '<strong>Recommendations for Improvement:</strong> What changes could make the product a better fit for your target market',
+        '<strong>Improvements for Competitive Advantage:</strong> What enhancements would help you compete more effectively'
+      ],
+      rh: ['Criteria','Excellent (2)','Proficient (1.5)','Basic (1)','Limited (0.5)','Inadequate (0)'],
+      rr: [
+        ['Company/Brand Description','Detailed and insightful','Clear and descriptive','Adequate','Vague','Missing'],
+        ['Benefits & Problem-Solving','Deep insight into business/customer benefit','Clear explanation','Adequate','Minimal','Missing'],
+        ['Impact on Customers/Business','Strong analysis of value and impact','Good insight','General idea provided','Vague','Missing'],
+        ['Product Life Cycle Stage','Clear and well-supported analysis','Accurate and clear','Identified with minimal explanation','Unclear or unsupported','Missing'],
+        ['Alignment with Target Market','Insightful and well-connected','Clear and relevant','General understanding','Weak or vague','Missing'],
+        ['Recommendations for Improvement','Actionable and relevant','Clear and feasible','Somewhat helpful','Lacking depth','Missing'],
+        ['Competitive Effectiveness','Strong suggestions to improve edge','Practical and relevant','Basic suggestions','Vague or unrealistic','Missing'],
+        ['Clarity & Organization (1 pt)','Highly organized and well-written','Mostly clear','Some structure issues','Hard to follow','Disorganized']
+      ]
+    }
+  },
+  {
+    title: 'Week 6: Retailing, Wholesaling & Sustainable Marketing',
+    outcomes: [
+      '<span class="out-code">BUS-300-6a</span> Explain the roles and functions of retailers and wholesalers in the marketing channel',
+      '<span class="out-code">BUS-300-6b</span> Analyze how retail and wholesale strategies influence product availability, pricing, and customer satisfaction',
+      '<span class="out-code">BUS-300-6c</span> Define sustainable marketing and assess its impact on brand identity, customer loyalty, and social responsibility',
+      '<span class="out-code">BUS-300-6d</span> Apply principles of purpose-driven marketing to support long-term business and environmental goals',
+      '<span class="out-code">BUS-300-6e</span> Synthesize course concepts into a cohesive, actionable, and professional marketing plan'
+    ],
+    readings: [
+      {label:'Chapter 18: Retailing and Wholesaling', link: mkCh[18]},
+      {label:'Chapter 19: Sustainable Marketing — The New Paradigm', link: mkCh[19]}
+    ],
+    discussion: [
+      'How can you create an action plan for your marketing plan?',
+      'What elements should you consider when developing a marketing budget?',
+      'What are challenges and opportunities working with retailers?',
+      'What factors should be considered to develop a sustainable marketing plan?',
+      'What is purpose-driven marketing?',
+      'What items do you need to revise in your marketing plan?',
+      'What has been your biggest success in this process?'
+    ],
+    assignment: {
+      title: 'Assignment 5: Distribution Strategy',
+      pts: '10', len: 'Narrative paragraphs using provided template',
+      overview: 'Complete the Distribution section of your marketing plan. Explain how your product or service will get into the hands of your customers.',
+      instructions: [
+        '<strong>Current Distribution Strategy:</strong> Describe your current or planned distribution strategy; include how the product is distributed and through what channels',
+        '<strong>Type of Distribution Strategy:</strong> Identify as exclusive, selective, or intensive; explain why this approach fits your product or service',
+        '<strong>Distribution Channels:</strong> Where and how can customers purchase? Online, retail, distributors? Any intermediaries involved?',
+        '<strong>Costs Involved:</strong> Expected costs including warehousing, shipping, retail fees, website management; how costs affect pricing or profitability',
+        '<strong>Justification of Strategy:</strong> Why is this the right strategy? How does it align with your marketing goals?',
+        '<strong>Geographical Availability:</strong> Where will the product be available? Which regions will you prioritize and why?'
+      ],
+      rh: ['Criteria','Excellent','Proficient','Basic','Limited','Inadequate (0)'],
+      rr: [
+        ['Current Strategy (2 pts)','2 — Detailed and clear','1.5 — Good clarity','1 — Basic but complete','0.5 — Vague or unclear','Missing'],
+        ['Type of Distribution (1 pt)','1 — Clearly identified and justified','0.75 — Mostly clear','0.5 — Identified, limited reasoning','0.25 — Minimal rationale','Not addressed'],
+        ['Distribution Channels (2 pts)','2 — Thorough and insightful','1.5 — Clear and descriptive','1 — Basic overview','0.5 — Superficial','Not included'],
+        ['Costs (1 pt)','1 — Comprehensive explanation','0.75 — Clear overview','0.5 — Somewhat explained','0.25 — Lacking detail','Missing'],
+        ['Justification (2 pts)','2 — Strong and relevant rationale','1.5 — Clear reasoning','1 — Adequate logic','0.5 — Limited support','Missing'],
+        ['Geographical Availability (1 pt)','1 — Clearly explained and appropriate','0.75 — Mostly clear','0.5 — Mentioned but vague','0.25 — Weak or limited','Missing'],
+        ['Clarity and Organization (1 pt)','1 — Exceptionally clear and logical','0.75 — Mostly well-organized','0.5 — Adequate structure','0.25 — Unclear or choppy','Poorly written']
+      ]
+    }
+  }
+];
+
+// Week 6 BUS-300 also gets the final assignment appended
+const finalAsgn = {
+  title: 'Final: Comprehensive Marketing Plan',
+  pts: '50', len: 'All sections revised + new components',
+  overview: 'Finalize your comprehensive marketing plan. This is not a copy-paste of past work — it must be a refined, revised, improved document reflecting instructor feedback and deeper understanding. Follow APA formatting throughout.',
+  instructions: [
+    '<strong>Revise all prior sections:</strong> Company Profile, Mission Statement, SWOT Analysis, Marketing Goals and Objectives, Market Segmentation, Target Market, Buyer Personas, Positioning, Situation Analysis, Pricing and Promotion Strategies, Product Strategy, Distribution Strategy',
+    '<strong>Executive Summary (new):</strong> 1–2 paragraphs outlining major goals, market focus, and strategies',
+    '<strong>Marketing Budget (new):</strong> Projected budget with reasonable cost estimates for promotions, distribution, and technology',
+    '<strong>Action Items (new):</strong> List or chart of major marketing actions; include who is responsible, timeline, and key milestones',
+    '<strong>Controls and Evaluation (new):</strong> Describe how success will be measured using KPIs; identify how and when you will evaluate progress and adjust'
+  ],
+  rh: ['Criteria','Excellent (10)','Proficient (8)','Basic (6)','Limited (4)','Inadequate (2)'],
+  rr: [
+    ['Completeness','Covers all sections in-depth','Covers all required sections','Mostly complete with some missing depth','Incomplete, missing sections','Severely incomplete'],
+    ['Professionalism','Free of errors, APA formatted, well written','Minor issues, generally polished','Some errors or formatting issues','Many errors, disorganized','Multiple errors'],
+    ['Analysis','Deep, insightful marketing analysis','Strong, thoughtful analysis','Basic or shallow insights','Limited or weak analysis','No meaningful analysis'],
+    ['Detail','Rich in specific examples, evidence, and depth','Good level of detail and support','Some sections vague or light','Minimal detail or vague responses','Lacks detail throughout'],
+    ['Supporting Evidence','Uses strong, credible sources and research','Includes relevant evidence and some research','Some evidence, lacks depth or relevance','Little evidence, weak sources','No credible evidence']
+  ]
+};
+
+// ── Podcast URLs — add as generated ──────────────────────────────────────────
+const podcasts = {
+  bus102: {
+    1: 'https://notebooklm.google.com/notebook/eb489d58-6141-438d-807b-f2ceb952b14b/artifact/f9fe38d3-4a3f-47b0-9098-0fba4f123363',
+    2: 'https://notebooklm.google.com/notebook/eb489d58-6141-438d-807b-f2ceb952b14b/artifact/53d38bff-d292-4e4e-a5ec-09ba501c75a6',
+    3: 'https://notebooklm.google.com/notebook/eb489d58-6141-438d-807b-f2ceb952b14b/artifact/dc35e1da-0477-4763-b9bd-3f819cbfc2cc',
+    4: 'https://notebooklm.google.com/notebook/eb489d58-6141-438d-807b-f2ceb952b14b/artifact/ccbedb20-e3bf-447e-ba8c-fdb51bf31de4',
+    5: 'https://notebooklm.google.com/notebook/eb489d58-6141-438d-807b-f2ceb952b14b/artifact/5afc4b5b-242e-4e83-97ce-2c4b03fe01f4',
+    6: 'https://notebooklm.google.com/notebook/eb489d58-6141-438d-807b-f2ceb952b14b/artifact/733ad2e2-a81f-4c12-9001-b05483d65609'
+  },
+  bus300: {
+    1: null, 2: null, 3: null, 4: null, 5: null, 6: null
+  }
+};
+
+function podcastCard(courseId, n) {
+  const url = podcasts[courseId][n];
+  const body = url
+    ? `<div style="padding:14px 0 4px;">
+        <p style="font-size:13px;color:#5F5E5A;margin-bottom:12px;">AI-generated audio overview of this week's readings. Opens in NotebookLM.</p>
+        <a href="${url}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#6B2FA0;color:white;text-decoration:none;padding:9px 18px;border-radius:6px;font-size:13px;font-weight:700;">&#9654;&nbsp; Listen to Week ${n} Podcast</a>
+      </div>`
+    : `<div style="padding:14px 0 4px;"><p style="font-size:13px;color:#9B9B99;font-style:italic;">Not yet generated — add the NotebookLM link when ready.</p></div>`;
+  return card('Podcast', 'tag-pod', 'Week ' + n + ' Audio Overview', body);
+}
+
+// ── Render ────────────────────────────────────────────────────────────────────
+
+function buildCourse(courseId, data, heroTitle, heroDesc, credits, weeks, extra6) {
+  const el = document.getElementById(courseId);
+  let html = `<div class="course-hero">
+    <div><h1>${heroTitle}</h1><p>${heroDesc}</p></div>
+    <div class="course-meta"><div class="badge">${credits}</div><p>${weeks} Weeks</p></div>
+  </div>
+  <div class="week-tabs" id="${courseId}-tabs"></div>
+  <div id="${courseId}-weeks"></div>`;
+  el.innerHTML = html;
+
+  const tabsEl = document.getElementById(courseId+'-tabs');
+  const weeksEl = document.getElementById(courseId+'-weeks');
+
+  data.forEach((wk, i) => {
+    const n = i+1;
+
+    // Tab
+    const tab = document.createElement('button');
+    tab.className = 'week-tab'+(n===1?' active':'');
+    tab.id = courseId+'-t'+n;
+    tab.textContent = 'Week '+n;
+    tab.onclick = () => showWeek(courseId, n);
+    tabsEl.appendChild(tab);
+
+    // Week container
+    const wDiv = document.createElement('div');
+    wDiv.className = 'week-content'+(n===1?' active':'');
+    wDiv.id = courseId+'-w'+n;
+
+    // Extra for week 6 BUS-300
+    let extraHtml = '';
+    if (extra6 && n===6) {
+      extraHtml = `<div class="divider"></div>
+        ${card('Assignment','tag-asgn', extra6.title, assignment(extra6))}`;
+    }
+
+    wDiv.innerHTML = `<div class="week-title">${wk.title}</div>
+      ${podcastCard(courseId, n)}
+      ${card('Outcomes','tag-out','Learning Outcomes', outcomes(wk.outcomes))}
+      ${card('Readings','tag-read','Readings & Videos', readings(wk.readings))}
+      ${card('Discussion','tag-disc','Discussion Questions', discussion(wk.discussion))}
+      ${card('Assignment','tag-asgn', wk.assignment.title, assignment(wk.assignment))}
+      ${extraHtml}`;
+
+    weeksEl.appendChild(wDiv);
+  });
+}
+
+buildCourse(
+  'bus102', bus102,
+  'BUS-102: Introduction to Business',
+  'Explores the nature, form, and function of business. Covers the functions of business, entrepreneurship, management, organizational structure, marketing, distribution, and financial management.',
+  '3 Credit Hours', 6, null
+);
+
+buildCourse(
+  'bus300', bus300,
+  'BUS-300: Marketing',
+  'Students apply marketing principles to solve practical problems of entering the marketplace. Covers theories and concepts analyzing forces shaping marketing strategy, culminating in a comprehensive marketing plan.',
+  '3 Credit Hours', 6, finalAsgn
+);
+</script>
+</body>
+</html>
