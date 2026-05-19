@@ -109,6 +109,23 @@ nav button.active { color: white; border-bottom-color: #7A1219; }
   .course-hero { flex-direction: column; }
   .course-meta { text-align: left; }
 }
+
+/* Deck link button */
+.deck-link { display: inline-flex; align-items: center; gap: 8px; background: #2D2D2D; color: white; text-decoration: none; padding: 9px 18px; border-radius: 6px; font-size: 13px; font-weight: 700; margin-bottom: 20px; border: 1px solid #444; }
+.deck-link:hover { background: #7A1219; }
+
+/* What You'll Do tab */
+.overview-section { margin-bottom: 28px; }
+.overview-heading { font-size: 16px; font-weight: 700; color: #2D2D2D; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #7A1219; }
+.overview-intro { font-size: 14px; color: #5F5E5A; line-height: 1.7; margin-bottom: 20px; }
+.week-overview-grid { display: flex; flex-direction: column; gap: 10px; }
+.week-ov { display: flex; gap: 14px; align-items: flex-start; background: white; border: 1px solid #E8E8E8; border-radius: 8px; padding: 16px 18px; }
+.week-ov-num { width: 36px; height: 36px; border-radius: 50%; background: #7A1219; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+.week-ov-body { flex: 1; }
+.week-ov-title { font-weight: 700; font-size: 13px; color: #2D2D2D; margin-bottom: 4px; }
+.week-ov-desc { font-size: 13px; color: #5F5E5A; line-height: 1.6; }
+.week-ov-asgn { display: inline-block; margin-top: 6px; font-size: 11px; font-weight: 700; color: #185FA5; background: #E6F1FB; padding: 2px 8px; border-radius: 3px; }
+
 </style>
 </head>
 <body>
@@ -123,11 +140,15 @@ nav button.active { color: white; border-bottom-color: #7A1219; }
   <nav>
     <button class="active" onclick="showCourse('bus102',this)">BUS-102: Introduction to Business</button>
     <button onclick="showCourse('bus300',this)">BUS-300: Marketing</button>
+    <button onclick="showCourse('mgt135',this)">MGT-135: Introduction to Leadership</button>
+    <button onclick="showCourse('bus410',this)">BUS-410: Strategy Implementation</button>
   </nav>
 </header>
 
 <div id="bus102" class="page active"></div>
 <div id="bus300" class="page"></div>
+<div id="mgt135" class="page"></div>
+<div id="bus410" class="page"></div>
 
 <script>
 const IB = 'https://openstax.org/books/introduction-business/pages/';
@@ -161,6 +182,8 @@ function chLink(url, label) {
   return `<a href="${url}" target="_blank">${label}</a>`;
 }
 
+
+
 function showCourse(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
@@ -178,8 +201,10 @@ function toggle(el) {
 function showWeek(courseId, n) {
   document.querySelectorAll('#'+courseId+' .week-content').forEach(w => w.classList.remove('active'));
   document.querySelectorAll('#'+courseId+' .week-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById(courseId+'-w'+n).classList.add('active');
-  document.getElementById(courseId+'-t'+n).classList.add('active');
+  const wEl = document.getElementById(courseId+'-w'+n);
+  const tEl = document.getElementById(courseId+'-t'+n);
+  if (wEl) wEl.classList.add('active');
+  if (tEl) tEl.classList.add('active');
 }
 
 function card(tag, tagClass, title, bodyHtml) {
@@ -802,28 +827,42 @@ const podcasts = {
   bus300: {
     1: 'https://notebooklm.google.com/notebook/eb489d58-6141-438d-807b-f2ceb952b14b/artifact/d9ac1116-7180-4b99-98ec-e28a1e7aea03',
     2: 'https://notebooklm.google.com/notebook/eb489d58-6141-438d-807b-f2ceb952b14b/artifact/0d66d36e-f056-44d7-a64b-a22c6cc82fce', 3: 'https://notebooklm.google.com/notebook/eb489d58-6141-438d-807b-f2ceb952b14b/artifact/96ec4543-f5b7-4a11-99ae-9696e65765b3', 4: 'https://notebooklm.google.com/notebook/eb489d58-6141-438d-807b-f2ceb952b14b/artifact/dcc7707e-8a3f-4814-8175-1b25822f0f85', 5: 'https://notebooklm.google.com/notebook/eb489d58-6141-438d-807b-f2ceb952b14b/artifact/f85a683f-e91f-46c4-921a-e4cc3346a407', 6: 'https://notebooklm.google.com/notebook/eb489d58-6141-438d-807b-f2ceb952b14b/artifact/d406e813-5dda-4673-a94b-7917e141a405'
+  },
+  mgt135: { 1: 'https://notebooklm.google.com/notebook/eb489d58-6141-438d-807b-f2ceb952b14b/artifact/0b012f99-2cd7-4179-9d7f-6d022e56635a', 2: null, 3: null, 4: null, 5: null, 6: null },
+  bus410: { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null }
+};
+
+
+const videos = {
+  bus102: {
+    1: 'https://notebooklm.google.com/notebook/eb489d58-6141-438d-807b-f2ceb952b14b/artifact/0b012f99-2cd7-4179-9d7f-6d022e56635a'
   }
 };
 
 function podcastCard(courseId, n) {
   const url = podcasts[courseId][n];
+  const vid = videos[courseId] && videos[courseId][n];
+  const vidBtn = vid ? `<a href="${vid}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#185FA5;color:white;text-decoration:none;padding:9px 18px;border-radius:6px;font-size:13px;font-weight:700;margin-top:8px;">&#9654;&nbsp; Watch Week ${n} Video</a>` : '';
   const body = url
     ? `<div style="padding:14px 0 4px;">
         <p style="font-size:13px;color:#5F5E5A;margin-bottom:12px;">AI-generated audio overview of this week's readings. Opens in NotebookLM.</p>
         <a href="${url}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#6B2FA0;color:white;text-decoration:none;padding:9px 18px;border-radius:6px;font-size:13px;font-weight:700;">&#9654;&nbsp; Listen to Week ${n} Podcast</a>
+        ${vidBtn}
       </div>`
-    : `<div style="padding:14px 0 4px;"><p style="font-size:13px;color:#9B9B99;font-style:italic;">Not yet generated — add the NotebookLM link when ready.</p></div>`;
+    : `<div style="padding:14px 0 4px;"><p style="font-size:13px;color:#9B9B99;font-style:italic;">Not yet generated — add the NotebookLM link when ready.</p>${vidBtn}</div>`;
   return card('Podcast', 'tag-pod', 'Week ' + n + ' Audio Overview', body);
 }
 
 // ── Render ────────────────────────────────────────────────────────────────────
 
-function buildCourse(courseId, data, heroTitle, heroDesc, credits, weeks, extra6) {
+function buildCourse(courseId, data, heroTitle, heroDesc, credits, weeks, extra6, deckUrl, overviewHtml) {
   const el = document.getElementById(courseId);
+  const deckBlock = deckUrl ? `<a class="deck-link" href="${deckUrl}" target="_blank">&#9654; Open Instructor Slide Deck</a>` : '';
   let html = `<div class="course-hero">
     <div><h1>${heroTitle}</h1><p>${heroDesc}</p></div>
     <div class="course-meta"><div class="badge">${credits}</div><p>${weeks} Weeks</p></div>
   </div>
+  ${deckBlock}
   <div class="week-tabs" id="${courseId}-tabs"></div>
   <div id="${courseId}-weeks"></div>`;
   el.innerHTML = html;
@@ -831,12 +870,27 @@ function buildCourse(courseId, data, heroTitle, heroDesc, credits, weeks, extra6
   const tabsEl = document.getElementById(courseId+'-tabs');
   const weeksEl = document.getElementById(courseId+'-weeks');
 
+  // Overview tab
+  if (overviewHtml) {
+    const ovTab = document.createElement('button');
+    ovTab.className = 'week-tab active';
+    ovTab.id = courseId+'-tov';
+    ovTab.textContent = 'Course Overview';
+    ovTab.onclick = () => showWeek(courseId, 'ov');
+    tabsEl.appendChild(ovTab);
+    const ovDiv = document.createElement('div');
+    ovDiv.className = 'week-content active';
+    ovDiv.id = courseId+'-wov';
+    ovDiv.innerHTML = overviewHtml;
+    weeksEl.appendChild(ovDiv);
+  }
+
   data.forEach((wk, i) => {
     const n = i+1;
 
     // Tab
     const tab = document.createElement('button');
-    tab.className = 'week-tab'+(n===1?' active':'');
+    tab.className = 'week-tab';
     tab.id = courseId+'-t'+n;
     tab.textContent = 'Week '+n;
     tab.onclick = () => showWeek(courseId, n);
@@ -844,7 +898,7 @@ function buildCourse(courseId, data, heroTitle, heroDesc, credits, weeks, extra6
 
     // Week container
     const wDiv = document.createElement('div');
-    wDiv.className = 'week-content'+(n===1?' active':'');
+    wDiv.className = 'week-content';
     wDiv.id = courseId+'-w'+n;
 
     // Extra for week 6 BUS-300
@@ -870,14 +924,668 @@ buildCourse(
   'bus102', bus102,
   'BUS-102: Introduction to Business',
   'Explores the nature, form, and function of business. Covers the functions of business, entrepreneurship, management, organizational structure, marketing, distribution, and financial management.',
-  '3 Credit Hours', 6, null
+  '3 Credit Hours', 6, null,
+  'BUS102_Instructor_Deck.html',
+  `<div class="overview-section">
+  <div class="overview-heading">What You\'ll Do in This Course</div>
+  <div class="overview-intro">BUS-102 is a survey of the entire business landscape. Each week you read 2-5 chapters, participate in daily discussion posts, and complete one written assignment that applies what you read to a real organization you know. By the end of the course you will have analyzed a real organization across every major business function.</div>
+  <div class="week-overview-grid">
+    <div class="week-ov"><div class="week-ov-num">1</div><div class="week-ov-body"><div class="week-ov-title">The Business Environment</div><div class="week-ov-desc">Explore how economic systems work, what drives ethical and socially responsible business behavior, and how companies compete globally. You\'ll analyze real examples of ethical failures and global market entry decisions.</div><span class="week-ov-asgn">Assignment: Case study analysis — Walmart e-commerce strategy and Uber\'s corporate culture crisis</span></div></div>
+    <div class="week-ov"><div class="week-ov-num">2</div><div class="week-ov-body"><div class="week-ov-title">Entrepreneurship & Business Ownership</div><div class="week-ov-desc">Compare the tradeoffs between sole proprietorships, partnerships, corporations, LLCs, and franchises. Examine what makes entrepreneurs succeed and what causes small businesses to fail.</div><span class="week-ov-asgn">Assignment: Stakeholder analysis of an organization you know well — assess one strength and one area for improvement</span></div></div>
+    <div class="week-ov"><div class="week-ov-num">3</div><div class="week-ov-body"><div class="week-ov-title">Management & Leadership</div><div class="week-ov-desc">Apply the four functions of management to real workplace situations. Examine leadership styles, organizational structures, motivation theories (Maslow, Herzberg, Expectancy), HR practices, and operations management frameworks including TQM and Six Sigma.</div><span class="week-ov-asgn">Assignment: Apply all four management functions to an organization you\'ve worked for or observed</span></div></div>
+    <div class="week-ov"><div class="week-ov-num">4</div><div class="week-ov-body"><div class="week-ov-title">Marketing & Customers</div><div class="week-ov-desc">Learn how companies create, price, distribute, and promote products. Understand the consumer decision process, the product lifecycle, and how distribution channels and the promotion mix work together.</div><span class="week-ov-asgn">Assignment: Build a succession plan — create a job description, hiring process, onboarding plan, and evaluation framework to replace yourself</span></div></div>
+    <div class="week-ov"><div class="week-ov-num">5</div><div class="week-ov-body"><div class="week-ov-title">Technology & Financial Information</div><div class="week-ov-desc">Examine how ERP, CRM, cloud computing, and big data reshape business operations. Read and interpret the three core financial statements and use ratio analysis to assess a company\'s financial health.</div><span class="week-ov-asgn">Assignment: Case study analysis — Novartis invoice processing technology and Accountingfly\'s niche hiring platform</span></div></div>
+    <div class="week-ov"><div class="week-ov-num">6</div><div class="week-ov-body"><div class="week-ov-title">Money, Financial Markets & Career Development</div><div class="week-ov-desc">Understand how financial institutions, the Federal Reserve, and securities markets function. Learn how financial managers make capital decisions. Reflect on the course and your own career direction.</div><span class="week-ov-asgn">Final: 50-question auto-graded exam covering all six weeks</span></div></div>
+  </div>
+</div>`
+);
+
+// ── MGT-135 ──────────────────────────────────────────────────────────────────
+
+const mgt135 = [
+  {
+    title: 'Week 1: Defining Leadership and Traits of Successful Leaders',
+    outcomes: [
+      '<span class="out-code">MGT-135-1a</span> Define leadership',
+      '<span class="out-code">MGT-135-1b</span> Identify traits of successful leaders'
+    ],
+    readings: [
+      {label:'Kouzes & Posner: The Leadership Challenge (7th ed.) — Preface, Chapters 1 & 2'},
+      {label:'Itay Talgam: Lead Like the Great Conductors', vid:true, link:'https://www.youtube.com/watch?v=R9g3Q-qvtss'}
+    ],
+    discussion: [
+      'Why are the mission and vision of your organization important to the leadership process?',
+      'Do you have to be in a leadership position in order to be a leader within your organization? Why or why not?',
+      'Surveying the internet, considering your reading, and based on your personal experiences, how would you define leadership?',
+      'Reflecting on your reading this week, are there practices you\'ve read about that you\'d like to see implemented in your organization?',
+      'After watching Itay Talgam\'s video, what role should fun or control play in organizational leadership?',
+      'Of the five practices identified by Kouzes and Posner, which one are you most drawn to? Which makes the most sense and which are you most skeptical about?'
+    ],
+    assignment: {
+      title: 'Assignment 1: Article Review — Leadership in the Real World (5 pts) + Assignment 2: Profile of an Effective Leader (10 pts)',
+      pts: '15', len: 'Article Review: 2 pages max | Leader Profile: 500 words max',
+      overview: 'Two assignments this week. First, find a credible article about real-world leadership and analyze it against Kouzes and Posner\'s Five Practices. Second, write a short profile of someone you personally view as an effective leader.',
+      instructions: [
+        '<strong>Article Review:</strong> Choose a credible source (HBR, WSJ, Forbes, etc.). Identify who, what, when, where. Summarize the main points. Connect to Kouzes & Posner\'s framework and this week\'s readings. Cite in APA.',
+        '<strong>Leader Profile:</strong> Select a leader you admire — supervisor, community leader, public figure, or peer. Describe who they are and the context in which they led. Identify 2–3 key qualities. Connect explicitly to the Five Practices. Reflect on what you can learn from them.',
+        '<strong>Sources:</strong> Each assignment requires at least one APA citation from course materials.'
+      ],
+      rh: ['Criteria','Points','Description'],
+      rr: [
+        ['Article Review — Publication Info','1','Title, author, publication, date, and link correctly listed'],
+        ['Article Review — Summary','1','Clear and accurate summary of article\'s main points'],
+        ['Article Review — Analysis & Connection','2','Relates to course readings; identifies leadership practices; provides personal insight'],
+        ['Article Review — Clarity & Organization','1','Clear, organized writing; proper APA citation'],
+        ['Leader Profile — Description of Leader','3','Clear description and context; specific examples provided'],
+        ['Leader Profile — Analysis of Qualities','3','2–3 leadership qualities identified; connected to Kouzes & Posner\'s framework'],
+        ['Leader Profile — Lessons Learned','2','Reflects on how lessons apply to personal leadership growth'],
+        ['Leader Profile — Writing Quality & Sources','2','Organized, clear writing; correct terminology; at least one APA citation']
+      ]
+    }
+  },
+  {
+    title: 'Week 2: Modeling the Way',
+    outcomes: [
+      '<span class="out-code">MGT-135-2a</span> Clarify values of individuals and organizations',
+      '<span class="out-code">MGT-135-2b</span> Reflect on personal influences that shape leadership behavior'
+    ],
+    readings: [
+      {label:'Kouzes & Posner: Chapters 3 & 4'},
+      {label:'Seth Godin: The Tribes We Lead', vid:true, link:'https://www.ted.com/talks/seth_godin_the_tribes_we_lead'},
+      {label:'Clarifying Core Values (Clemmer Group)', link:'https://www.clemmergroup.com/articles/clarifying-your-core-values/'}
+    ],
+    discussion: [
+      'What lessons stood out to you from Seth Godin\'s video The Tribes We Lead?',
+      'What do Kouzes and Posner mean by "Model the Way"? Can you think of an example from your own experience?',
+      'How do we affirm shared values in an organization? Which ideas from the Clemmer Group reading resonated most?',
+      'Focusing on your project, what excites and inspires you about it?',
+      'What are some practical ways leaders set expectations for others?',
+      'What happens when personal values and organizational values are in conflict? How should leaders respond?',
+      'Based on your reading and experiences, what are effective techniques leaders can use to "Model the Way"?'
+    ],
+    assignment: {
+      title: 'Assignment 1: Article Review — Modeling the Way (5 pts) + Assignment 2: Project Description (10 pts)',
+      pts: '15', len: 'Article Review: 2 pages max | Project Description: 3–5 pages',
+      overview: 'Two assignments this week. First, analyze a real-world article through the lens of "Modeling the Way." Second, commit to and describe the leadership project you will carry through the rest of the course.',
+      instructions: [
+        '<strong>Article Review:</strong> Select an article illustrating effective or ineffective leadership. Address publication info, summary, and connection to "Model the Way." Did the leader clarify values? Set an example? Was there alignment or conflict between personal and organizational values?',
+        '<strong>Project Description — Project Overview:</strong> Purpose, scope, and main objectives. Why you chose it.',
+        '<strong>Project Description — Stakeholders:</strong> Who is involved and why their buy-in matters.',
+        '<strong>Project Description — Desired Change:</strong> What you hope to achieve and how you\'ll measure success.',
+        '<strong>Project Description — Alignment with Values:</strong> How the project connects to your personal values and your organization\'s mission.',
+        '<strong>Project Description — Connection to Leadership Practice:</strong> At least one way this project lets you "Model the Way."'
+      ],
+      rh: ['Criteria','Points','Description'],
+      rr: [
+        ['Article Review — Publication Info','1','Accurate reference to source'],
+        ['Article Review — Summary','1','Accurate, concise summary'],
+        ['Article Review — Connection to Reading','2','Strong analysis connecting to Kouzes & Posner\'s Model the Way principles'],
+        ['Article Review — Clarity & Organization','1','Clear, professional writing; free of major errors'],
+        ['Project Description — Project Overview','2','Clear, detailed description of purpose, scope, and importance'],
+        ['Project Description — Stakeholders','2','Identifies individuals/groups involved and explains their roles'],
+        ['Project Description — Desired Change','2','Clearly explains intended outcomes and success criteria'],
+        ['Project Description — Alignment with Values','2','Thoughtful reflection on personal and organizational alignment'],
+        ['Project Description — Connection to Leadership','1','Links project to Model the Way concepts'],
+        ['Project Description — Clarity & Organization','1','Well-organized, concise, free of major errors']
+      ]
+    }
+  },
+  {
+    title: 'Week 3: Inspire a Shared Vision',
+    outcomes: [
+      '<span class="out-code">MGT-135-3a</span> Describe future-oriented leadership tactics and their role in shaping organizational direction',
+      '<span class="out-code">MGT-135-3b</span> Evaluate the importance of enlisting others in achieving a shared vision',
+      '<span class="out-code">MGT-135-3c</span> Apply strategies to communicate purpose and inspire collective commitment'
+    ],
+    readings: [
+      {label:'Kouzes & Posner: Chapters 5 & 6'},
+      {label:'Drucker, P. (2004). Drucker on Leadership. Forbes.', link:'https://www.forbes.com/2004/11/19/cz_hc_1119drucker.html'},
+      {label:'Simon Sinek: How Great Leaders Inspire Action', vid:true, link:'https://www.youtube.com/watch?v=qp0HIF3SfI4'},
+      {label:'Derek Sivers: How to Start a Movement', vid:true, link:'https://www.youtube.com/watch?v=V74AxCqOTvg'}
+    ],
+    discussion: [
+      'What future trends — demographics, technology, regulations, or cultural changes — are likely to influence the direction of your project? How will you prepare to adapt?',
+      'Why is it essential to bring others into your project? What resources (skills, time, networks) will you need from them?',
+      'Who might be your "first follower," and how can you encourage their commitment?',
+      'Describe Simon Sinek\'s Golden Circle. How does it apply to your leadership approach?',
+      'Why might individual and organizational values differ, and how can leaders navigate this tension?',
+      'What strategies can you use to uncover the values that will motivate your group?',
+      'Kouzes and Posner say leaders should be forward-looking. Why must leaders also reflect on the past to look ahead effectively?'
+    ],
+    assignment: {
+      title: 'Assignment 1: Article Review — Inspiring a Shared Vision (5 pts) + Assignment 2: Vision for Your Project (15 pts)',
+      pts: '20', len: 'Article Review: 2 pages max | Vision Paper: 500–750 words',
+      overview: 'Two assignments. First, analyze a real-world article using the "Inspire a Shared Vision" framework. Second, describe how you will inspire a shared vision for your project using Sinek\'s Golden Circle and other course frameworks.',
+      instructions: [
+        '<strong>Article Review:</strong> Select a relevant article. Cover publication info, summary, and analysis connecting to Kouzes & Posner, Drucker, Sinek, and Sivers.',
+        '<strong>Vision Paper — Project Scope and Goals:</strong> Define the project, main objectives, and intended outcomes.',
+        '<strong>Vision Paper — Communicating the Vision:</strong> How you\'ll frame purpose and meaning using Sinek\'s Why/How/What.',
+        '<strong>Vision Paper — Enlisting Others:</strong> Who you need on board, strategies to engage them, and how you\'ll find your "first follower."',
+        '<strong>Vision Paper — Aligning Values:</strong> How the project aligns with personal and organizational values; what you\'ll do if values conflict.',
+        '<strong>Vision Paper — Challenges and Opportunities:</strong> Obstacles you may face and how Kouzes & Posner or Drucker guide your response.',
+        '<strong>Sources:</strong> At least two references to course materials in APA format.'
+      ],
+      rh: ['Criteria','Points','Description'],
+      rr: [
+        ['Article Review — Publication Info','1','Complete and accurate article details'],
+        ['Article Review — Summary','1','Clear, concise summary'],
+        ['Article Review — Analysis','2','Strong connection to Kouzes & Posner, Drucker, Sinek, Sivers'],
+        ['Article Review — Reflection','1','Thoughtful application to project or personal leadership'],
+        ['Vision Paper — Project Scope & Goals','3','Clear, detailed description; demonstrates understanding of significance'],
+        ['Vision Paper — Communicating the Vision','3','Effectively describes framing; integrates Golden Circle or relevant concepts'],
+        ['Vision Paper — Enlisting Others','3','Identifies stakeholders; explains engagement strategies; discusses first follower'],
+        ['Vision Paper — Aligning Values','2','Explains alignment; addresses potential conflicts'],
+        ['Vision Paper — Challenges & Opportunities','2','Analyzes obstacles; provides strategies using course concepts'],
+        ['Vision Paper — Writing Quality & Sources','2','Clear, organized, error-free; two APA course references']
+      ]
+    }
+  },
+  {
+    title: 'Week 4: Challenge the Process',
+    outcomes: [
+      '<span class="out-code">MGT-135-4a</span> Examine ways to discover opportunities for change and innovation',
+      '<span class="out-code">MGT-135-4b</span> Discuss tactics for experimentation and risk-taking',
+      '<span class="out-code">MGT-135-4c</span> Apply strategies for generating small wins and sustaining momentum'
+    ],
+    readings: [
+      {label:'Kouzes & Posner: Chapters 7 & 8'},
+      {label:'How Do You Challenge the Process???', vid:true, link:'https://www.youtube.com/watch?v=MkEHHgCOUGk'},
+      {label:'Ipsita Dasgupta: To Challenge the Status Quo, Find a Co-Conspirator (TED)', vid:true, link:'https://www.ted.com/talks/ipsita_dasgupta_to_challenge_the_status_quo_find_a_co_conspirator'}
+    ],
+    discussion: [
+      'What are some methods of discovering places for innovation in your organization or project?',
+      'Why should leaders check for "limiting assumptions"? What are they?',
+      'Kouzes and Posner argue that all change requires leadership. What can be done if senior leaders are not engaged in driving change?',
+      'What are some concrete ways we can encourage innovation even when our team appears to be doing well?',
+      'What does it mean to "generate small wins"? Share an example from your own experience.',
+      'After initiating change, what strategies can effective leaders use to sustain momentum and evaluate progress?'
+    ],
+    assignment: {
+      title: 'Assignment 1: Article Review — Challenge the Process (5 pts) + Assignment 2: Challenging the Process in Your Project (10 pts)',
+      pts: '15', len: 'Article Review: 2 pages max | Project Paper: 3–5 pages',
+      overview: 'Two assignments. First, analyze a real-world article about challenging the status quo. Second, apply "Challenge the Process" directly to your leadership project.',
+      instructions: [
+        '<strong>Article Review:</strong> Cover publication info, summary, and analysis connecting to Kouzes & Posner\'s "Challenge the Process." Did the leader innovate, take calculated risks, generate small wins? What was missing if leadership was ineffective?',
+        '<strong>Project Paper — Opportunities for Innovation:</strong> Identify at least two aspects of your project that would benefit from new approaches. Explain why they matter.',
+        '<strong>Project Paper — Engage Your Team:</strong> Specific strategies to involve team members in identifying and selecting innovative solutions. How will you encourage creativity while keeping alignment?',
+        '<strong>Project Paper — Learn from Mistakes:</strong> How you will create a culture that treats mistakes as learning opportunities. At least one method for gathering feedback.',
+        '<strong>Project Paper — Incremental Wins:</strong> Identify "small wins" or milestones built into your project. Explain how celebrating them maintains momentum.',
+        '<strong>Sources:</strong> At least one APA citation from course reading or outside resource.'
+      ],
+      rh: ['Criteria','Points','Description'],
+      rr: [
+        ['Article Review — Publication Info','1','Accurate citation and complete details'],
+        ['Article Review — Summary','1','Clear, concise explanation of article\'s main points'],
+        ['Article Review — Analysis','2','Strong connection to Challenge the Process; thoughtful reflection and examples'],
+        ['Article Review — Clarity & Writing','1','Well-organized, professional, free of major errors'],
+        ['Project Paper — Opportunities for Innovation','2','Clearly explains at least two opportunities; connects to project goals'],
+        ['Project Paper — Engagement of Team','2','Concrete strategies to involve team; emphasizes collaboration and creativity'],
+        ['Project Paper — Learning from Mistakes','2','Realistic ways to handle mistakes; includes feedback/reflection strategies'],
+        ['Project Paper — Incremental Wins','2','Meaningful small wins identified; explains how they sustain motivation'],
+        ['Project Paper — Clarity & Writing','2','Well-organized, professional, free of major errors; correct APA citation']
+      ]
+    }
+  },
+  {
+    title: 'Week 5: Enable Others to Act',
+    outcomes: [
+      '<span class="out-code">MGT-135-5a</span> Describe ways to foster collaboration within teams',
+      '<span class="out-code">MGT-135-5b</span> Develop techniques to strengthen others and build mutual trust',
+      '<span class="out-code">MGT-135-5c</span> Apply leadership strategies to empower team members in your project'
+    ],
+    readings: [
+      {label:'Kouzes & Posner: Chapters 9 & 10'},
+      {label:'Powell, C. A Leadership Primer. GovLeaders.', link:'https://govleaders.org/powell.htm'},
+      {label:'Jim Tamm: First Step to Collaboration? Don\'t Be So Defensive! (TED)', vid:true, link:'https://www.ted.com/talks/jim_tamm_first_step_to_collaboration_don_t_be_so_defensive'},
+      {label:'Patrice Gordon: How Reverse Mentorship Can Help Create Better Leaders (TED)', vid:true, link:'https://www.ted.com/talks/patrice_gordon_how_reverse_mentorship_can_help_create_better_leaders'}
+    ],
+    discussion: [
+      'What are your main takeaways from the Powell article? Which principle resonates most?',
+      'Why is trust essential to collaboration? What steps can leaders take to build and maintain trust?',
+      'How would you personally define collaboration? Share examples of how you\'ve seen collaboration succeed or fail.',
+      'In an era of virtual and digital teams, are face-to-face meetings still important? Why or why not?',
+      'What role does feedback (both giving and receiving) play in building stronger teams?',
+      'Kouzes and Posner list multiple ways leaders can strengthen others. Which strategy resonates most with you, and why?',
+      'Could a reverse mentorship program work in your organization? What benefits or challenges would it bring?',
+      'Reflect on a time when you were part of a team that "just clicked." What made that collaboration so effective?'
+    ],
+    assignment: {
+      title: 'Assignment 1: Article Review — Enable Others to Act (5 pts) + Assignment 2: Building Collaboration (10 pts)',
+      pts: '15', len: 'Article Review: 2 pages max | Collaboration Paper: 5 pages max',
+      overview: 'Two assignments. First, analyze a real-world article through the lens of "Enable Others to Act." Second, apply enabling strategies directly to your leadership project team.',
+      instructions: [
+        '<strong>Article Review:</strong> Cover publication info, summary, and analysis connecting to Kouzes & Posner, Powell\'s Leadership Primer, or the TED Talks. Discuss how the example illustrates fostering collaboration and strengthening others.',
+        '<strong>Collaboration Paper — Project & Team Overview:</strong> Reintroduce your project, team, and outcomes.',
+        '<strong>Collaboration Paper — Personal Goals:</strong> What you want to achieve from this project and your leadership growth.',
+        '<strong>Collaboration Paper — Supporting Team Members:</strong> Specific actions to support and empower team members.',
+        '<strong>Collaboration Paper — Current Relationships:</strong> Characterize your current relationship with team members. What\'s working? Where can trust and collaboration be strengthened?',
+        '<strong>Collaboration Paper — Climate of Trust:</strong> Structures, behaviors, or norms you can establish to build mutual respect.',
+        '<strong>Collaboration Paper — Strengthening Talents:</strong> Training, mentoring, reverse mentorship, or stretch assignments.',
+        '<strong>Collaboration Paper — Personal Reflections & Recommendations:</strong> What you like and dislike about the project so far; concrete next steps for the team.'
+      ],
+      rh: ['Criteria','Points','Description'],
+      rr: [
+        ['Article Review — Publication & Summary','1','Accurate publication details and clear summary'],
+        ['Article Review — Analysis','2','Connects to course readings; shows understanding of enabling others to act'],
+        ['Article Review — Reflection','1','Personal insights; connected to leadership practice or project'],
+        ['Article Review — Clarity & Organization','1','Well-structured, professional, error-free'],
+        ['Collaboration Paper — Project Overview & Goals','2','Clear intro to project; explains team objectives and personal leadership goals'],
+        ['Collaboration Paper — Supporting Team Members','2','Identifies specific strategies to support and empower team members'],
+        ['Collaboration Paper — Climate of Trust','2','Describes ways to build teamwork and trust; aware of collaboration challenges'],
+        ['Collaboration Paper — Strengthening Others','2','Concrete methods for helping team members grow and develop skills'],
+        ['Collaboration Paper — Clarity & Organization','2','Well-organized, professional, clear; correct APA']
+      ]
+    }
+  },
+  {
+    title: 'Week 6: Encourage the Heart & Putting It All Together',
+    outcomes: [
+      '<span class="out-code">MGT-135-6a</span> Evaluate ways to recognize and celebrate the contributions of others',
+      '<span class="out-code">MGT-135-6b</span> Determine appropriate ways to celebrate shared values and victories',
+      '<span class="out-code">MGT-135-6c</span> Apply leadership skills holistically to a real-world project or organizational challenge'
+    ],
+    readings: [
+      {label:'Kouzes & Posner: Chapters 11, 12 & 13'},
+      {label:'Stanley McChrystal: Leadership Is a Choice (YouTube)', vid:true, link:'https://www.youtube.com/watch?v=0JiHmccDQqA'}
+    ],
+    discussion: [
+      'What does "encouraging the heart" mean to you personally? How does it differ from simply "being nice"?',
+      'Kouzes and Posner emphasize expecting the best. How do you balance holding high expectations with being supportive when people struggle?',
+      'Think of a time when someone recognized your contributions. What made that recognition meaningful (or not meaningful)?',
+      'What are some creative, low-cost ways to celebrate team victories in a professional setting?',
+      'General McChrystal talks about leadership as a choice. How does this perspective change your understanding of leadership?',
+      'As you finalize your project plan, which of the five practices do you think will be most challenging to implement? Why?',
+      'What role do rituals (weekly check-ins, awards, traditions) play in sustaining motivation and morale?',
+      'Looking back over this course, what have you learned about your own leadership style that you didn\'t know before?'
+    ],
+    assignment: {
+      title: 'Final Project: Leadership in Action',
+      pts: '25', len: '7–15 pages, double-spaced',
+      overview: 'Integrate all five practices of exemplary leadership — Model the Way, Inspire a Shared Vision, Challenge the Process, Enable Others to Act, and Encourage the Heart — into one cohesive leadership plan for a real team in a real organization.',
+      instructions: [
+        '<strong>Introduction to the Organization:</strong> Describe the organization, team (at least 3 people), and provide background on mission, size, and context.',
+        '<strong>Description of the Project:</strong> The specific initiative you will lead — goal, how success is measured, whether the goal is realistic, resources required, and timeline.',
+        '<strong>Model the Way:</strong> How you will clarify values and set an example others can follow.',
+        '<strong>Inspire a Shared Vision:</strong> How you will communicate a compelling vision and enlist others.',
+        '<strong>Challenge the Process:</strong> How you will encourage innovation and build small wins into the plan.',
+        '<strong>Enable Others to Act:</strong> How you will foster collaboration, trust, and team members\' skills and confidence.',
+        '<strong>Encourage the Heart:</strong> How you will recognize contributions and celebrate victories (formal and informal methods).',
+        '<strong>Challenges and Solutions:</strong> Anticipate at least 3 obstacles (conflicting personalities, limited resources, resistance to change, etc.) and provide a practical solution for each.',
+        '<strong>Conclusion and Reflection:</strong> Summarize the plan; reflect on what you learned about yourself as a leader; identify strengths to build on, weaknesses to address, and next steps.',
+        '<strong>Sources:</strong> At least 2–3 external references in APA format.'
+      ],
+      rh: ['Criteria','Points','Description'],
+      rr: [
+        ['Organization Description','3','Clear, detailed overview of the chosen organization and team'],
+        ['Project Description','3','Well-developed explanation of goal, scope, resources, and timeline'],
+        ['Application of Five Practices','10','Thoughtful application of each practice; concrete examples and strategies (2 pts each)'],
+        ['Challenges & Solutions','5','Identifies realistic challenges; provides actionable solutions'],
+        ['Conclusion & Reflection','2','Strong wrap-up demonstrating self-awareness and leadership growth'],
+        ['Writing Quality & Sources','2','Clear, professional writing; APA citations; free from major errors']
+      ]
+    }
+  }
+];
+
+buildCourse(
+  'mgt135', mgt135,
+  'MGT-135: Introduction to Leadership',
+  'Examines leadership through a five-part analysis of leadership principles and their application in the modern workplace. Students develop tools to evaluate and strengthen their own leadership abilities across diverse organizational contexts.',
+  '3 Credit Hours', 6, null, 'MGT135_Instructor_Deck.html',
+  `<div class="overview-section">
+  <div class="overview-heading">What You\'ll Do in This Course</div>
+  <div class="overview-intro">MGT-135 is a project-based leadership course built on Kouzes and Posner\'s Five Practices of Exemplary Leadership. From Week 2, you choose a real project and apply each week\'s practice to it. By Week 6 you will have a complete leadership plan you could realistically use in your professional or community life. The required text is The Leadership Challenge (7th ed.) by Kouzes and Posner.</div>
+  <div class="week-overview-grid">
+    <div class="week-ov"><div class="week-ov-num">1</div><div class="week-ov-body"><div class="week-ov-title">Defining Leadership and Traits of Successful Leaders</div><div class="week-ov-desc">Explore what leadership really means versus management. Study Kouzes and Posner\'s Five Practices and watch Itay Talgam show how six conductors illustrate six different leadership approaches.</div><span class="week-ov-asgn">Assignments: Article Review (5 pts) + Profile of an Effective Leader (10 pts)</span></div></div>
+    <div class="week-ov"><div class="week-ov-num">2</div><div class="week-ov-body"><div class="week-ov-title">Modeling the Way</div><div class="week-ov-desc">Clarify your own values and examine how leaders build credibility through consistent action. Seth Godin\'s Tribes framework connects personal values to building a following.</div><span class="week-ov-asgn">Assignments: Article Review (5 pts) + Project Description (10 pts)</span></div></div>
+    <div class="week-ov"><div class="week-ov-num">3</div><div class="week-ov-body"><div class="week-ov-title">Inspire a Shared Vision</div><div class="week-ov-desc">Learn how leaders envision the future and enlist others. Apply Simon Sinek\'s Golden Circle and Derek Sivers\' "first follower" concept to communicate your project\'s purpose.</div><span class="week-ov-asgn">Assignments: Article Review (5 pts) + Vision Paper (15 pts)</span></div></div>
+    <div class="week-ov"><div class="week-ov-num">4</div><div class="week-ov-body"><div class="week-ov-title">Challenge the Process</div><div class="week-ov-desc">Examine how leaders identify innovation opportunities, take calculated risks, and build momentum through small wins. Find your co-conspirator.</div><span class="week-ov-asgn">Assignments: Article Review (5 pts) + Challenge the Process Paper (10 pts)</span></div></div>
+    <div class="week-ov"><div class="week-ov-num">5</div><div class="week-ov-body"><div class="week-ov-title">Enable Others to Act</div><div class="week-ov-desc">Study how leaders build trust, foster collaboration, and strengthen team members through mentoring, reverse mentorship, and empowerment strategies.</div><span class="week-ov-asgn">Assignments: Article Review (5 pts) + Collaboration Paper (10 pts)</span></div></div>
+    <div class="week-ov"><div class="week-ov-num">6</div><div class="week-ov-body"><div class="week-ov-title">Encourage the Heart and Putting It All Together</div><div class="week-ov-desc">Explore recognition, celebration, and how all five practices work together. Apply every practice to a real team and organization in your final leadership plan.</div><span class="week-ov-asgn">Final Project: Leadership in Action (25 pts)</span></div></div>
+  </div>
+</div>`
+);
+
+// ── BUS-410 ──────────────────────────────────────────────────────────────────
+
+const bus410 = [
+  {
+    title: 'Week 1: Organizational Analysis',
+    outcomes: [
+      '<span class="out-code">BUS-410-1a</span> Explain the core concepts of strategic management and differentiate between strategy and strategic thinking',
+      '<span class="out-code">BUS-410-1b</span> Analyze an organization\'s mission, vision, and values to evaluate alignment with strategic goals',
+      '<span class="out-code">BUS-410-1c</span> Conduct a basic internal and external organizational assessment using SWOT, PESTEL, and Porter\'s Five Forces',
+      '<span class="out-code">BUS-410-1d</span> Apply resource-based and value chain models to evaluate internal capabilities and competitive potential',
+      '<span class="out-code">BUS-410-1e</span> Assess organizational performance using balanced scorecards and other strategic metrics'
+    ],
+    readings: [
+      {label:'Strategic Management (OpenStax): Chapters 1, 2, 3, 4, 5.1–5.2', link:'https://open.umn.edu/opentextbooks/textbooks/73'},
+      {label:'Horwath, R. (2005). Discovering Purpose: Developing Mission, Vision & Values. Strategic Thinking Institute.'},
+      {label:'Strategic Management Process', vid:true, link:'https://youtu.be/o0U0gwvnhek'},
+      {label:'A Simple Intro to Mission, Vision, and Values', vid:true, link:'https://youtu.be/7mWQh_7fK3U'},
+      {label:'Porter\'s Five Forces Explained', vid:true, link:'https://youtu.be/_IaBZmB09RE'},
+      {label:'Value Chain Analysis', vid:true, link:'https://youtu.be/Tpb1fxt9YfU'},
+      {label:'Business Strategy: SWOT Analysis', vid:true, link:'https://youtu.be/9-NWhwskTO4'},
+      {label:'What is a PESTLE Analysis?', link:'https://pestleanalysis.com/what-is-pestle-analysis/'}
+    ],
+    discussion: [
+      'What is the difference between strategic management and strategy?',
+      'What are indicators of a strong mission?',
+      'How should executives analyze the performance of their organization?',
+      'What is competitive advantage and how is it calculated?',
+      'How is the PESTEL framework used to evaluate the external environment?',
+      'How is Porter\'s Five Forces used to perform a competitive analysis of an industry?',
+      'What are strategic groups and how are they useful to evaluate the competitive environment?',
+      'What tools can be used to evaluate the internal environment?',
+      'How is the SWOT framework developed and used for determining strategic issues and strategies?'
+    ],
+    assignment: {
+      title: 'Assignment 1: Company Overview (8 pts) + Assignment 2: Strategic Analysis (12 pts)',
+      pts: '20', len: 'Company Overview: 450–550 words | Strategic Analysis: 1,200–1,500 words',
+      overview: 'Two assignments this week. First, introduce the company or startup you will work with for the entire course. Second, conduct a full internal and external analysis of that organization.',
+      instructions: [
+        '<strong>Company Overview:</strong> Organization background and founding story. Vision, mission, and values — why they matter to the company\'s strategy. Size, structure, industry, locations, and products or services. Why you chose this organization.',
+        '<strong>Strategic Analysis — Industry Landscape:</strong> Key trends, drivers of change, industry size and outlook, regulatory or economic factors.',
+        '<strong>Strategic Analysis — Competitor Analysis:</strong> Main competitors, their strengths and weaknesses, business strategies, and market share comparison.',
+        '<strong>Strategic Analysis — SWOT Analysis:</strong> Specific, data-linked Strengths, Weaknesses, Opportunities, and Threats.',
+        '<strong>Strategic Analysis — PESTEL Analysis:</strong> Political, Economic, Social, Technological, Environmental, and Legal factors most relevant to your organization.',
+        '<strong>Strategic Analysis — Integration and Insight:</strong> What the combined analysis tells you about the organization\'s strategic position and key recommendations.',
+        '<strong>Sources:</strong> Cite all sources including company websites, industry reports, and course readings in APA format.'
+      ],
+      rh: ['Criteria','Points','Description'],
+      rr: [
+        ['Company Overview — Organization Introduction','2','Clear, engaging; demonstrates understanding of history and context'],
+        ['Company Overview — Vision, Mission & Values','2','Clearly explained with insight into their strategic importance'],
+        ['Company Overview — Company Details','2','Thorough overview of size, structure, industry, and offerings'],
+        ['Company Overview — Word Count & Mechanics','2','450–550 words; no errors; properly cited'],
+        ['Strategic Analysis — Industry Landscape','2','Deep insights; thorough and up-to-date'],
+        ['Strategic Analysis — Competitor Analysis','2','Thorough; strong understanding of market dynamics'],
+        ['Strategic Analysis — SWOT Analysis','2','Comprehensive and insightful'],
+        ['Strategic Analysis — PESTEL Analysis','2','Thorough, well-reasoned, in-depth'],
+        ['Strategic Analysis — Integration & Insight','2','Excellent integration and strategic depth'],
+        ['Strategic Analysis — Word Count & Mechanics','2','On target; no errors; citations correct']
+      ]
+    }
+  },
+  {
+    title: 'Week 2: Strategic Planning and Strategies',
+    outcomes: [
+      '<span class="out-code">BUS-410-2a</span> Identify strategic issues facing an organization based on internal and external analysis',
+      '<span class="out-code">BUS-410-2b</span> Formulate SMART strategic objectives aligned with an organization\'s mission and vision',
+      '<span class="out-code">BUS-410-2c</span> Evaluate business-level strategies (cost leadership, differentiation, focus) in the context of competitive positioning',
+      '<span class="out-code">BUS-410-2d</span> Assess corporate-level strategies including diversification, integration, and retrenchment',
+      '<span class="out-code">BUS-410-2e</span> Align strategies and tactics with strategic objectives to support long-term organizational growth'
+    ],
+    readings: [
+      {label:'Strategic Management: Chapters 5.3–5.4, 6, 8', link:'https://open.umn.edu/opentextbooks/textbooks/73'},
+      {label:'Case Study: Nautica Brand Losing Ground (Kapner, 2007)'},
+      {label:'Strategic Issues — Gregg Learning', vid:true, link:'https://youtu.be/gregg-strategic-issues'},
+      {label:'Five Competitive Strategies — Gregg Learning', vid:true, link:'https://youtu.be/gregg-five-strategies'},
+      {label:'Best-Cost Provider — Gregg Learning', vid:true, link:'https://youtu.be/gregg-best-cost'}
+    ],
+    discussion: [
+      'How can we identify a strategic issue?',
+      'What are business strategies?',
+      'How are generic strategies used?',
+      'What is corporate-level strategy and how does it differ from business-level strategy?',
+      'What are four methods that a firm can use to implement its corporate strategy?',
+      'Given that so many mergers and acquisitions fail, why do executives keep making horizontal integration moves?'
+    ],
+    assignment: {
+      title: 'Strategic Objectives, Strategies, and Tactics',
+      pts: '20', len: '1,200–1,500 words',
+      overview: 'Building on your Week 1 analysis, identify the strategic issues your organization faces. Develop 4–6 SMART strategic objectives and outline the business-level and corporate-level strategies and tactics that will address them.',
+      instructions: [
+        '<strong>Identify Strategic Issues:</strong> Review your SWOT, PESTEL, and competitor analysis. What are the major challenges or opportunities? Be specific — explain impact, not just category.',
+        '<strong>Develop Strategic Objectives:</strong> Write 4–6 SMART objectives that respond to the issues. Each must be Specific, Measurable, Achievable, Relevant, and Time-bound. Example: "Increase online sales revenue by 20% over the next 12 months through targeted digital marketing."',
+        '<strong>Outline Strategies and Tactics:</strong> For each objective, propose a business-level strategy (cost leadership, differentiation, focus) or corporate-level strategy (diversification, expansion, retrenchment). Then outline specific tactics. Justify each strategy choice.',
+        '<strong>Demonstrate Strategic Alignment:</strong> Show how your objectives, strategies, and tactics reflect the organization\'s mission, vision, and values.',
+        '<strong>Sources:</strong> Cite company websites, industry reports, and course readings in APA format.'
+      ],
+      rh: ['Criteria','Points','Description'],
+      rr: [
+        ['Strategic Issues Identification','4','Deep, insightful identification with strong understanding of impact'],
+        ['Objective Development','4','4–6 objectives; exceptionally clear, specific, and aligned with mission'],
+        ['Strategies and Tactics','4','Comprehensive, specific strategies and tactics with excellent rationale'],
+        ['Alignment with Mission, Vision, Values','4','Exceptional and insightful alignment'],
+        ['Word Count and Mechanics','4','Free of errors; formatting and citation correct']
+      ]
+    }
+  },
+  {
+    title: 'Week 3: Financial Analysis',
+    outcomes: [
+      '<span class="out-code">BUS-410-3a</span> Explain the strategic role of innovation and entrepreneurial orientation in achieving competitive advantage',
+      '<span class="out-code">BUS-410-3b</span> Evaluate the benefits and risks associated with entering international markets',
+      '<span class="out-code">BUS-410-3c</span> Analyze innovation and market entry strategies within the context of global competition',
+      '<span class="out-code">BUS-410-3d</span> Conduct a financial analysis and develop a multi-year financial forecast and strategic budget',
+      '<span class="out-code">BUS-410-3e</span> Assess the financial feasibility and ROI of proposed strategic initiatives'
+    ],
+    readings: [
+      {label:'Strategic Management: Chapters 7 & 9', link:'https://open.umn.edu/opentextbooks/textbooks/73'},
+      {label:'Entrepreneurial Orientation and Organizational Performance (Oxford Review)', vid:true, link:'https://youtu.be/Iru7IBqc3Vk'},
+      {label:'Innovation Strategy (Kuczmarski Innovation)', vid:true, link:'https://youtu.be/B-tY6citUHw'},
+      {label:'CAGE Framework for International Trade — Pankaj Ghemawat', vid:true, link:'https://youtu.be/7FpUJaG7uMk'},
+      {label:'Porter\'s Diamond Explained with an Example', vid:true, link:'https://youtu.be/NM5Lwj-RZ34'},
+      {label:'Global Market Entry Strategy', vid:true, link:'https://youtu.be/a5UaXsYV1aw'}
+    ],
+    discussion: [
+      'What type of information do you need to collect to perform a financial analysis?',
+      'What is Entrepreneurial Orientation?',
+      'Based on your readings about innovation and international markets, do you need to revise your strategies?',
+      'Why should companies innovate?',
+      'What are the main benefits and risks of competing in international markets?',
+      'What methods of entry are available to firms that seek to compete in international markets?'
+    ],
+    assignment: {
+      title: 'Financial Analysis and Strategic Forecasting',
+      pts: '10', len: '800–1,200 words',
+      overview: 'Develop a financial analysis and multi-year forecast for your organization. Existing company students use actual financial data. Startup students develop projections based on market research and industry benchmarks.',
+      instructions: [
+        '<strong>Budget Development:</strong> Create a detailed annual budget with revenue projections, operating expenses, and capital expenditures. Present in a table or visual. Use historical data or industry standards to inform estimates.',
+        '<strong>Financial Forecast (3–5 years):</strong> Project future revenues, expenses, and cash flows. Clearly state your assumptions and methodology.',
+        '<strong>Financial Feasibility Analysis:</strong> Assess the financial viability of one or more strategic initiatives (product launch, market expansion, cost-saving measure). Discuss projected impact on financial performance.',
+        '<strong>Investment, Cost Implications, and ROI:</strong> For existing companies, evaluate investments and calculate NPV, IRR, or Payback Period. For startups, estimate startup costs and expected returns. Analyze cost structure implications.',
+        '<strong>Financial Recommendations:</strong> Based on your analysis, offer recommendations for improving performance, managing financial risk, and meeting long-term goals.',
+        '<strong>Sources:</strong> Cite financial databases, business articles, company reports, or startup research tools in APA format.'
+      ],
+      rh: ['Criteria','Points','Description'],
+      rr: [
+        ['Budget Development','2','Exceptionally detailed with realistic, well-researched numbers; appropriate use of data'],
+        ['Financial Forecasting','2','Excellent 3–5 year forecast with transparent assumptions and strong methodology'],
+        ['Financial Feasibility','2','Outstanding analysis of financial impact; strong connection to company goals'],
+        ['Investment / Cost / ROI','2','Comprehensive investment and cost analysis; accurately calculates NPV, IRR, or ROI'],
+        ['Recommendations','2','Excellent, data-driven recommendations aligned with financial goals and risk management']
+      ]
+    }
+  },
+  {
+    title: 'Week 4: Change Management',
+    outcomes: [
+      '<span class="out-code">BUS-410-4a</span> Describe the processes and challenges involved in executing strategic change within an organization',
+      '<span class="out-code">BUS-410-4b</span> Analyze different organizational structures and assess their impact on strategy implementation',
+      '<span class="out-code">BUS-410-4c</span> Evaluate ethical leadership practices and their role in promoting accountability and corporate responsibility',
+      '<span class="out-code">BUS-410-4d</span> Identify risk factors in strategic initiatives and propose realistic, ethical mitigation strategies',
+      '<span class="out-code">BUS-410-4e</span> Develop a structured change management plan aligned to stakeholder needs, leadership roles, and organizational readiness'
+    ],
+    readings: [
+      {label:'Strategic Management: Chapters 10 & 11', link:'https://open.umn.edu/opentextbooks/textbooks/73'},
+      {label:'Miller, K. (2020). 5 Critical Steps in the Change Management Process. Business Insights.', link:'https://online.hbs.edu/blog/post/steps-in-change-management-process'},
+      {label:'Brown, I., Steen, A., & Foreman, J. (2009). Risk Management in Corporate Governance. Corporate Governance: An International Review, 17(5), 546–558.'},
+      {label:'Organizational Design and Structure (Gregg Learning)', vid:true, link:'https://youtu.be/Y4vEos6xuks'},
+      {label:'The Ethics of Business (Cranfield School of Management)', vid:true, link:'https://youtu.be/vAtu_iBbknY'},
+      {label:'Michael Porter: Why Businesses Can Be Good at Solving Social Problems (TED)', vid:true, link:'https://youtu.be/0iIh5YYDR2o'}
+    ],
+    discussion: [
+      'Why is a firm\'s organizational structure important?',
+      'What are the key legal forms of business, and what implications does the choice have for organizational structure?',
+      'How does structure impact the change management process?',
+      'Are there changes you will need to make to your organization to execute your strategy?',
+      'What controls will you need to put in place to manage your strategic initiatives?',
+      'What is corporate social responsibility and its strategic role for a firm?',
+      'What is the role of the firm\'s board of directors as it relates to ethical behavior?',
+      'What are risks associated with your industry or organization?',
+      'What regulations or regulatory bodies within your industry must you comply with?',
+      'Are there sustainability or ESG considerations within your industry or organization?'
+    ],
+    assignment: {
+      title: 'Assignment 1: Change Management Plan (14 pts) + Assignment 2: Risk Mitigation Plan (6 pts)',
+      pts: '20', len: 'Change Management: 800–1,200 words | Risk Mitigation: 600–800 words',
+      overview: 'Two assignments this week. First, develop a structured change management plan for implementing at least one major change from your strategic plan. Second, identify key risks and build a mitigation plan.',
+      instructions: [
+        '<strong>Change Management — Stakeholder Impact Assessment:</strong> Identify key stakeholders and assess how the proposed change affects them — needs, concerns, and likely reactions.',
+        '<strong>Change Management — Leadership Alignment Plan:</strong> How organizational leadership will support the change and drive success.',
+        '<strong>Change Management — Stakeholder Engagement Strategy:</strong> How you will involve, support, and reduce resistance among stakeholders.',
+        '<strong>Change Management — Communication Plan:</strong> How you will communicate the need, benefits, and process. Identify channels and timing.',
+        '<strong>Change Management — Training Plan:</strong> How you will prepare individuals or teams to implement the change.',
+        '<strong>Change Management — Impact and Readiness Analysis:</strong> Overall impact on people, operations, and culture. Where will resistance arise?',
+        '<strong>Risk Mitigation — Risk Identification:</strong> List 4–6 specific risks across regulatory, leadership, financial, operational, technology, and reputational categories.',
+        '<strong>Risk Mitigation — Risk Analysis:</strong> Assess impact and likelihood for each risk using high/medium/low or a risk matrix.',
+        '<strong>Risk Mitigation — Mitigation Strategies:</strong> Specific, actionable response for each identified risk.',
+        '<strong>Risk Mitigation — Ethical Considerations:</strong> Address ethical risks related to your strategy; explain how ethical values are integrated into the mitigation approach.',
+        '<strong>Sources:</strong> Cite frameworks, models, and external sources in APA format.'
+      ],
+      rh: ['Criteria','Points','Description'],
+      rr: [
+        ['Change Plan — Stakeholder Impact','2','Deep, insightful analysis of stakeholder needs, concerns, and likely reactions'],
+        ['Change Plan — Leadership Alignment','2','Strong, practical plan for gaining and maintaining leadership support'],
+        ['Change Plan — Stakeholder Engagement','2','Comprehensive plan to involve, support, and engage key stakeholders'],
+        ['Change Plan — Communication Plan','2','Thorough and strategic; clear channels, timing, and messages'],
+        ['Change Plan — Training Plan','2','Well-developed strategy with specific tools, formats, or schedules'],
+        ['Change Plan — Impact & Readiness','2','Insightful, well-reasoned analysis of effects and organizational readiness'],
+        ['Risk Plan — Risk Identification','2','Comprehensive and insightful; risks span multiple categories'],
+        ['Risk Plan — Risk Analysis','2','Deep insight into impact and likelihood; clear justification'],
+        ['Risk Plan — Mitigation Strategies','2','Thorough and actionable; well-reasoned'],
+        ['Risk Plan — Ethical Considerations','2','Strong ethical awareness; clearly integrated into the plan']
+      ]
+    }
+  },
+  {
+    title: 'Week 5: Measurement and Evaluation',
+    outcomes: [
+      '<span class="out-code">BUS-410-5a</span> Identify and develop Key Performance Indicators (KPIs) that align with strategic objectives and Critical Success Factors (CSFs)',
+      '<span class="out-code">BUS-410-5b</span> Construct a practical framework for measuring, evaluating, and reporting organizational performance',
+      '<span class="out-code">BUS-410-5c</span> Reflect on the strategic role of KPIs and performance metrics in supporting continuous improvement'
+    ],
+    readings: [
+      {label:'Bhatti, M.I., Awan, H.M., & Razaq, Z. (2014). The Key Performance Indicators (KPIs) and Their Impact on Overall Organizational Performance. Quality & Quantity, 48, 3127–3143.'},
+      {label:'The Relationship between Strategic Objectives, KPIs and Initiatives (ClearPoint Strategy)', vid:true, link:'https://www.youtube.com/watch?v=rXkYpOMaD0M'}
+    ],
+    discussion: [
+      'What is the relationship between strategic objectives and KPIs?',
+      'What makes a good KPI?',
+      'What elements should we be tracking to measure firm performance?',
+      'Have your strategies or goals shifted during this process? What are effective ways to revise them?',
+      'Are there strategies that are missing from your plan?'
+    ],
+    assignment: {
+      title: 'KPI Selection and Measurement Framework',
+      pts: '10', len: '1,000–1,400 words',
+      overview: 'Select and justify 3–5 KPIs tied to your organization\'s strategic objectives and Critical Success Factors. Build a measurement and evaluation framework that defines how each KPI will be tracked, reported, and acted on.',
+      instructions: [
+        '<strong>KPI Selection and Justification:</strong> Identify 3–5 Critical Success Factors. For each CSF, select at least one SMART KPI (Specific, Measurable, Achievable, Relevant, Time-bound). Justify why each KPI was selected and how it supports the CSF and organizational goals.',
+        '<strong>Measurement and Evaluation Framework:</strong> For each KPI — data sources (CRM, surveys, financial reports, etc.), measurement frequency, who is responsible, thresholds or targets that define success, and how results will be communicated and to whom.',
+        '<strong>Reflection:</strong> Explain why KPIs and measurement frameworks are critical to strategic planning. Reflect on how performance tracking helps your organization stay aligned with its mission.',
+        '<strong>Format tip:</strong> A table summarizing the framework is strongly encouraged for clarity.'
+      ],
+      rh: ['Criteria','Points','Description'],
+      rr: [
+        ['KPI Selection','2','All KPIs are SMART and fully aligned with strategic objectives'],
+        ['Justification','2','Clear, insightful explanation of how each KPI supports goals'],
+        ['Data Sources / Measurement / Responsibility','2','Thorough plan with clear sources, frequencies, and ownership'],
+        ['Thresholds / Reporting','2','Clear targets and communication strategy; supports decision-making'],
+        ['Reflection','2','Deep understanding of the strategic role of KPIs']
+      ]
+    }
+  },
+  {
+    title: 'Week 6: Finalizing and Presenting Your Strategic Plan',
+    outcomes: [
+      '<span class="out-code">BUS-410-6a</span> Synthesize the components of a strategic plan into a cohesive, professional final report',
+      '<span class="out-code">BUS-410-6b</span> Design and deliver a concise, compelling executive-level presentation',
+      '<span class="out-code">BUS-410-6c</span> Evaluate the effectiveness of communication strategies in presenting complex business plans to diverse stakeholders'
+    ],
+    readings: [
+      {label:'Lancefield, D. (2022). How to Communicate Your Company\'s Strategy Effectively. Harvard Business Review.', link:'https://hbr.org/2022/06/how-to-communicate-your-companys-strategy-clearly'},
+      {label:'Spee, A.P. & Jarzabkowski, P. (2011). Strategic Planning as Communicative Process. Organization Studies, 32(9), 1217–1245.'}
+    ],
+    discussion: [
+      'What changes have you made to your documents to develop a final submission?',
+      'What elements do you think you should include in your final presentation that may not be listed in the submission guidelines?',
+      'What have you learned through this process?',
+      'What additional skills or information do you need to be successful in the execution of this plan?',
+      'What recommendations do you have to improve this program? What else should be emphasized?'
+    ],
+    assignment: {
+      title: 'Capstone Project: Strategic Business Transformation',
+      pts: '50', len: 'Written Plan: 1,800–2,500 words | Presentation: 3–5 minutes',
+      overview: 'Integrate and polish all prior assignments into one comprehensive strategic plan. Then record a 3–5 minute voice-over or video presentation summarizing your key findings and recommendations for an executive audience.',
+      instructions: [
+        '<strong>Written Plan — Business & Industry Analysis:</strong> Revised internal and external analysis, SWOT, and competitor assessment.',
+        '<strong>Written Plan — Strategic Plan:</strong> Vision/mission alignment; SMART objectives, strategies, and tactics.',
+        '<strong>Written Plan — Financial Analysis:</strong> Budgeting, forecasting, and ROI.',
+        '<strong>Written Plan — Change Management Plan:</strong> Stakeholder impact, leadership alignment, communication, and training.',
+        '<strong>Written Plan — Risk Assessment & Mitigation:</strong> Key risks, likelihood/impact analysis, and mitigation strategies.',
+        '<strong>Written Plan — Measurement & Evaluation Framework:</strong> KPIs, data sources, tracking, and reporting systems.',
+        '<strong>Executive Presentation:</strong> Prepare a slide deck (PowerPoint, Google Slides, or Prezi). Record a 3–5 minute voice-over or video. Cover: what problem you are solving, your key strategies, how the plan will be implemented and measured, and why your approach is sound.',
+        '<strong>Sources:</strong> APA citations throughout; include a reference list.'
+      ],
+      rh: ['Criteria','Points','Description'],
+      rr: [
+        ['Business & Industry Analysis','5','In-depth, insightful, and well-supported'],
+        ['Strategic Plan','5','Aligned, actionable, sustainable with SMART objectives'],
+        ['Financial Analysis','5','Accurate, detailed projections with ROI'],
+        ['Change Management Plan','5','Comprehensive with stakeholder alignment and readiness assessment'],
+        ['Risk Assessment & Mitigation','5','Robust and ethical mitigation strategies'],
+        ['Measurement & Evaluation','5','Clear KPIs, data sources, and tracking plans'],
+        ['Overall Integration & Writing Quality','5','Exceptionally cohesive, professionally written'],
+        ['Presentation — Content Accuracy & Relevance','4','Clearly summarizes and aligns with strategic plan'],
+        ['Presentation — Delivery & Professionalism','4','Engaging, confident, and polished'],
+        ['Presentation — Visual Design','4','Visually appealing, well-structured slides'],
+        ['Presentation — Use of Time (3–5 min)','4','Within time limit and well-paced'],
+        ['Presentation — Technical Quality','4','Clear audio/video; no technical distractions']
+      ]
+    }
+  }
+];
+
+buildCourse(
+  'bus410', bus410,
+  'BUS-410: Strategy Implementation (Capstone)',
+  'Students synthesize academic knowledge and practical skills to craft a comprehensive strategic plan. Covers market analysis, competitive advantage, financial forecasting, change management, risk mitigation, and KPI frameworks.',
+  '3 Credit Hours', 6, null, 'BUS410_Instructor_Deck.html',
+  `<div class="overview-section">
+  <div class="overview-heading">What You\'ll Do in This Course</div>
+  <div class="overview-intro">BUS-410 is the program capstone. From Week 1, you choose a real company (or design a startup) and build a full strategic plan piece by piece. Each week adds a new layer — analysis, strategy, financials, change management, risk, and KPIs. By Week 6 you will have a professional strategic plan and an executive presentation you could deliver to real stakeholders. The required text is Strategic Management (OpenStax), available free online.</div>
+  <div class="week-overview-grid">
+    <div class="week-ov"><div class="week-ov-num">1</div><div class="week-ov-body"><div class="week-ov-title">Organizational Analysis</div><div class="week-ov-desc">Establish your company\'s foundation: mission, vision, values, and performance metrics. Conduct SWOT, PESTEL, Porter\'s Five Forces, and value chain analysis. Choose the organization you\'ll work with for the entire course.</div><span class="week-ov-asgn">Assignments: Company Overview (8 pts) + Strategic Analysis (12 pts)</span></div></div>
+    <div class="week-ov"><div class="week-ov-num">2</div><div class="week-ov-body"><div class="week-ov-title">Strategic Planning and Strategies</div><div class="week-ov-desc">Move from analysis to action. Identify strategic issues, write 4–6 SMART objectives, select business-level and corporate-level strategies, and align tactics with your mission and vision.</div><span class="week-ov-asgn">Assignment: Strategic Objectives, Strategies, and Tactics (20 pts)</span></div></div>
+    <div class="week-ov"><div class="week-ov-num">3</div><div class="week-ov-body"><div class="week-ov-title">Financial Analysis</div><div class="week-ov-desc">Ground your strategy in financial reality. Build a multi-year budget and forecast, assess the feasibility of key initiatives, and calculate ROI, NPV, or IRR on proposed investments.</div><span class="week-ov-asgn">Assignment: Financial Analysis and Strategic Forecasting (10 pts)</span></div></div>
+    <div class="week-ov"><div class="week-ov-num">4</div><div class="week-ov-body"><div class="week-ov-title">Change Management</div><div class="week-ov-desc">Plan how to lead your organization through the change your strategy requires. Build a stakeholder engagement and communication plan, then assess risks and build a mitigation framework.</div><span class="week-ov-asgn">Assignments: Change Management Plan (14 pts) + Risk Mitigation Plan (6 pts)</span></div></div>
+    <div class="week-ov"><div class="week-ov-num">5</div><div class="week-ov-body"><div class="week-ov-title">Measurement and Evaluation</div><div class="week-ov-desc">Define what success looks like. Identify Critical Success Factors, develop SMART KPIs, and build a measurement framework that tracks performance and drives accountability across the organization.</div><span class="week-ov-asgn">Assignment: KPI Selection and Measurement Framework (10 pts)</span></div></div>
+    <div class="week-ov"><div class="week-ov-num">6</div><div class="week-ov-body"><div class="week-ov-title">Finalizing and Presenting Your Strategic Plan</div><div class="week-ov-desc">Polish and integrate all prior work into one cohesive strategic plan. Then design and record a 3–5 minute executive presentation summarizing your analysis, strategies, and recommendations.</div><span class="week-ov-asgn">Capstone: Written Strategic Plan (30 pts) + Executive Presentation (20 pts)</span></div></div>
+  </div>
+</div>`
 );
 
 buildCourse(
   'bus300', bus300,
   'BUS-300: Marketing',
   'Students apply marketing principles to solve practical problems of entering the marketplace. Covers theories and concepts analyzing forces shaping marketing strategy, culminating in a comprehensive marketing plan.',
-  '3 Credit Hours', 6, finalAsgn
+  '3 Credit Hours', 6, finalAsgn,
+  'BUS300_Instructor_Deck.html',
+  `<div class="overview-section">
+  <div class="overview-heading">What You\'ll Do in This Course</div>
+  <div class="overview-intro">BUS-300 is a project-based marketing course. From Week 1, you choose a real company and build a comprehensive marketing plan section by section. Each week\'s assignment adds a new piece to the same document. By Week 6 you will have a complete, professional marketing plan you could actually use.</div>
+  <div class="week-overview-grid">
+    <div class="week-ov"><div class="week-ov-num">1</div><div class="week-ov-body"><div class="week-ov-title">Foundations of Marketing</div><div class="week-ov-desc">Learn what marketing is, how the 4Ps work, how consumer decisions are made, and how marketing connects to business strategy. Choose the company you will use for the entire course — you\'ll build every section of your marketing plan around this company.</div><span class="week-ov-asgn">Assignment 1: Company profile, mission statement, SWOT analysis, and 3 marketing goals with measurable objectives (10 pts)</span></div></div>
+    <div class="week-ov"><div class="week-ov-num">2</div><div class="week-ov-body"><div class="week-ov-title">Understanding Your Market</div><div class="week-ov-desc">Dig into B2B vs. B2C markets, learn the STP framework (Segmentation, Targeting, Positioning), build buyer personas, and understand how marketing research and data collection work — including the ethics of consumer data.</div><span class="week-ov-asgn">Assignment 2: Market segmentation, target market definition, 2-3 buyer personas, and positioning map (20 pts)</span></div></div>
+    <div class="week-ov"><div class="week-ov-num">3</div><div class="week-ov-body"><div class="week-ov-title">Global & Diversity Marketing</div><div class="week-ov-desc">Explore how companies enter global markets and adapt their strategies to different cultures and legal environments. Examine diversity marketing — what makes it authentic vs. performative — and how U.S. demographic shifts affect marketing strategy.</div><span class="week-ov-asgn">Assignment 3: Current market situation — market size, product review, competitive analysis, comparison to competitors (15 pts)</span></div></div>
+    <div class="week-ov"><div class="week-ov-num">4</div><div class="week-ov-body"><div class="week-ov-title">Product Strategy & Pricing</div><div class="week-ov-desc">Learn how products are classified, how the product lifecycle shapes strategy, and how to market services. Master pricing strategy — from cost-based to value-based to psychological pricing — and understand where the ethical lines are.</div><span class="week-ov-asgn">Assignment 3B: Pricing strategy and promotion strategy for your company (15 pts)</span></div></div>
+    <div class="week-ov"><div class="week-ov-num">5</div><div class="week-ov-body"><div class="week-ov-title">Promotion & Distribution</div><div class="week-ov-desc">Study the full promotion mix: IMC, advertising, PR, personal selling, sales promotions, digital and social media marketing, and mobile marketing. Learn how distribution channels connect your product to customers — and why promotion and distribution must be aligned.</div><span class="week-ov-asgn">Assignment 4: Product strategy section of your marketing plan (10 pts)</span></div></div>
+    <div class="week-ov"><div class="week-ov-num">6</div><div class="week-ov-body"><div class="week-ov-title">Retailing, Wholesaling & Sustainable Marketing</div><div class="week-ov-desc">Understand how products reach consumers through retailers and wholesalers. Explore sustainable marketing, ESG frameworks, and purpose-driven brands. Then finalize your marketing plan — revise all prior sections and add an executive summary, budget, action items, and evaluation framework.</div><span class="week-ov-asgn">Assignment 5: Distribution strategy (10 pts) + Final: Complete marketing plan (50 pts)</span></div></div>
+  </div>
+</div>`
 );
 </script>
 </body>
