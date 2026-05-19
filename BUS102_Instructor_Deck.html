@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BUS-102: Introduction to Business — Instructor Deck</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+:root {
+  --red: #7A1219;
+  --red-light: #c0444d;
+  --red-pale: #FBEAEA;
+  --charcoal: #2D2D2D;
+  --gray: #5F5E5A;
+  --gray-light: #E8E8E8;
+  --off-white: #F6F6F4;
+  --white: #FFFFFF;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #111;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+.deck { width: 100%; max-width: 1100px; }
+.slide {
+  display: none;
+  width: 100%;
+
+  background: var(--white);
+  border-radius: 6px;
+
+  position: relative;
+  flex-direction: column;
+}
+.slide.active { display: flex; }
+
+/* ── COURSE TITLE ── */
+.slide.s-course {
+  background: var(--charcoal);
+  flex-direction: column;
+  justify-content: center;
+  padding: 7% 9%;
+}
+.s-course .eyebrow {
+  font-size: clamp(10px,1.3vw,14px);
+  font-weight:600;
+  color: var(--red-light);
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  margin-bottom:3%;
+}
+.s-course h1 {
+  font-family:'DM Serif Display',serif;
+  font-size:38px;
+  color: var(--white);
+  line-height:1.1;
+  margin-bottom:3%;
+}
+.s-course .sub {
+  font-size:13px;
+  color:rgba(255,255,255,0.6);
+  line-height:1.9;
+}
+.s-course .accent { position:absolute;bottom:0;left:0;right:0;height:5px;background:var(--red); }
+
+/* ── WEEK TITLE ── */
+.slide.s-week {
+  background: var(--red);
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 7% 8%;
+}
+.s-week .wlabel {
+  font-size:clamp(10px,1.2vw,13px);
+  font-weight:600;
+  color:rgba(255,255,255,0.65);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  margin-bottom:2%;
+}
+.s-week h2 {
+  font-family:'DM Serif Display',serif;
+  font-size:36px;
+  color:var(--white);
+  line-height:1.15;
+  margin-bottom:4%;
+}
+.rdg-block {
+  background:rgba(0,0,0,0.22);
+  border-radius:4px;
+  padding:2.5% 3.5%;
+  width:100%;
+}
+.rdg-block .rlabel {
+  font-size:11px;
+  font-weight:700;
+  color:rgba(255,255,255,0.55);
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  margin-bottom:1.5%;
+}
+.rdg-block ul { list-style:none; display:flex; flex-wrap:wrap; gap:.8% 3%; }
+.rdg-block li {
+  font-size:13px;
+  color:rgba(255,255,255,0.9);
+}
+.rdg-block li::before { content:"→ "; color:rgba(255,255,255,0.4); }
+
+/* ── SECTION BREAK ── */
+.slide.s-section {
+  background: var(--charcoal);
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  padding:7% 9%;
+}
+.s-section .stag {
+  font-size:12px;
+  font-weight:600;
+  color:var(--red-light);
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  margin-bottom:2%;
+}
+.s-section h3 {
+  font-family:'DM Serif Display',serif;
+  font-size:32px;
+  color:var(--white);
+  line-height:1.2;
+}
+
+/* ── CONTENT ── */
+.slide.s-content { flex-direction:column; }
+.s-hdr {
+  background:var(--charcoal);
+  padding:2.8% 5%;
+  flex-shrink:0;
+}
+.s-hdr .htag {
+  font-size:10px;
+  font-weight:700;
+  color:var(--red-light);
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  margin-bottom:.8%;
+}
+.s-hdr h4 {
+  font-family:'DM Serif Display',serif;
+  font-size:22px;
+  color:var(--white);
+  line-height:1.2;
+}
+.s-body {
+  flex:1;
+  padding:2.5% 5%;
+  display:flex;
+  flex-direction:column;
+  gap:1.2%;
+  
+  background:var(--white);
+}
+.s-body.cols { flex-direction:column; } .cols-row { display:flex; flex-direction:row; gap:3%; }
+.col { flex:1; display:flex; flex-direction:column; gap:1.2%; }
+
+/* points */
+.pt {
+  display:flex;
+  align-items:flex-start;
+  gap:1.8%;
+  font-size:14px;
+  color:var(--charcoal);
+  line-height:1.45;
+}
+.pt .d {
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--red);
+  flex-shrink:0;
+  margin-top:.35em;
+}
+.pt b { font-weight:600; color:var(--charcoal); }
+
+.sub-hdr {
+  font-size:11px;
+  font-weight:700;
+  color:var(--red);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  border-bottom:2px solid var(--red);
+  padding-bottom:.4%;
+  margin-bottom:.8%;
+  flex-shrink:0;
+}
+
+/* discussion callout */
+.dq {
+  background:var(--red-pale);
+  border-left:4px solid var(--red);
+  border-radius:0 4px 4px 0;
+  padding:1.8% 2.5%;
+  flex-shrink:0;
+  margin-top:auto;
+}
+.dq .dq-lbl {
+  font-size:10px;
+  font-weight:700;
+  color:var(--red);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  margin-bottom:.8%;
+}
+.dq .dq-q {
+  font-size:13px;
+  color:var(--charcoal);
+  line-height:1.45;
+  font-style:italic;
+}
+.dq .dq-q+.dq-q { margin-top:.6%; }
+
+/* ── ASSIGNMENT ── */
+.slide.s-asgn { flex-direction:column; }
+.s-asgn .s-hdr { background:var(--red); }
+.s-asgn .s-hdr .htag { color:rgba(255,255,255,0.6); }
+.s-asgn .s-hdr h4 { color:var(--white); }
+.a-body {
+  flex:1;
+  padding:2.5% 5%;
+  display:flex;
+  flex-direction:column;
+  gap:1.5%;
+  
+  background:var(--white);
+}
+.a-meta { display:flex; gap:2%; flex-shrink:0; }
+.a-badge {
+  background:var(--red-pale);
+  border:1px solid rgba(122,18,25,.25);
+  border-radius:3px;
+  padding:.7% 2%;
+  font-size:11px;
+  font-weight:600;
+  color:var(--red);
+}
+.a-sec {
+  background:var(--off-white);
+  border-radius:4px;
+  padding:1.8% 2.5%;
+  flex-shrink:0;
+}
+.a-sec .a-lbl {
+  font-size:10px;
+  font-weight:700;
+  color:var(--gray);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  margin-bottom:.8%;
+}
+.a-sec .a-item {
+  font-size:13px;
+  color:var(--charcoal);
+  line-height:1.45;
+  padding:.5% 0;
+  border-bottom:1px solid var(--gray-light);
+  display:flex;
+  gap:1.5%;
+  align-items:flex-start;
+}
+.a-sec .a-item:last-child { border-bottom:none; }
+.a-sec .a-item .n { color:var(--red); font-weight:700; flex-shrink:0; }
+
+/* ── CASE STUDY ── */
+.slide.s-case { flex-direction:column; }
+.s-case .s-hdr { background:var(--charcoal); }
+.case-body {
+  flex:1;
+  padding:2.5% 5%;
+  display:flex;
+  flex-direction:column;
+  gap:1.2%;
+  
+  background:var(--white);
+}
+.case-intro {
+  font-size:13px;
+  color:var(--gray);
+  line-height:1.5;
+  flex-shrink:0;
+}
+.case-q {
+  display:flex;
+  align-items:flex-start;
+  gap:1.8%;
+  font-size:13px;
+  color:var(--charcoal);
+  line-height:1.45;
+  padding:.6% 0;
+  border-bottom:1px solid var(--gray-light);
+}
+.case-q:last-child { border-bottom:none; }
+.case-q .qn {
+  font-weight:700;
+  color:var(--red);
+  flex-shrink:0;
+  min-width:2.5%;
+}
+.case-title {
+  font-size:12px;
+  font-weight:700;
+  color:var(--white);
+  background:var(--charcoal);
+  padding:.8% 1.5%;
+  border-radius:3px;
+  flex-shrink:0;
+  align-self:flex-start;
+}
+
+/* ── NAV ── */
+.nav {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  margin-top:14px;
+}
+.nav button {
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.2);
+  color:#fff;
+  padding:8px 22px;
+  border-radius:4px;
+  cursor:pointer;
+  font-family:'DM Sans',sans-serif;
+  font-size:13px;
+  font-weight:500;
+}
+.nav button:hover { background:rgba(255,255,255,.2); }
+.nav .ctr { color:rgba(255,255,255,.45); font-size:12px; min-width:70px; text-align:center; }
+
+  /* ── TOC SLIDE ── */
+  .slide.s-toc { background:var(--white); flex-direction:column; padding:0; }
+  .toc-header {
+    background:var(--charcoal);
+    padding:28px 48px 24px;
+    flex-shrink:0;
+  }
+  .toc-eyebrow {
+    font-size:11px;
+    font-weight:700;
+    color:var(--red-light);
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .toc-heading {
+    font-family:'DM Serif Display',serif;
+    font-size:28px;
+    color:var(--white);
+    margin-bottom:4px;
+  }
+  .toc-sub {
+    font-size:12px;
+    color:rgba(255,255,255,0.45);
+  }
+  .toc-grid {
+    padding:20px 40px 28px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .toc-item {
+    display:flex;
+    align-items:center;
+    gap:16px;
+    background:var(--off-white);
+    border:1px solid var(--gray-light);
+    border-radius:6px;
+    padding:14px 20px;
+    cursor:pointer;
+    transition:background 0.15s, border-color 0.15s, transform 0.1s;
+  }
+  .toc-item:hover {
+    background:var(--red-pale);
+    border-color:var(--red);
+    transform:translateX(4px);
+  }
+  .toc-num {
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background:var(--red);
+    color:var(--white);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:15px;
+    font-weight:700;
+    flex-shrink:0;
+  }
+  .toc-text { flex:1; }
+  .toc-week {
+    font-size:10px;
+    font-weight:700;
+    color:var(--red);
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    margin-bottom:2px;
+  }
+  .toc-title {
+    font-size:14px;
+    font-weight:600;
+    color:var(--charcoal);
+  }
+  .toc-arrow {
+    font-size:18px;
+    color:var(--red);
+    font-weight:700;
+    opacity:0.5;
+  }
+  .toc-item:hover .toc-arrow { opacity:1; }
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- ══════════════════════════════════════════ -->
+<!-- COURSE TITLE -->
+<!-- ══════════════════════════════════════════ -->
+<div class="slide s-course active">
+  <h1>BUS-102<br>Introduction to Business</h1>
+  <div class="sub">
+    Dunlap-Stone University &nbsp;·&nbsp; 3 Credit Hours &nbsp;·&nbsp; 6 Weeks<br>
+    Textbook: Introduction to Business (OpenStax) — free at openstax.org/books/introduction-business<br>
+    6 weeks · Discussion-based · Weekly written assignments
+  </div>
+  <div class="accent"></div>
+
+<div class="slide s-toc" id="toc-slide">
+  <div class="toc-header">
+    <div class="toc-eyebrow">BUS-102</div>
+    <div class="toc-heading">Course Contents</div>
+    <div class="toc-sub">Click any week to jump to it</div>
+  </div>
+  <div class="toc-grid">
+    
+        <div class="toc-item" onclick="goToWeek('week-1')">
+          <div class="toc-num">1</div>
+          <div class="toc-text">
+            <div class="toc-week">Week 1</div>
+            <div class="toc-title">The Business Environment</div>
+          </div>
+          <div class="toc-arrow">→</div>
+        </div>
+        <div class="toc-item" onclick="goToWeek('week-2')">
+          <div class="toc-num">2</div>
+          <div class="toc-text">
+            <div class="toc-week">Week 2</div>
+            <div class="toc-title">Entrepreneurship & Business Ownership</div>
+          </div>
+          <div class="toc-arrow">→</div>
+        </div>
+        <div class="toc-item" onclick="goToWeek('week-3')">
+          <div class="toc-num">3</div>
+          <div class="toc-text">
+            <div class="toc-week">Week 3</div>
+            <div class="toc-title">Management & Leadership</div>
+          </div>
+          <div class="toc-arrow">→</div>
+        </div>
+        <div class="toc-item" onclick="goToWeek('week-4')">
+          <div class="toc-num">4</div>
+          <div class="toc-text">
+            <div class="toc-week">Week 4</div>
+            <div class="toc-title">Marketing & Customers</div>
+          </div>
+          <div class="toc-arrow">→</div>
+        </div>
+        <div class="toc-item" onclick="goToWeek('week-5')">
+          <div class="toc-num">5</div>
+          <div class="toc-text">
+            <div class="toc-week">Week 5</div>
+            <div class="toc-title">Technology & Financial Information</div>
+          </div>
+          <div class="toc-arrow">→</div>
+        </div>
+        <div class="toc-item" onclick="goToWeek('week-6')">
+          <div class="toc-num">6</div>
+          <div class="toc-text">
+            <div class="toc-week">Week 6</div>
+            <div class="toc-title">Money, Financial Markets & Career Development</div>
+          </div>
+          <div class="toc-arrow">→</div>
+        </div>
+  </div>
+</div>
+
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- WEEK 1 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="slide s-week" id="week-1">
+  <div class="wlabel">Week 1</div>
+  <h2>The Business Environment</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading</div>
+    <ul>
+      <li>Ch. 1: Understanding Economic Systems and Business</li>
+      <li>Ch. 2: Making Ethical Decisions and Managing a Socially Responsible Business</li>
+      <li>Ch. 3: Competing in the Global Marketplace</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 1 · Chapter 1</div>
+  <h3>Economic Systems<br>and Business</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Ch. 1</div><h4>How Economies Work</h4></div>
+  <div class="s-body">
+    <div class="pt"><div class="d"></div><div>Economics studies how societies allocate scarce resources — every business decision is made within an economic system</div></div>
+    <div class="pt"><div class="d"></div><div><b>Free market:</b> Prices set by supply and demand with minimal government interference — the U.S. model</div></div>
+    <div class="pt"><div class="d"></div><div><b>Command economy:</b> Government controls production and pricing — limited competition or innovation</div></div>
+    <div class="pt"><div class="d"></div><div><b>Mixed economy:</b> Most real economies combine market forces with some government regulation</div></div>
+    <div class="pt"><div class="d"></div><div><b>Microeconomics:</b> Behavior of individual firms, consumers, and markets — prices, production, competition</div></div>
+    <div class="pt"><div class="d"></div><div><b>Macroeconomics:</b> The broader economy — GDP, inflation, unemployment, national output</div></div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Ch. 1</div><h4>Measuring Economic Health</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Key Economic Indicators</div>
+      <div class="pt"><div class="d"></div><div><b>GDP (Gross Domestic Product):</b> Total value of all goods and services produced — primary measure of economic size and growth</div></div>
+      <div class="pt"><div class="d"></div><div><b>Employment rate:</b> High employment signals a healthy economy; unemployment above ~5% signals problems</div></div>
+      <div class="pt"><div class="d"></div><div><b>Inflation:</b> Rising prices over time — mild inflation (2-3%) is normal; high inflation erodes purchasing power</div></div>
+      <div class="pt"><div class="d"></div><div><b>Price stability:</b> The Federal Reserve targets ~2% annual inflation as ideal</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Government Policy Tools</div>
+      <div class="pt"><div class="d"></div><div><b>Monetary policy (Federal Reserve):</b> Controls money supply and interest rates — raises rates to slow inflation, lowers them to stimulate growth</div></div>
+      <div class="pt"><div class="d"></div><div><b>Fiscal policy (Congress + President):</b> Controls government spending and taxation — spending increases stimulate; tax increases slow the economy</div></div>
+      <div class="pt"><div class="d"></div><div>Business cycles include expansion, peak, contraction, and trough — companies must plan for all phases</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">How do economic growth, full employment, price stability, and inflation indicate a nation's economic health?</div>
+      <div class="dq-q">How does the government use monetary policy and fiscal policy to achieve its macroeconomic goals?</div>
+      <div class="dq-q">Which trends are reshaping the business, microeconomic, and macroeconomic environments and competitive arena?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 1 · Chapter 2</div>
+  <h3>Business Ethics and<br>Social Responsibility</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Ch. 2</div><h4>What Ethical Business Behavior Looks Like</h4></div>
+  <div class="s-body">
+    <div class="pt"><div class="d"></div><div>Ethics in business = doing what is right, legal, and fair — even when no one is watching</div></div>
+    <div class="pt"><div class="d"></div><div><b>Sources of ethical guidance:</b> Personal values, organizational codes of conduct, industry standards, and law</div></div>
+    <div class="pt"><div class="d"></div><div><b>Code of ethics:</b> A formal document outlining standards of behavior expected of all employees</div></div>
+    <div class="pt"><div class="d"></div><div><b>Whistleblowing:</b> Reporting unethical behavior internally or externally — legally protected in many contexts</div></div>
+    <div class="pt"><div class="d"></div><div>Ethical failures create legal liability, financial loss, and lasting reputational damage — Enron, Wells Fargo, Theranos as examples</div></div>
+    <div class="pt"><div class="d"></div><div>Organizations encourage ethics through training, clear reporting channels, leadership modeling, and consistent enforcement</div></div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Ch. 2</div><h4>Social Responsibility and Stakeholders</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Social Responsibility</div>
+      <div class="pt"><div class="d"></div><div>Businesses have obligations beyond profit — to employees, customers, communities, and the environment</div></div>
+      <div class="pt"><div class="d"></div><div><b>Carroll's Pyramid:</b> Economic → Legal → Ethical → Philanthropic responsibilities (from base to peak)</div></div>
+      <div class="pt"><div class="d"></div><div><b>ESG (Environmental, Social, Governance):</b> Framework investors use to evaluate company responsibility and long-term risk</div></div>
+      <div class="pt"><div class="d"></div><div>Sustainability reporting is now standard for public companies — stakeholders demand transparency</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Who Are the Stakeholders?</div>
+      <div class="pt"><div class="d"></div><div><b>Employees:</b> Safe working conditions, fair pay, advancement opportunities</div></div>
+      <div class="pt"><div class="d"></div><div><b>Customers:</b> Safe products, honest advertising, fair pricing</div></div>
+      <div class="pt"><div class="d"></div><div><b>Investors:</b> Accurate financial reporting, sound management</div></div>
+      <div class="pt"><div class="d"></div><div><b>Community:</b> Jobs, taxes, environmental stewardship</div></div>
+      <div class="pt"><div class="d"></div><div><b>Government:</b> Legal compliance, tax obligations</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">How can organizations encourage ethical business behavior?</div>
+      <div class="dq-q">How do businesses meet their social responsibilities to various stakeholders? What are the trends in ethics and social responsibility?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 1 · Chapter 3</div>
+  <h3>Competing in the<br>Global Marketplace</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Ch. 3</div><h4>Why Nations Trade and the Barriers They Face</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Why Nations Trade</div>
+      <div class="pt"><div class="d"></div><div><b>Comparative advantage:</b> Countries produce what they make most efficiently and trade for the rest</div></div>
+      <div class="pt"><div class="d"></div><div>Access to resources, technology, and labor not available domestically</div></div>
+      <div class="pt"><div class="d"></div><div>Larger potential market — more customers, more revenue, more growth</div></div>
+      <div class="pt"><div class="d"></div><div>Trade agreements (NAFTA/USMCA, WTO) reduce barriers and expand access</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Barriers to Trade</div>
+      <div class="pt"><div class="d"></div><div><b>Tariffs:</b> Taxes on imports — raise prices and protect domestic industries</div></div>
+      <div class="pt"><div class="d"></div><div><b>Quotas:</b> Limits on the quantity of imports allowed</div></div>
+      <div class="pt"><div class="d"></div><div><b>Currency risk:</b> Exchange rate fluctuations affect the cost of imports and value of exports</div></div>
+      <div class="pt"><div class="d"></div><div><b>Cultural differences:</b> Language, norms, business practices, and consumer preferences vary widely</div></div>
+      <div class="pt"><div class="d"></div><div><b>Political and legal risks:</b> Regulations, corruption, expropriation, and instability</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Ch. 3</div><h4>How Companies Enter Global Markets</h4></div>
+  <div class="s-body">
+    <div class="pt"><div class="d"></div><div><b>Exporting:</b> Selling goods produced at home to buyers in other countries — lowest commitment, lowest risk, lowest control</div></div>
+    <div class="pt"><div class="d"></div><div><b>Licensing:</b> Granting a foreign company the right to use your brand, patent, or process for a royalty fee</div></div>
+    <div class="pt"><div class="d"></div><div><b>Franchising:</b> Licensing a complete business system — McDonald's, Subway, and most hotel chains use this model globally</div></div>
+    <div class="pt"><div class="d"></div><div><b>Joint venture:</b> Partnering with a local company — shared risk, shared knowledge, shared control</div></div>
+    <div class="pt"><div class="d"></div><div><b>Direct investment / foreign subsidiary:</b> Building or buying operations in another country — highest commitment, highest control, highest risk</div></div>
+    <div class="pt"><div class="d"></div><div>Choice of entry strategy depends on: risk tolerance, capital available, need for local knowledge, and importance of control</div></div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">Why do nations trade? What are the barriers to international trade?</div>
+      <div class="dq-q">How do companies enter the global marketplace? What are the trends in the global marketplace?</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 1 ASSIGNMENT -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 1 · Assignment</div><h4>Case Study Analysis: Walmart &amp; Uber</h4></div>
+  <div class="a-body">
+    <div class="a-meta">
+      <div class="a-badge">10 Points</div>
+      <div class="a-badge">Submit: PDF or .docx</div>
+      <div class="a-badge">Due: Wednesday midnight</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Overview</div>
+      <div class="a-item"><span class="n">→</span><span>Students read both cases in the OpenStax textbook and answer all questions. Each case requires analysis that connects facts to business concepts — not summary.</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-case">
+  <div class="s-hdr"><div class="htag">Week 1 · Case 1</div><h4>Walmart Gets Serious about E-Commerce</h4></div>
+  <div class="case-body">
+    <div class="case-intro">Walmart acquired Jet.com ($3.3 billion), ShoeBuy, Moosejaw, Bonobos, and other online retailers in an aggressive push to compete with Amazon. The case examines the strategic rationale for these acquisitions and the operational implications for Walmart's retail network.</div>
+    <div class="case-q"><span class="qn">Q1</span><span>What are some advantages of Walmart purchasing established web businesses like Jet.com, ShoeBuy, and Moosejaw rather than building its own e-commerce capabilities from scratch?</span></div>
+    <div class="case-q"><span class="qn">Q2</span><span>What impact is Walmart's acquisition of nontraditional retailers likely to have on the shopping habits of Walmart's core customers? Will it attract new customers?</span></div>
+    <div class="case-q"><span class="qn">Q3</span><span>How will the aggressive e-commerce plan implemented by Walmart affect operations at its physical retail locations? Consider staffing, inventory, and the role of stores as fulfillment centers.</span></div>
+  </div>
+</div>
+
+<div class="slide s-case">
+  <div class="s-hdr"><div class="htag">Week 1 · Case 2</div><h4>Uber Hits a Bumpy Road</h4></div>
+  <div class="case-body">
+    <div class="case-intro">Uber faced a series of high-profile scandals including sexual harassment allegations, a toxic workplace culture, regulatory battles, and a leadership crisis. The case examines how corporate culture, ethics, and leadership failures can threaten even the most dominant companies.</div>
+    <div class="case-q"><span class="qn">Q1</span><span>Only 36% of Uber's employees are women. How do you think this situation helped perpetuate a flawed corporate culture that allowed harassment and misconduct to continue?</span></div>
+    <div class="case-q"><span class="qn">Q2</span><span>What can Uber do to ensure its competitors are not chipping away at its dominant market share as a result of such bad press and public perception problems?</span></div>
+    <div class="case-q"><span class="qn">Q3</span><span>Do you think installing an experienced female CEO would help the company change its culture and workplace environment? Explain your reasoning using course concepts.</span></div>
+    <div class="case-q"><span class="qn">Q4</span><span>Research the internet for any new stories and updates addressing Uber's effort to correct its mistakes. Summarize what you find and evaluate whether the changes appear substantive.</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- WEEK 2 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="slide s-week" id="week-2">
+  <div class="wlabel">Week 2</div>
+  <h2>Entrepreneurship &amp;<br>Business Ownership</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading</div>
+    <ul>
+      <li>Ch. 4: Forms of Business Ownership</li>
+      <li>Ch. 5: Entrepreneurship — Starting and Managing Your Own Business</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 2 · Chapter 4</div>
+  <h3>Forms of<br>Business Ownership</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 2 · Ch. 4</div><h4>Sole Proprietorships and Partnerships</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Sole Proprietorship</div>
+      <div class="pt"><div class="d"></div><div>One owner, complete control, and all profits — the simplest and most common form of business</div></div>
+      <div class="pt"><div class="d"></div><div>Easy to form — no special legal requirements in most states</div></div>
+      <div class="pt"><div class="d"></div><div><b>Unlimited personal liability:</b> Owner is personally responsible for all debts and legal judgments — your house, savings, and assets are at risk</div></div>
+      <div class="pt"><div class="d"></div><div>Difficult to raise capital — limited to owner's savings and personal loans</div></div>
+      <div class="pt"><div class="d"></div><div>Business ends when owner retires, dies, or sells</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Partnership</div>
+      <div class="pt"><div class="d"></div><div>Two or more owners share control, profits, and responsibilities</div></div>
+      <div class="pt"><div class="d"></div><div><b>General partnership:</b> All partners have equal liability for business debts</div></div>
+      <div class="pt"><div class="d"></div><div><b>Limited partnership (LP):</b> Silent partners invest but have limited liability — general partner runs the business</div></div>
+      <div class="pt"><div class="d"></div><div><b>LLP (Limited Liability Partnership):</b> All partners have limited liability — common for law firms and accountants</div></div>
+      <div class="pt"><div class="d"></div><div>Partnership agreement is essential — defines roles, profit sharing, and exit procedures</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What are the advantages and disadvantages of the sole proprietorship form of business?</div>
+      <div class="dq-q">What are the advantages of operating as a partnership, and what downside risks should partners consider?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 2 · Ch. 4</div><h4>Corporations, LLCs, and Franchising</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Corporations</div>
+      <div class="pt"><div class="d"></div><div><b>Limited liability:</b> Shareholders can lose their investment, but not their personal assets</div></div>
+      <div class="pt"><div class="d"></div><div>Can raise capital by issuing stock — publicly traded or privately held</div></div>
+      <div class="pt"><div class="d"></div><div>Complex structure: Board of Directors → CEO → Officers → Employees</div></div>
+      <div class="pt"><div class="d"></div><div><b>C-Corp:</b> Double taxation — taxed at corporate level and again when dividends are paid to shareholders</div></div>
+      <div class="pt"><div class="d"></div><div><b>S-Corp:</b> Pass-through taxation — profits flow directly to shareholders' personal returns; limited to 100 shareholders</div></div>
+      <div class="pt"><div class="d"></div><div><b>LLC:</b> Combines limited liability of a corporation with the tax flexibility of a partnership — increasingly popular for small business</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Franchising</div>
+      <div class="pt"><div class="d"></div><div>License a proven brand, system, and support in exchange for fees and royalties</div></div>
+      <div class="pt"><div class="d"></div><div><b>Advantages:</b> Built-in brand recognition, proven business model, training and support from franchisor</div></div>
+      <div class="pt"><div class="d"></div><div><b>Disadvantages:</b> Less control over operations, required to follow franchisor rules, ongoing royalty payments</div></div>
+      <div class="pt"><div class="d"></div><div>Examples: McDonald's, Subway, 7-Eleven, UPS Store, Marriott hotels</div></div>
+      <div class="pt"><div class="d"></div><div>Franchising continues to grow — lower failure rate than independent startups</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">How does the corporate structure provide advantages and disadvantages? What are the major types of corporations?</div>
+      <div class="dq-q">What makes franchising an appropriate form for some business types, and why does it continue to grow? What trends will affect future business organizations?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 2 · Chapter 5</div>
+  <h3>Entrepreneurship:<br>Starting Your Own Business</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 2 · Ch. 5</div><h4>What Entrepreneurs Do and Why</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">The Entrepreneurial Mindset</div>
+      <div class="pt"><div class="d"></div><div>Entrepreneurs identify opportunities where others see problems or gaps in the market</div></div>
+      <div class="pt"><div class="d"></div><div>They take calculated risks — not reckless ones. The goal is managing uncertainty, not eliminating it</div></div>
+      <div class="pt"><div class="d"></div><div><b>Key traits:</b> Initiative, resilience, creativity, adaptability, comfort with ambiguity</div></div>
+      <div class="pt"><div class="d"></div><div>Small businesses employ nearly half of the private-sector workforce in the U.S.</div></div>
+      <div class="pt"><div class="d"></div><div>Entrepreneurs drive innovation — they are not constrained by existing corporate structures and incentives</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Starting and Growing a Business</div>
+      <div class="pt"><div class="d"></div><div><b>Business plan:</b> The essential roadmap — describes the business, market, competition, operations, and financials</div></div>
+      <div class="pt"><div class="d"></div><div>Business plan is also required to secure funding from banks and investors</div></div>
+      <div class="pt"><div class="d"></div><div><b>Common startup challenges:</b> Access to capital, competition from established players, attracting talent, and scaling efficiently</div></div>
+      <div class="pt"><div class="d"></div><div>Most small businesses fail within 5 years — poor planning, undercapitalization, and weak market research are top causes</div></div>
+      <div class="pt"><div class="d"></div><div><b>Resources:</b> SBA loans, SCORE mentorship, angel investors, venture capital for high-growth startups</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">Why do people become entrepreneurs? Which characteristics do successful entrepreneurs share?</div>
+      <div class="dq-q">What are the advantages and disadvantages facing owners of small businesses? What trends shape entrepreneurship?</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 2 ASSIGNMENT -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 2 · Assignment</div><h4>Understanding Your Organization in Context</h4></div>
+  <div class="a-body">
+    <div class="a-meta">
+      <div class="a-badge">10 Points</div>
+      <div class="a-badge">500–750 words</div>
+      <div class="a-badge">Due: Wednesday midnight</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Overview</div>
+      <div class="a-item"><span class="n">→</span><span>Select an organization the student knows well — one they work for, have worked for, or a publicly traded company. Assess one area where it excels in meeting stakeholder needs and one area where it could improve.</span></div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Required Sections</div>
+      <div class="a-item"><span class="n">1.</span><span>Introduction: Name, type, size, industry, and scale of the organization</span></div>
+      <div class="a-item"><span class="n">2.</span><span>Identify Stakeholders: Define the term stakeholder; identify at least 3 key groups and explain each group's role in or relationship to the organization</span></div>
+      <div class="a-item"><span class="n">3.</span><span>Area of Strength: One area the organization handles well; specific examples; connect to course concepts from Ch. 1–5</span></div>
+      <div class="a-item"><span class="n">4.</span><span>Area for Improvement: One gap or weakness; explain why it matters; offer a concrete suggestion using course concepts</span></div>
+      <div class="a-item"><span class="n">5.</span><span>Conclusion: Summarize key insights; reflect on the importance of the business-stakeholder relationship</span></div>
+      <div class="a-item"><span class="n">6.</span><span>Sources: Cite textbook and any other sources used in APA or MLA format</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- WEEK 3 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="slide s-week" id="week-3">
+  <div class="wlabel">Week 3</div>
+  <h2>Management &amp; Leadership</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading</div>
+    <ul>
+      <li>Ch. 6: Management and Leadership in Today's Organizations</li>
+      <li>Ch. 7: Designing Organizational Structures</li>
+      <li>Ch. 8: Managing Human Resources and Labor Relations</li>
+      <li>Ch. 9: Motivating Employees</li>
+      <li>Ch. 10: Achieving World-Class Operations Management</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 3 · Ch. 6</div><h4>The Four Functions of Management</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Planning and Organizing</div>
+      <div class="pt"><div class="d"></div><div><b>Planning:</b> Setting goals, determining how to achieve them, and preparing for the future — strategic, tactical, and operational plans</div></div>
+      <div class="pt"><div class="d"></div><div><b>Organizing:</b> Arranging resources and tasks — who does what, who reports to whom, how decisions are made</div></div>
+      <div class="pt"><div class="d"></div><div>Planning without organizing leads to great ideas and no execution; organizing without planning leads to efficient work on the wrong things</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Leading and Controlling</div>
+      <div class="pt"><div class="d"></div><div><b>Leading:</b> Motivating and guiding people toward goals — requires communication, inspiration, and emotional intelligence</div></div>
+      <div class="pt"><div class="d"></div><div><b>Controlling:</b> Monitoring performance, comparing to goals, and making corrections — the feedback loop of management</div></div>
+      <div class="pt"><div class="d"></div><div><b>Types of power:</b> Legitimate (title), Reward (incentives), Coercive (punishment), Expert (knowledge), Referent (respect and admiration)</div></div>
+      <div class="pt"><div class="d"></div><div>Effective managers use all five types — overreliance on coercive power destroys morale and trust</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">How would you define management? What roles do managers take on in different organizational settings?</div>
+      <div class="dq-q">What types of power do you see in your organization?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 3 · Ch. 6</div><h4>Leadership Styles</h4></div>
+  <div class="s-body">
+    <div class="pt"><div class="d"></div><div><b>Autocratic leadership:</b> Leader makes decisions unilaterally — fast in a crisis, but kills employee initiative and engagement over time</div></div>
+    <div class="pt"><div class="d"></div><div><b>Democratic (participative) leadership:</b> Employees are involved in decision-making — higher engagement, slower decisions</div></div>
+    <div class="pt"><div class="d"></div><div><b>Laissez-faire leadership:</b> Leader steps back and lets employees direct themselves — works with highly skilled, self-motivated teams; dangerous otherwise</div></div>
+    <div class="pt"><div class="d"></div><div><b>Transformational leadership:</b> Inspires employees to exceed expectations by appealing to higher purpose and vision</div></div>
+    <div class="pt"><div class="d"></div><div><b>Transactional leadership:</b> Motivates through rewards and punishments tied to performance — clear expectations, clear consequences</div></div>
+    <div class="pt"><div class="d"></div><div>The best leaders adapt their style to the situation — no single style works in every context</div></div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 3 · Ch. 7</div><h4>Designing Organizational Structures</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Key Structural Concepts</div>
+      <div class="pt"><div class="d"></div><div><b>Hierarchy:</b> Levels of authority from top to bottom — determines who has power and who makes decisions</div></div>
+      <div class="pt"><div class="d"></div><div><b>Span of control:</b> How many employees one manager oversees — wider spans save cost; narrower spans allow closer supervision</div></div>
+      <div class="pt"><div class="d"></div><div><b>Centralization:</b> Decisions made at the top — consistency and control; slower response to local needs</div></div>
+      <div class="pt"><div class="d"></div><div><b>Decentralization:</b> Decisions pushed down the organization — faster, more responsive to local conditions</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Common Structures</div>
+      <div class="pt"><div class="d"></div><div><b>Functional:</b> Organized by department (Marketing, Finance, Operations) — efficiency within functions, but silos between them</div></div>
+      <div class="pt"><div class="d"></div><div><b>Divisional:</b> Organized by product, geography, or customer type — each division is semi-autonomous</div></div>
+      <div class="pt"><div class="d"></div><div><b>Matrix:</b> Employees report to both a functional manager and a project manager — maximizes flexibility, creates confusion</div></div>
+      <div class="pt"><div class="d"></div><div>Flat organizations (fewer layers) increase speed and accountability; tall organizations provide more supervision and control</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">Based on your reading, how would you describe your organization's structure?</div>
+      <div class="dq-q">What trends are influencing the way businesses organize? (Remote work, agile teams, gig economy)</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 3 · Ch. 8</div><h4>Managing Human Resources and Labor Relations</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">The HR Function</div>
+      <div class="pt"><div class="d"></div><div>HR manages the full employee lifecycle: recruit → select → onboard → train → evaluate → compensate → retain or separate</div></div>
+      <div class="pt"><div class="d"></div><div><b>Job analysis:</b> Defining the tasks, skills, and qualifications for every role — the foundation of hiring and evaluation</div></div>
+      <div class="pt"><div class="d"></div><div><b>Selection tools:</b> Interviews, skills tests, background checks, reference checks — each must be legally defensible</div></div>
+      <div class="pt"><div class="d"></div><div>Performance appraisals: 360-degree reviews, MBO (Management by Objectives), or rating scales</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Labor Relations and Trends</div>
+      <div class="pt"><div class="d"></div><div><b>Unions:</b> Represent workers in collective bargaining — negotiate wages, hours, and working conditions</div></div>
+      <div class="pt"><div class="d"></div><div><b>Collective bargaining:</b> Process of negotiating a contract between union and management</div></div>
+      <div class="pt"><div class="d"></div><div>Diversity, equity, and inclusion are now strategic priorities — not just compliance requirements</div></div>
+      <div class="pt"><div class="d"></div><div>Trends: remote hiring, AI in recruiting, gig economy worker classification, pay transparency laws</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Question</div>
+      <div class="dq-q">Reflecting on your reading, how does your organization's hiring process compare to what you read? Which trends do you see?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 3 · Ch. 9</div><h4>Motivation Theories</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Need-Based Theories</div>
+      <div class="pt"><div class="d"></div><div><b>Maslow's Hierarchy:</b> Physiological → Safety → Social/Belonging → Esteem → Self-Actualization — lower needs must be met before higher ones motivate</div></div>
+      <div class="pt"><div class="d"></div><div><b>Herzberg's Two-Factor Theory:</b> Hygiene factors (pay, working conditions, job security) prevent dissatisfaction but don't motivate. True motivators: achievement, recognition, responsibility, growth</div></div>
+      <div class="pt"><div class="d"></div><div><b>McClelland's Acquired Needs:</b> People are motivated by achievement, affiliation, or power — managers need to match incentives to employee drives</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Process-Based Theories</div>
+      <div class="pt"><div class="d"></div><div><b>Expectancy Theory (Vroom):</b> Motivation = Expectancy × Instrumentality × Valence — employees must believe effort leads to performance, performance leads to reward, and the reward is worth having</div></div>
+      <div class="pt"><div class="d"></div><div><b>Goal-Setting Theory:</b> Specific, challenging, accepted goals drive higher performance than vague "do your best" goals</div></div>
+      <div class="pt"><div class="d"></div><div>Practical tools: recognition programs, autonomy, development opportunities, flexible work, fair and transparent compensation</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">Select one of the theories from Chapter 9 and present an overview. How does it apply to your own experience?</div>
+      <div class="dq-q">What initiatives are organizations using today to motivate and retain employees?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 3 · Ch. 10</div><h4>Operations Management</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">What Operations Managers Do</div>
+      <div class="pt"><div class="d"></div><div>Operations management oversees the production of goods and services — efficiently, at quality, and at cost</div></div>
+      <div class="pt"><div class="d"></div><div><b>Supply chain management:</b> Coordinates suppliers, production, and delivery — a disrupted supply chain can shut down a company</div></div>
+      <div class="pt"><div class="d"></div><div><b>Inventory management:</b> Too much inventory = wasted capital; too little = missed sales and unhappy customers</div></div>
+      <div class="pt"><div class="d"></div><div><b>Capacity planning:</b> Ensuring production capacity matches current and future demand</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Quality Frameworks</div>
+      <div class="pt"><div class="d"></div><div><b>TQM (Total Quality Management):</b> Organization-wide commitment to continuous improvement at every stage — quality is everyone's job</div></div>
+      <div class="pt"><div class="d"></div><div><b>Six Sigma:</b> Data-driven approach to eliminating defects — targets fewer than 3.4 defects per million opportunities</div></div>
+      <div class="pt"><div class="d"></div><div><b>Lean manufacturing:</b> Eliminate waste in every form — excess inventory, unnecessary motion, waiting time, overproduction</div></div>
+      <div class="pt"><div class="d"></div><div>ISO certification: International standards that signal consistent quality processes to global customers</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">Why are resource-planning tasks like inventory management and supplier relations critical to production?</div>
+      <div class="dq-q">Based on your reading, how would you define operations management?</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 3 ASSIGNMENT -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 3 · Assignment</div><h4>Management Functions in Practice</h4></div>
+  <div class="a-body">
+    <div class="a-meta">
+      <div class="a-badge">10 Points</div>
+      <div class="a-badge">500–750 words</div>
+      <div class="a-badge">Due: Wednesday midnight</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Overview</div>
+      <div class="a-item"><span class="n">→</span><span>Reflect on your own work experience or observation of management in an organization you know well. Apply the four primary functions of management to a real-world context. If not currently employed, use a past job, sports team, volunteer group, or family business.</span></div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Required Sections</div>
+      <div class="a-item"><span class="n">1.</span><span>Describe the Organization: What it does, your relationship to it, and the size or type of team</span></div>
+      <div class="a-item"><span class="n">2.</span><span>Planning: Define the function and provide a specific real-world example from the organization</span></div>
+      <div class="a-item"><span class="n">3.</span><span>Organizing: Define the function and provide a specific real-world example from the organization</span></div>
+      <div class="a-item"><span class="n">4.</span><span>Leading: Define the function and provide a specific real-world example from the organization</span></div>
+      <div class="a-item"><span class="n">5.</span><span>Controlling: Define the function and provide a specific real-world example from the organization</span></div>
+      <div class="a-item"><span class="n">6.</span><span>Conclusion: What does the organization do well? What could improve? Connect observations to course concepts</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- WEEK 4 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="slide s-week" id="week-4">
+  <div class="wlabel">Week 4</div>
+  <h2>Marketing &amp; Customers</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading</div>
+    <ul>
+      <li>Ch. 11: Creating Products and Pricing Strategies to Meet Customers' Needs</li>
+      <li>Ch. 12: Distributing and Promoting Products and Services</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 4 · Ch. 11</div><h4>Marketing Strategy and Consumer Behavior</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Building a Marketing Strategy</div>
+      <div class="pt"><div class="d"></div><div>Marketing strategy starts with understanding who your customer is, what they need, and how your product solves their problem</div></div>
+      <div class="pt"><div class="d"></div><div><b>Market segmentation:</b> Divide the market into groups with shared characteristics — demographic, geographic, psychographic, behavioral</div></div>
+      <div class="pt"><div class="d"></div><div><b>Target market:</b> The specific segment(s) the company chooses to serve — you can't serve everyone well</div></div>
+      <div class="pt"><div class="d"></div><div><b>Positioning:</b> How you want customers to perceive your brand relative to competitors — this is communicated through the entire marketing mix</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Consumer Buying Decisions</div>
+      <div class="pt"><div class="d"></div><div><b>B2C buying process:</b> Problem recognition → Information search → Evaluation → Purchase → Post-purchase evaluation</div></div>
+      <div class="pt"><div class="d"></div><div><b>High involvement:</b> Complex purchases (cars, homes) require extensive research and comparison</div></div>
+      <div class="pt"><div class="d"></div><div><b>Low involvement:</b> Habitual purchases (toothpaste, coffee) rely on brand loyalty and convenience</div></div>
+      <div class="pt"><div class="d"></div><div>Marketers design messages for specific stages — awareness campaigns target early stages; promotions close sales at the end</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">How do managers create a marketing strategy? How do consumers and organizations make buying decisions?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 4 · Ch. 11</div><h4>Products, Pricing, and Branding</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Product Development and Lifecycle</div>
+      <div class="pt"><div class="d"></div><div>New product development: Idea generation → Screening → Concept testing → Strategy development → Business analysis → Development → Test marketing → Launch</div></div>
+      <div class="pt"><div class="d"></div><div><b>Introduction:</b> Low sales, high costs — build awareness</div></div>
+      <div class="pt"><div class="d"></div><div><b>Growth:</b> Sales climb, competitors enter — differentiate</div></div>
+      <div class="pt"><div class="d"></div><div><b>Maturity:</b> Sales peak — defend market share and extend the product</div></div>
+      <div class="pt"><div class="d"></div><div><b>Decline:</b> Sales drop — harvest profits or exit the market</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Pricing and Branding</div>
+      <div class="pt"><div class="d"></div><div><b>Cost-plus pricing:</b> Add a profit margin to your costs — simple but ignores what customers will pay</div></div>
+      <div class="pt"><div class="d"></div><div><b>Value-based pricing:</b> Price reflects customer's perceived value — can command premium prices</div></div>
+      <div class="pt"><div class="d"></div><div><b>Penetration pricing:</b> Low initial price to build market share quickly</div></div>
+      <div class="pt"><div class="d"></div><div><b>Price skimming:</b> High initial price for new or innovative products, then lower as competition enters</div></div>
+      <div class="pt"><div class="d"></div><div><b>Brand equity:</b> The premium customers pay because of brand reputation — Apple, Nike, and Rolex command prices competitors can't match</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">How do organizations create new products? What strategies are used for pricing products?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 4 · Ch. 12</div><h4>Distribution and Promotion</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Distribution Channels</div>
+      <div class="pt"><div class="d"></div><div>Distribution channels move products from producer to consumer — the path a product takes to reach its buyer</div></div>
+      <div class="pt"><div class="d"></div><div><b>Direct channel:</b> Producer sells directly to consumer — Dell computers, Tesla, most e-commerce</div></div>
+      <div class="pt"><div class="d"></div><div><b>Indirect channel:</b> Producer → Wholesaler → Retailer → Consumer — most consumer packaged goods</div></div>
+      <div class="pt"><div class="d"></div><div>Retail types: Department, specialty, discount, supermarket, warehouse club, e-commerce, convenience</div></div>
+      <div class="pt"><div class="d"></div><div>Supply chain management coordinates suppliers, production, and delivery to maximize efficiency and customer satisfaction</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">The Promotion Mix</div>
+      <div class="pt"><div class="d"></div><div><b>Advertising:</b> Paid, non-personal communication — builds awareness and brand image at scale</div></div>
+      <div class="pt"><div class="d"></div><div><b>Public relations:</b> Earned media — press coverage, community involvement, crisis communication</div></div>
+      <div class="pt"><div class="d"></div><div><b>Personal selling:</b> One-on-one interaction — expensive but most effective for complex, high-value sales</div></div>
+      <div class="pt"><div class="d"></div><div><b>Sales promotions:</b> Short-term incentives — coupons, rebates, free samples, contests</div></div>
+      <div class="pt"><div class="d"></div><div><b>IMC (Integrated Marketing Communications):</b> All channels must deliver a consistent brand message</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What are the different kinds of retail operations? How can supply chain management increase efficiency?</div>
+      <div class="dq-q">How would you define promotion? How does public relations fit into the promotional mix?</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 4 ASSIGNMENT -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 4 · Assignment</div><h4>Succession Planning: Replacing Yourself</h4></div>
+  <div class="a-body">
+    <div class="a-meta">
+      <div class="a-badge">10 Points</div>
+      <div class="a-badge">500–750 words</div>
+      <div class="a-badge">Due: Wednesday midnight</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Overview</div>
+      <div class="a-item"><span class="n">→</span><span>Imagine you have just been promoted. Create a plan to replace yourself in your current role. This exercise requires critical thinking about job roles, hiring, training, and performance evaluation. Students may use a real role or a hypothetical one.</span></div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Required Sections</div>
+      <div class="a-item"><span class="n">1.</span><span>Introduction: Why succession planning matters to organizational stability; introduce the current role being filled</span></div>
+      <div class="a-item"><span class="n">2.</span><span>Job Description: Essential responsibilities, required skills, and qualifications; how the role contributes to organizational goals</span></div>
+      <div class="a-item"><span class="n">3.</span><span>Hiring Process: How the organization would recruit and select a replacement; justify why the process is effective</span></div>
+      <div class="a-item"><span class="n">4.</span><span>Training and Onboarding: Outline onboarding steps, mentorship opportunities, and professional development in the first 90 days</span></div>
+      <div class="a-item"><span class="n">5.</span><span>Evaluation and Performance Review: Key metrics; how success is measured in year one; connection to organizational goals</span></div>
+      <div class="a-item"><span class="n">6.</span><span>Conclusion + Sources: Summarize the plan; reflect on how succession planning benefits stability; cite textbook and at least one credible source</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- WEEK 5 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="slide s-week" id="week-5">
+  <div class="wlabel">Week 5</div>
+  <h2>Technology &amp; Financial Information</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading</div>
+    <ul>
+      <li>Ch. 13: Using Technology to Manage Information</li>
+      <li>Ch. 14: Using Financial Information and Accounting</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 5 · Ch. 13</div><h4>Information Technology in Business</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Core IT Systems</div>
+      <div class="pt"><div class="d"></div><div><b>ERP (Enterprise Resource Planning):</b> Integrates all business processes — finance, HR, supply chain, manufacturing — into one unified system. SAP and Oracle are the dominant players.</div></div>
+      <div class="pt"><div class="d"></div><div><b>CRM (Customer Relationship Management):</b> Tracks every customer interaction — sales pipeline, support history, purchase behavior. Salesforce is the market leader.</div></div>
+      <div class="pt"><div class="d"></div><div><b>Cloud computing:</b> On-demand access to software, storage, and computing power — enables remote work, reduces infrastructure costs, scales instantly</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Data and Security</div>
+      <div class="pt"><div class="d"></div><div><b>Big data:</b> Massive datasets analyzed to reveal patterns in customer behavior, operations, and markets — drives personalization and strategic decisions</div></div>
+      <div class="pt"><div class="d"></div><div><b>AI and machine learning:</b> Automate routine decisions, predict customer behavior, optimize supply chains — the frontier of business technology</div></div>
+      <div class="pt"><div class="d"></div><div><b>Cybersecurity:</b> Data breaches cost companies billions and destroy customer trust — now a board-level strategic issue, not just an IT issue</div></div>
+      <div class="pt"><div class="d"></div><div>Trends: IoT (Internet of Things), 5G networks, blockchain for supply chain transparency, quantum computing on the horizon</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">How has information technology transformed business and managerial decision making?</div>
+      <div class="dq-q">How does your organization use information technology? What are the leading trends in IT?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 5 · Ch. 14</div><h4>The Three Core Financial Statements</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Balance Sheet</div>
+      <div class="pt"><div class="d"></div><div>Snapshot of financial position at a specific point in time</div></div>
+      <div class="pt"><div class="d"></div><div><b>Assets = Liabilities + Owner's Equity</b> — this equation must always balance</div></div>
+      <div class="pt"><div class="d"></div><div><b>Assets:</b> What the company owns — cash, inventory, equipment, property</div></div>
+      <div class="pt"><div class="d"></div><div><b>Liabilities:</b> What the company owes — loans, accounts payable, bonds</div></div>
+      <div class="pt"><div class="d"></div><div><b>Equity:</b> What belongs to the owners after all debts are paid</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Income Statement and Cash Flow</div>
+      <div class="pt"><div class="d"></div><div><b>Income statement:</b> Revenue minus expenses equals net profit (or loss) — covers a period of time (quarter, year)</div></div>
+      <div class="pt"><div class="d"></div><div>Gross profit = Revenue minus cost of goods sold. Operating profit subtracts operating expenses. Net income subtracts taxes and interest.</div></div>
+      <div class="pt"><div class="d"></div><div><b>Cash flow statement:</b> Tracks actual cash in and out — a company can show accounting profit but still run out of cash</div></div>
+      <div class="pt"><div class="d"></div><div>Three sections: Operating activities, investing activities, financing activities</div></div>
+      <div class="pt"><div class="d"></div><div>GAAP (Generally Accepted Accounting Principles) and FASB ensure consistent reporting across companies</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">Who in an organization needs access to financial reporting? How does a balance sheet describe an organization?</div>
+      <div class="dq-q">How does the income statement report a firm's profitability?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 5 · Ch. 14</div><h4>Using Ratio Analysis to Evaluate Financial Health</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Liquidity Ratios</div>
+      <div class="pt"><div class="d"></div><div><b>Current ratio = Current assets ÷ Current liabilities</b> — measures ability to pay short-term obligations. Above 2.0 is generally healthy.</div></div>
+      <div class="pt"><div class="d"></div><div><b>Quick ratio (Acid test):</b> Excludes inventory — more conservative measure of immediate liquidity</div></div>
+      <div class="sub-hdr" style="margin-top:4%;">Profitability Ratios</div>
+      <div class="pt"><div class="d"></div><div><b>Net profit margin = Net income ÷ Revenue</b> — how much of each dollar of revenue becomes profit</div></div>
+      <div class="pt"><div class="d"></div><div><b>Return on equity (ROE):</b> Profit generated for each dollar of owner investment</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Leverage Ratios</div>
+      <div class="pt"><div class="d"></div><div><b>Debt-to-equity ratio = Total debt ÷ Total equity</b> — how much the company is financed by debt vs. owner investment</div></div>
+      <div class="pt"><div class="d"></div><div>High leverage amplifies gains in good times and losses in bad times — a key risk indicator</div></div>
+      <div class="sub-hdr" style="margin-top:4%;">Activity Ratios</div>
+      <div class="pt"><div class="d"></div><div><b>Inventory turnover:</b> How many times inventory is sold and replaced in a period — high turnover signals strong sales and efficient inventory management</div></div>
+      <div class="pt"><div class="d"></div><div>Ratios are most useful when compared to industry benchmarks and the company's own historical performance</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Question</div>
+      <div class="dq-q">How can ratio analysis be used to identify a firm's financial strengths and weaknesses?</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 5 ASSIGNMENT -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 5 · Assignment</div><h4>Case Study Analysis: Novartis &amp; Accountingfly</h4></div>
+  <div class="a-body">
+    <div class="a-meta">
+      <div class="a-badge">10 Points</div>
+      <div class="a-badge">250–500 words per case</div>
+      <div class="a-badge">Due: Wednesday midnight</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Overview</div>
+      <div class="a-item"><span class="n">→</span><span>Students read both cases in the OpenStax textbook and answer all questions for each. Analysis must connect case facts to business concepts covered in Ch. 13 and 14 — not just summarize the reading.</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-case">
+  <div class="s-hdr"><div class="htag">Week 5 · Case 1</div><h4>Novartis's Prescription for Invoice Processing</h4></div>
+  <div class="case-body">
+    <div class="case-intro">Novartis, one of the world's largest pharmaceutical companies, processes millions of invoices annually across dozens of countries and currencies. The case examines how InputAccel for Invoices software transformed their accounts payable operations, reducing processing time and cost while improving accuracy across their global operations.</div>
+    <div class="case-q"><span class="qn">Q1</span><span>What factors contributed to Novartis's invoice processing being so complex across its global operations? Consider the scale, geography, regulatory environments, and currency issues involved.</span></div>
+    <div class="case-q"><span class="qn">Q2</span><span>How did the InputAccel for Invoices software improve the invoice processing workflow at Novartis? What specific problems did it solve and what measurable improvements did it produce?</span></div>
+    <div class="case-q"><span class="qn">Q3</span><span>What other uses and functions does InputAccel serve beyond invoice processing, and how will this additional functionality be useful to Novartis over the long term?</span></div>
+  </div>
+</div>
+
+<div class="slide s-case">
+  <div class="s-hdr"><div class="htag">Week 5 · Case 2</div><h4>Accountingfly Changes How CPAs Get Hired</h4></div>
+  <div class="case-body">
+    <div class="case-intro">Accountingfly is a specialized job platform focused exclusively on the accounting profession. Unlike general job boards like Monster or LinkedIn, Accountingfly built a niche platform for CPAs and accounting firms — and later acquired Going Concern, a leading accounting industry news site, to strengthen its position as the go-to professional hub for the accounting world.</div>
+    <div class="case-q"><span class="qn">Q1</span><span>Why did the founders of Accountingfly focus specifically on the accounting industry rather than building a general job board? What are the strategic advantages of vertical specialization in a marketplace business?</span></div>
+    <div class="case-q"><span class="qn">Q2</span><span>How is Accountingfly's model fundamentally different from a general job site like Monster.com or LinkedIn? What does it offer to both job seekers and employers that general platforms cannot match?</span></div>
+    <div class="case-q"><span class="qn">Q3</span><span>How can Accountingfly use its acquisition of Going Concern as a recruiting tool for experienced CPAs who desire a different career track? Provide specific examples of how content and community can drive hiring activity.</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- WEEK 6 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="slide s-week" id="week-6">
+  <div class="wlabel">Week 6</div>
+  <h2>Money, Financial Markets<br>&amp; Career Development</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading</div>
+    <ul>
+      <li>Ch. 15: Understanding Money and Financial Institutions</li>
+      <li>Ch. 16: Understanding Financial Management and Securities Markets</li>
+      <li>Ch. 17: Developing a Career in Business</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 6 · Ch. 15</div><h4>Money and Financial Institutions</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">What Money Does</div>
+      <div class="pt"><div class="d"></div><div><b>Medium of exchange:</b> Makes transactions possible — eliminates the inefficiency of barter</div></div>
+      <div class="pt"><div class="d"></div><div><b>Store of value:</b> Allows wealth to be saved and transferred over time</div></div>
+      <div class="pt"><div class="d"></div><div><b>Unit of account:</b> Provides a common measure to compare the value of different goods and services</div></div>
+      <div class="pt"><div class="d"></div><div>Money supply: M1 (cash + checking), M2 (M1 + savings + money market) — the Fed controls this to manage the economy</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Types of Financial Institutions</div>
+      <div class="pt"><div class="d"></div><div><b>Commercial banks:</b> Accept deposits, make loans, facilitate payments — serve individuals and businesses</div></div>
+      <div class="pt"><div class="d"></div><div><b>Credit unions:</b> Member-owned, non-profit cooperatives — typically offer better rates than commercial banks</div></div>
+      <div class="pt"><div class="d"></div><div><b>Investment banks:</b> Help companies raise capital, manage M&A transactions, underwrite stock and bond offerings</div></div>
+      <div class="pt"><div class="d"></div><div><b>Federal Reserve:</b> Central bank of the U.S. — controls monetary policy, supervises banks, maintains financial system stability</div></div>
+      <div class="pt"><div class="d"></div><div>FDIC insures deposits up to $250,000 — protects consumers and prevents bank runs</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What trends are reshaping financial institutions? What role do U.S. banks play in the international marketplace?</div>
+      <div class="dq-q">Why would a company need additional capital? What are the options for obtaining it?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 6 · Ch. 16</div><h4>Financial Management and Securities Markets</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">What Financial Managers Do</div>
+      <div class="pt"><div class="d"></div><div>Financial managers plan the company's capital needs, manage cash flow, and make investment decisions</div></div>
+      <div class="pt"><div class="d"></div><div><b>Short-term decisions:</b> Managing accounts receivable, accounts payable, and inventory to maintain sufficient liquidity</div></div>
+      <div class="pt"><div class="d"></div><div><b>Long-term decisions (capital budgeting):</b> Evaluating major investments in equipment, facilities, and technology using NPV and IRR</div></div>
+      <div class="pt"><div class="d"></div><div><b>Sources of capital:</b> Equity (selling stock), debt (issuing bonds or borrowing), retained earnings, venture capital</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Securities Markets</div>
+      <div class="pt"><div class="d"></div><div><b>NYSE and NASDAQ:</b> Allow public companies to sell stock and raise capital from millions of investors</div></div>
+      <div class="pt"><div class="d"></div><div><b>IPO (Initial Public Offering):</b> First time a company sells shares to the public — raises large capital but requires ongoing disclosure</div></div>
+      <div class="pt"><div class="d"></div><div><b>Stocks:</b> Represent ownership; <b>Bonds:</b> Represent debt — different risk/return profiles</div></div>
+      <div class="pt"><div class="d"></div><div>Finance affects every aspect of firm strategy — growth plans, hiring, product development, and pricing all depend on capital availability</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">How do finance and the financial manager affect the firm's overall strategy?</div>
+      <div class="dq-q">What types of short-term and long-term expenditures does a firm make? What are current developments in financial management and securities markets?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 6 · Ch. 17</div><h4>Developing a Career in Business</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Building Career Capital</div>
+      <div class="pt"><div class="d"></div><div>Career success requires self-awareness, networking, and continuous learning — not just technical skills</div></div>
+      <div class="pt"><div class="d"></div><div>Business professionals benefit most from developing: communication, analytical thinking, leadership, and financial literacy</div></div>
+      <div class="pt"><div class="d"></div><div>Internships, mentors, and professional associations accelerate career growth significantly — start building these relationships now</div></div>
+      <div class="pt"><div class="d"></div><div>LinkedIn profile, resume, and interview skills are foundational tools — non-optional for any career path</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">The Changing Workplace</div>
+      <div class="pt"><div class="d"></div><div>The business landscape evolves constantly — adaptability is the most durable competitive advantage any professional can build</div></div>
+      <div class="pt"><div class="d"></div><div>AI and automation will replace routine tasks — the careers with staying power require judgment, creativity, and relationship skills</div></div>
+      <div class="pt"><div class="d"></div><div>Continuous learning is not optional — professional certifications, online courses, and industry reading keep skills current</div></div>
+      <div class="pt"><div class="d"></div><div>Your personal brand is built by consistent behavior, reputation, and the quality of your work — start building it deliberately</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Question</div>
+      <div class="dq-q">Reflecting on the course as a whole, what are areas that you would like to focus on in future courses? What did you find most relevant to your own professional goals?</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 6 ASSIGNMENT -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 6 · Final Assessment</div><h4>Final Exam</h4></div>
+  <div class="a-body" style="justify-content:center;align-items:center;text-align:center;gap:3%;">
+    <div style="font-size:20px;font-weight:700;color:var(--charcoal);">50-Question Auto-Graded Exam</div>
+    <div style="font-size:14px;color:var(--gray);max-width:65%;line-height:1.7;">Covers all course outcomes from Weeks 1 through 6. Administered through Populi. No written submission required.</div>
+    <div class="a-meta" style="justify-content:center;">
+      <div class="a-badge">25 Points</div>
+      <div class="a-badge">Auto-graded in Populi</div>
+    </div>
+    <div style="font-size:13px;color:var(--gray);max-width:70%;line-height:1.7;">Topics covered: Economic systems, ethics and social responsibility, global business, forms of business ownership, entrepreneurship, management and leadership, organizational structure, human resources, motivation, operations management, marketing strategy, products and pricing, distribution and promotion, information technology, financial statements, ratio analysis, money and banking, financial management, securities markets, and career development.</div>
+  </div>
+</div>
+
+</div><!-- end deck -->
+
+<div class="nav">
+  <button onclick="prev()">← Prev</button>
+  <span class="ctr" id="ctr"></span>
+  <button onclick="next()">Next →</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let cur = 0;
+function show(n) {
+  slides[cur].classList.remove('active');
+  cur = (n + slides.length) % slides.length;
+  slides[cur].classList.add('active');
+  document.getElementById('ctr').textContent = (cur+1) + ' / ' + slides.length;
+}
+
+  function goToWeek(id) {
+    const target = document.getElementById(id);
+    if (!target) return;
+    const allSlides = document.querySelectorAll('.slide');
+    allSlides.forEach((s,i) => { if(s === target) show(i); });
+  }
+  function next() { show(cur+1); }
+function prev() { show(cur-1); }
+document.addEventListener('keydown', e => {
+  if (e.key==='ArrowRight'||e.key==='ArrowDown') next();
+  if (e.key==='ArrowLeft'||e.key==='ArrowUp') prev();
+});
+show(0);
+</script>
+</body>
+</html>

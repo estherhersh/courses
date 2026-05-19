@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BUS-300: Marketing — Instructor Deck</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+:root {
+  --red: #7A1219;
+  --red-light: #c0444d;
+  --red-pale: #FBEAEA;
+  --charcoal: #2D2D2D;
+  --gray: #5F5E5A;
+  --gray-light: #E8E8E8;
+  --off-white: #F6F6F4;
+  --white: #FFFFFF;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family:'DM Sans',sans-serif;
+  background:#111;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-height:100vh;
+  padding:20px;
+}
+.deck { width:100%; max-width:1100px; }
+.slide {
+  display:none;
+  width:100%;
+  aspect-ratio:16/9;
+  background:var(--white);
+  border-radius:6px;
+  
+  position:relative;
+  flex-direction:column;
+}
+.slide.active { display:flex; }
+
+.slide.s-course { background:var(--charcoal); flex-direction:column; justify-content:center; padding:60px 9%; min-height:400px; }
+.s-course .eyebrow { font-size:13px; font-weight:600; color:var(--red-light); letter-spacing:.15em; text-transform:uppercase; margin-bottom:3%; }
+.s-course h1 { font-family:'DM Serif Display',serif; font-size:38px; color:var(--white); line-height:1.1; margin-bottom:3%; }
+.s-course .sub { font-size:13px; color:rgba(255,255,255,0.6); line-height:1.9; }
+.s-course .accent { position:absolute; bottom:0; left:0; right:0; height:5px; background:var(--red); }
+
+.slide.s-week { background:var(--red); flex-direction:column; justify-content:flex-start; padding:60px 8%; min-height:300px; }
+.s-week .wlabel { font-size:clamp(10px,1.2vw,13px); font-weight:600; color:rgba(255,255,255,0.65); letter-spacing:.18em; text-transform:uppercase; margin-bottom:2%; }
+.s-week h2 { font-family:'DM Serif Display',serif; font-size:36px; color:var(--white); line-height:1.15; margin-bottom:4%; }
+.rdg-block { background:rgba(0,0,0,0.22); border-radius:4px; padding:2.5% 3.5%; width:100%; }
+.rdg-block .rlabel { font-size:11px; font-weight:700; color:rgba(255,255,255,0.55); letter-spacing:.13em; text-transform:uppercase; margin-bottom:1.5%; }
+.rdg-block ul { list-style:none; display:flex; flex-wrap:wrap; gap:.8% 3%; }
+.rdg-block li { font-size:13px; color:rgba(255,255,255,0.9); }
+.rdg-block li::before { content:"→ "; color:rgba(255,255,255,0.4); }
+
+.slide.s-section { background:var(--charcoal); flex-direction:column; justify-content:center; align-items:flex-start; padding:60px 9%; min-height:280px; }
+.s-section .stag { font-size:12px; font-weight:600; color:var(--red-light); letter-spacing:.15em; text-transform:uppercase; margin-bottom:2%; }
+.s-section h3 { font-family:'DM Serif Display',serif; font-size:32px; color:var(--white); line-height:1.2; }
+
+.slide.s-content { flex-direction:column; }
+.s-hdr { background:var(--charcoal); padding:2.8% 5%; flex-shrink:0; }
+.s-hdr .htag { font-size:10px; font-weight:700; color:var(--red-light); letter-spacing:.15em; text-transform:uppercase; margin-bottom:.8%; }
+.s-hdr h4 { font-family:'DM Serif Display',serif; font-size:22px; color:var(--white); line-height:1.2; }
+.s-body { flex:1; padding:2.5% 5%; display:flex; flex-direction:column; gap:1.2%;  background:var(--white); }
+.s-body.cols { flex-direction:column; } .cols-row { display:flex; flex-direction:row; gap:3%; }
+.col { flex:1; display:flex; flex-direction:column; gap:1.2%; }
+
+.pt { display:flex; align-items:flex-start; gap:1.8%; font-size:14px; color:var(--charcoal); line-height:1.45; }
+.pt .d { width:8px; height:8px; border-radius:50%; background:var(--red); flex-shrink:0; margin-top:.35em; }
+.pt b { font-weight:600; }
+
+.sub-hdr { font-size:11px; font-weight:700; color:var(--red); letter-spacing:.1em; text-transform:uppercase; border-bottom:2px solid var(--red); padding-bottom:.4%; margin-bottom:.8%; flex-shrink:0; }
+
+.dq { background:var(--red-pale); border-left:4px solid var(--red); border-radius:0 4px 4px 0; padding:1.8% 2.5%; flex-shrink:0; }
+.dq .dq-lbl { font-size:10px; font-weight:700; color:var(--red); letter-spacing:.12em; text-transform:uppercase; margin-bottom:.8%; }
+.dq .dq-q { font-size:13px; color:var(--charcoal); line-height:1.45; font-style:italic; }
+.dq .dq-q+.dq-q { margin-top:.6%; }
+
+.slide.s-asgn { flex-direction:column; }
+.s-asgn .s-hdr { background:var(--red); }
+.s-asgn .s-hdr .htag { color:rgba(255,255,255,0.6); }
+.s-asgn .s-hdr h4 { color:var(--white); }
+.a-body { flex:1; padding:2.5% 5%; display:flex; flex-direction:column; gap:1.5%;  background:var(--white); }
+.a-meta { display:flex; gap:2%; flex-shrink:0; }
+.a-badge { background:var(--red-pale); border:1px solid rgba(122,18,25,.25); border-radius:3px; padding:.7% 2%; font-size:11px; font-weight:600; color:var(--red); }
+.a-sec { background:var(--off-white); border-radius:4px; padding:1.8% 2.5%; flex-shrink:0; }
+.a-sec .a-lbl { font-size:10px; font-weight:700; color:var(--gray); letter-spacing:.1em; text-transform:uppercase; margin-bottom:.8%; }
+.a-sec .a-item { font-size:13px; color:var(--charcoal); line-height:1.45; padding:.5% 0; border-bottom:1px solid var(--gray-light); display:flex; gap:1.5%; align-items:flex-start; }
+.a-sec .a-item:last-child { border-bottom:none; }
+.a-sec .a-item .n { color:var(--red); font-weight:700; flex-shrink:0; }
+.mp-note { background:var(--charcoal); border-radius:4px; padding:1.5% 2.5%; flex-shrink:0; font-size:12px; color:rgba(255,255,255,0.85); }
+.mp-note b { color:var(--red-light); }
+
+.nav { display:flex; align-items:center; justify-content:center; gap:16px; margin-top:14px; }
+.nav button { background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); color:#fff; padding:8px 22px; border-radius:4px; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500; }
+.nav button:hover { background:rgba(255,255,255,.2); }
+.nav .ctr { color:rgba(255,255,255,.45); font-size:12px; min-width:70px; text-align:center; }
+
+  /* ── TOC SLIDE ── */
+  .slide.s-toc { background:var(--white); flex-direction:column; padding:0; }
+  .toc-header {
+    background:var(--charcoal);
+    padding:28px 48px 24px;
+    flex-shrink:0;
+  }
+  .toc-eyebrow {
+    font-size:11px;
+    font-weight:700;
+    color:var(--red-light);
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .toc-heading {
+    font-family:'DM Serif Display',serif;
+    font-size:28px;
+    color:var(--white);
+    margin-bottom:4px;
+  }
+  .toc-sub {
+    font-size:12px;
+    color:rgba(255,255,255,0.45);
+  }
+  .toc-grid {
+    padding:20px 40px 28px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .toc-item {
+    display:flex;
+    align-items:center;
+    gap:16px;
+    background:var(--off-white);
+    border:1px solid var(--gray-light);
+    border-radius:6px;
+    padding:14px 20px;
+    cursor:pointer;
+    transition:background 0.15s, border-color 0.15s, transform 0.1s;
+  }
+  .toc-item:hover {
+    background:var(--red-pale);
+    border-color:var(--red);
+    transform:translateX(4px);
+  }
+  .toc-num {
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background:var(--red);
+    color:var(--white);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:15px;
+    font-weight:700;
+    flex-shrink:0;
+  }
+  .toc-text { flex:1; }
+  .toc-week {
+    font-size:10px;
+    font-weight:700;
+    color:var(--red);
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    margin-bottom:2px;
+  }
+  .toc-title {
+    font-size:14px;
+    font-weight:600;
+    color:var(--charcoal);
+  }
+  .toc-arrow {
+    font-size:18px;
+    color:var(--red);
+    font-weight:700;
+    opacity:0.5;
+  }
+  .toc-item:hover .toc-arrow { opacity:1; }
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- COURSE TITLE -->
+<div class="slide s-course active">
+  <h1>BUS-300<br>Marketing</h1>
+  <div class="sub">
+    Dunlap-Stone University &nbsp;·&nbsp; 3 Credit Hours &nbsp;·&nbsp; 6 Weeks<br>
+    Textbook: Principles of Marketing (OpenStax) — free at openstax.org/books/principles-marketing<br>
+    Marketing Plan: Built section by section each week — students use the same company all course
+  </div>
+  <div class="accent"></div>
+
+<div class="slide s-toc" id="toc-slide">
+  <div class="toc-header">
+    <div class="toc-eyebrow">BUS-300</div>
+    <div class="toc-heading">Course Contents</div>
+    <div class="toc-sub">Click any week to jump to it</div>
+  </div>
+  <div class="toc-grid">
+    
+        <div class="toc-item" onclick="goToWeek('week-1')">
+          <div class="toc-num">1</div>
+          <div class="toc-text">
+            <div class="toc-week">Week 1</div>
+            <div class="toc-title">Foundations of Marketing</div>
+          </div>
+          <div class="toc-arrow">→</div>
+        </div>
+        <div class="toc-item" onclick="goToWeek('week-2')">
+          <div class="toc-num">2</div>
+          <div class="toc-text">
+            <div class="toc-week">Week 2</div>
+            <div class="toc-title">Understanding Your Market</div>
+          </div>
+          <div class="toc-arrow">→</div>
+        </div>
+        <div class="toc-item" onclick="goToWeek('week-3')">
+          <div class="toc-num">3</div>
+          <div class="toc-text">
+            <div class="toc-week">Week 3</div>
+            <div class="toc-title">Global & Diversity Marketing</div>
+          </div>
+          <div class="toc-arrow">→</div>
+        </div>
+        <div class="toc-item" onclick="goToWeek('week-4')">
+          <div class="toc-num">4</div>
+          <div class="toc-text">
+            <div class="toc-week">Week 4</div>
+            <div class="toc-title">Product Strategy & Pricing</div>
+          </div>
+          <div class="toc-arrow">→</div>
+        </div>
+        <div class="toc-item" onclick="goToWeek('week-5')">
+          <div class="toc-num">5</div>
+          <div class="toc-text">
+            <div class="toc-week">Week 5</div>
+            <div class="toc-title">Promotion & Distribution</div>
+          </div>
+          <div class="toc-arrow">→</div>
+        </div>
+        <div class="toc-item" onclick="goToWeek('week-6')">
+          <div class="toc-num">6</div>
+          <div class="toc-text">
+            <div class="toc-week">Week 6</div>
+            <div class="toc-title">Retailing, Wholesaling & Sustainable Marketing</div>
+          </div>
+          <div class="toc-arrow">→</div>
+        </div>
+  </div>
+</div>
+
+</div>
+
+<!-- ══════════ WEEK 1 ══════════ -->
+<div class="slide s-week" id="week-1">
+  <div class="wlabel">Week 1</div>
+  <h2>Foundations of Marketing</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading</div>
+    <ul>
+      <li>Ch. 1: Marketing and Customer Value</li>
+      <li>Ch. 2: Strategic Planning in Marketing</li>
+      <li>Ch. 3: Consumer Markets and Purchasing Behavior</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 1 · Chapter 1</div>
+  <h3>Marketing and<br>Customer Value</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Ch. 1</div><h4>What Marketing Really Is</h4></div>
+  <div class="s-body">
+    <div class="pt"><div class="d"></div><div>Marketing is the process of creating, communicating, and delivering value to customers — it is a strategic function that touches every part of an organization, not just advertising or sales</div></div>
+    <div class="pt"><div class="d"></div><div><b>Product:</b> What are you offering? How is it designed, packaged, and positioned in the market?</div></div>
+    <div class="pt"><div class="d"></div><div><b>Price:</b> What are customers willing to pay? How do you balance value delivered with costs incurred?</div></div>
+    <div class="pt"><div class="d"></div><div><b>Place:</b> Where and how is the product available? Which channels reach your target customer most efficiently?</div></div>
+    <div class="pt"><div class="d"></div><div><b>Promotion:</b> How do you communicate the value proposition to the right people at the right time?</div></div>
+    <div class="pt"><div class="d"></div><div>Marketing operates within a broader environment — economic, social, technological, and legal forces all shape what's possible and what's effective</div></div>
+    <div class="pt"><div class="d"></div><div>Customer satisfaction and long-term loyalty are built through consistent, genuine value delivery — not just clever campaigns</div></div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">The marketing mix has been compared to a toolbelt. Describe a recent product you purchased online — where you bought it (place), how you found it (promotion), and whether the price was competitive compared to similar products.</div>
+      <div class="dq-q">How do we determine what a customer wants or needs? How does the external environment impact marketing?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 1 · Chapter 2</div>
+  <h3>Strategic Planning<br>in Marketing</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Ch. 2</div><h4>How Marketing Drives Business Strategy</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Strategic Planning Tools</div>
+      <div class="pt"><div class="d"></div><div><b>Mission statement:</b> Defines why the organization exists and who it serves — the anchor for all strategic decisions</div></div>
+      <div class="pt"><div class="d"></div><div><b>Vision:</b> Where the company is headed — the aspirational future state that guides long-term planning</div></div>
+      <div class="pt"><div class="d"></div><div><b>SWOT analysis:</b> Strengths and Weaknesses (internal, controllable); Opportunities and Threats (external, environmental)</div></div>
+      <div class="pt"><div class="d"></div><div><b>BCG Matrix:</b> Evaluates the product portfolio by market share and market growth — Stars, Cash Cows, Question Marks, Dogs</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">The Marketing Plan</div>
+      <div class="pt"><div class="d"></div><div>A formal document that outlines target market, goals, strategies, tactics, budget, and metrics — the operating document for marketing execution</div></div>
+      <div class="pt"><div class="d"></div><div>Marketing plans align day-to-day decisions with long-term strategic goals</div></div>
+      <div class="pt"><div class="d"></div><div>Students begin building their marketing plan this week — they will use the same company for all 6 weeks of the course</div></div>
+      <div class="pt"><div class="d"></div><div>Company must be one they work for, have worked for, want to start, or a publicly traded company with accessible data</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What role does marketing have in strategic planning? What is the purpose of a marketing plan?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 1 · Chapter 3</div>
+  <h3>Consumer Markets and<br>Purchasing Behavior</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Ch. 3</div><h4>The Consumer Decision Process</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">5 Stages of the Decision Process</div>
+      <div class="pt"><div class="d"></div><div><b>1. Problem recognition:</b> The consumer realizes a need or desire — either internally triggered (hunger) or externally triggered (an ad)</div></div>
+      <div class="pt"><div class="d"></div><div><b>2. Information search:</b> Internal search (memory and experience) followed by external search (online reviews, recommendations, ads)</div></div>
+      <div class="pt"><div class="d"></div><div><b>3. Evaluation of alternatives:</b> Comparing options on key attributes — price, quality, brand, convenience</div></div>
+      <div class="pt"><div class="d"></div><div><b>4. Purchase decision:</b> The actual buying act — can be influenced at the last moment by a promotion or a negative review</div></div>
+      <div class="pt"><div class="d"></div><div><b>5. Post-purchase evaluation:</b> Did the product meet expectations? Determines future loyalty and word-of-mouth</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Types of Buying Behavior</div>
+      <div class="pt"><div class="d"></div><div><b>Complex:</b> High involvement, significant differences between brands (car, home, laptop) — extensive research</div></div>
+      <div class="pt"><div class="d"></div><div><b>Dissonance-reducing:</b> High involvement, few perceived differences (carpet, appliances) — buy then seek reassurance</div></div>
+      <div class="pt"><div class="d"></div><div><b>Habitual:</b> Low involvement, low brand differentiation (toothpaste, bread) — routine repurchase with minimal thought</div></div>
+      <div class="pt"><div class="d"></div><div><b>Variety-seeking:</b> Low involvement, high brand switching (snacks, shampoo) — change for novelty, not dissatisfaction</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Ch. 3</div><h4>What Influences Consumer Decisions</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">External Influences</div>
+      <div class="pt"><div class="d"></div><div><b>Cultural factors:</b> Values, beliefs, customs, and traditions that shape what people want and how they buy — the deepest and most pervasive influence</div></div>
+      <div class="pt"><div class="d"></div><div><b>Subculture:</b> Groups within a culture — ethnic background, religion, geographic region, age cohort (Boomers, Gen Z)</div></div>
+      <div class="pt"><div class="d"></div><div><b>Social factors:</b> Family, peer groups, reference groups, and social class — "what will people think?"</div></div>
+      <div class="pt"><div class="d"></div><div>Opinion leaders and influencers have outsized impact on purchase decisions in their categories</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Internal Influences</div>
+      <div class="pt"><div class="d"></div><div><b>Personal factors:</b> Age, life stage, income, occupation, lifestyle, personality — all shape preferences and purchasing power</div></div>
+      <div class="pt"><div class="d"></div><div><b>Psychological factors:</b> Motivation (Maslow's hierarchy), perception (selective attention), learning (brand associations), and attitudes</div></div>
+      <div class="pt"><div class="d"></div><div><b>Situational factors:</b> Time pressure, store atmosphere, occasion, mood — can override rational decision-making</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">Businesses send thousands of marketing messages each day. Which are most influential in your life right now? Provide an example of selective attention for each: social, personal, psychological, cultural, and situational.</div>
+      <div class="dq-q">Provide a recent example of a purchase and describe your progress through the stages of the consumer decision process model.</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 1 ASSIGNMENT -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 1 · Assignment</div><h4>Assignment 1: Foundations of Your Marketing Plan</h4></div>
+  <div class="a-body">
+    <div class="mp-note"><b>Marketing Plan:</b> Week 1 is the foundation. Students choose a company and commit to it for all 6 weeks. The final assignment in Week 6 compiles and refines everything.</div>
+    <div class="a-meta">
+      <div class="a-badge">10 Points</div>
+      <div class="a-badge">Due: Wednesday midnight</div>
+      <div class="a-badge">No AI tools permitted</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Company Selection</div>
+      <div class="a-item"><span class="n">→</span><span>Must choose: a company they work for or have worked for, a realistic startup idea, or a publicly traded company with accessible public data. They use this same company for every assignment through Week 6.</span></div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Required Sections</div>
+      <div class="a-item"><span class="n">1.</span><span>Company Profile: Name, size, industry, products or services, key markets, brief history or competitive position</span></div>
+      <div class="a-item"><span class="n">2.</span><span>Mission Statement: Clear, focused mission statement reflecting core values and purpose — avoid vague or generic language</span></div>
+      <div class="a-item"><span class="n">3.</span><span>SWOT Analysis: Identify 3-4 Strengths, Weaknesses, Opportunities, and Threats; include a narrative paragraph summarizing the implications of the SWOT for marketing strategy</span></div>
+      <div class="a-item"><span class="n">4.</span><span>Marketing Goals and Objectives: Set 3 marketing goals for the next 3-5 years; for each goal include 2-3 measurable objectives trackable within 6-18 months</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ WEEK 2 ══════════ -->
+<div class="slide s-week" id="week-2">
+  <div class="wlabel">Week 2</div>
+  <h2>Understanding Your Market</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading</div>
+    <ul>
+      <li>Ch. 4: Business Markets and Purchasing Behavior</li>
+      <li>Ch. 5: Market Segmentation, Targeting, and Positioning</li>
+      <li>Ch. 6: Marketing Research and Market Intelligence</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 2 · Ch. 4</div><h4>B2B vs. B2C: Two Different Worlds</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">B2C Markets</div>
+      <div class="pt"><div class="d"></div><div>Marketing directly to individual consumers for personal use — clothing, food, entertainment, personal services</div></div>
+      <div class="pt"><div class="d"></div><div>Decisions often driven by emotion, habit, brand loyalty, or personal preference</div></div>
+      <div class="pt"><div class="d"></div><div>Shorter buying cycle, smaller transaction values, mass marketing approaches common</div></div>
+      <div class="pt"><div class="d"></div><div>Buyer and user are often the same person — or same household</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">B2B Markets</div>
+      <div class="pt"><div class="d"></div><div>Organizations buying from organizations — tech companies buying software, hospitals buying equipment, schools buying supplies</div></div>
+      <div class="pt"><div class="d"></div><div>Purchases are larger in scale, more rational, and more formally structured</div></div>
+      <div class="pt"><div class="d"></div><div><b>Buying center:</b> Multiple stakeholders with different roles — initiator, influencer, decider, buyer, gatekeeper, user</div></div>
+      <div class="pt"><div class="d"></div><div>8-step formal process: Problem recognition → Need description → Product specification → Supplier search → Proposal solicitation → Supplier selection → Order routine → Performance review</div></div>
+      <div class="pt"><div class="d"></div><div>Relationships and long-term value matter far more than in B2C — retention is the priority</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">Distinguish characteristics of the B2B market versus the B2C market.</div>
+      <div class="dq-q">Based on your reading, what influences B2B buyer behavior?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 2 · Ch. 5</div><h4>Segmentation, Targeting, and Positioning</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Segmentation</div>
+      <div class="pt"><div class="d"></div><div><b>Demographic:</b> Age, gender, income, education, family size — the most commonly used and most measurable</div></div>
+      <div class="pt"><div class="d"></div><div><b>Geographic:</b> Region, country, city size, climate — where people live shapes what they need</div></div>
+      <div class="pt"><div class="d"></div><div><b>Psychographic:</b> Values, lifestyle, personality, activities, interests — who they are beyond demographics</div></div>
+      <div class="pt"><div class="d"></div><div><b>Behavioral:</b> Usage rate, brand loyalty, purchase occasion, benefits sought — what they do with the product</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Targeting and Positioning</div>
+      <div class="pt"><div class="d"></div><div><b>Targeting:</b> Select the segments with the best combination of size, growth potential, profitability, and fit with company strengths</div></div>
+      <div class="pt"><div class="d"></div><div>Strategies: Undifferentiated (mass), Differentiated (multiple segments), Concentrated (one niche), Micromarketing (individual)</div></div>
+      <div class="pt"><div class="d"></div><div><b>Positioning:</b> The place your product occupies in the mind of your target customer relative to competitors</div></div>
+      <div class="pt"><div class="d"></div><div><b>Perceptual map:</b> Plots your brand against competitors on two key attributes — reveals opportunities and competitive crowding</div></div>
+      <div class="pt"><div class="d"></div><div><b>Buyer persona:</b> A fictional but realistic profile of your ideal customer — gives the market segment a face, a job, a life</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">Discuss methods of segmenting consumer markets. Why would a local hair salon choose geographic segmentation and a narrow concentrated strategy? Might multi-segment marketing be more effective?</div>
+      <div class="dq-q">What is a target market? How does it relate to product positioning?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 2 · Ch. 6</div><h4>Marketing Research and Market Intelligence</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">The Research Process</div>
+      <div class="pt"><div class="d"></div><div><b>Step 1:</b> Define the problem and research objectives — the most critical step; wrong question = useless data</div></div>
+      <div class="pt"><div class="d"></div><div><b>Step 2:</b> Develop the research plan — choose methods, sources, and budget</div></div>
+      <div class="pt"><div class="d"></div><div><b>Steps 3-4:</b> Collect and analyze data</div></div>
+      <div class="pt"><div class="d"></div><div><b>Steps 5-7:</b> Interpret findings, present results, make decisions</div></div>
+      <div class="pt"><div class="d"></div><div><b>Primary data:</b> Collected directly — surveys, interviews, focus groups, observation, experiments</div></div>
+      <div class="pt"><div class="d"></div><div><b>Secondary data:</b> Already exists — government reports, industry studies, internal sales records, competitor analysis</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Intelligence and Ethics</div>
+      <div class="pt"><div class="d"></div><div><b>Marketing intelligence:</b> Everyday information about developments in the marketing environment — competitor monitoring, industry news, social listening</div></div>
+      <div class="pt"><div class="d"></div><div><b>Big data:</b> Massive datasets that reveal behavioral patterns at scale — powers personalization, dynamic pricing, and predictive analytics</div></div>
+      <div class="pt"><div class="d"></div><div>Ethics in data collection: Consumer privacy is a legal and reputational issue — GDPR in Europe, CCPA in California signal growing regulation</div></div>
+      <div class="pt"><div class="d"></div><div>Companies like Meta face ongoing scrutiny for data practices — the cost of misuse is enormous</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">As a consumer, how do you feel about companies tracing your digital footprint? As a marketer, what value do you see in tracing consumers' online activities?</div>
+      <div class="dq-q">Why might quantitative research be better for measuring attitudes toward new products? Why might qualitative data provide deeper insights into consumer behavior?</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 2 ASSIGNMENT -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 2 · Assignment</div><h4>Assignment 2: Segmentation, Target Market, Buyer Personas, and Positioning</h4></div>
+  <div class="a-body">
+    <div class="mp-note"><b>Marketing Plan:</b> Week 2 defines who the student is selling to and how they will position their brand. Same company as Week 1.</div>
+    <div class="a-meta">
+      <div class="a-badge">20 Points</div>
+      <div class="a-badge">Due: Wednesday midnight</div>
+      <div class="a-badge">No AI tools permitted</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Required Sections</div>
+      <div class="a-item"><span class="n">1.</span><span>Market Segmentation: Describe customer problems the product addresses; general customer profile; identify several segments then select 1-3 to target; explain selection rationale and growth potential</span></div>
+      <div class="a-item"><span class="n">2.</span><span>Target Market: Define the group to be served; segment by demographic, geographic, psychographic, or behavioral characteristics; explain why this is the best strategic choice</span></div>
+      <div class="a-item"><span class="n">3.</span><span>Buyer Personas: Create 2-3 personas — each with a fictional name, job/role, personality traits, interests, and buying behaviors — written as short narrative profiles, not bullet lists</span></div>
+      <div class="a-item"><span class="n">4.</span><span>Positioning Strategy: Describe how the product should be perceived; create a positioning map using two key attributes; place brand and competitors on the graph; analyze position and identify opportunities</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ WEEK 3 ══════════ -->
+<div class="slide s-week" id="week-3">
+  <div class="wlabel">Week 3</div>
+  <h2>Global &amp; Diversity Marketing</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading</div>
+    <ul>
+      <li>Ch. 7: Marketing in a Global Environment</li>
+      <li>Ch. 8: Marketing in a Diverse Marketplace</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 3 · Ch. 7</div><h4>Global Marketing Strategy</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Market Entry Strategies</div>
+      <div class="pt"><div class="d"></div><div><b>Exporting:</b> Produce at home, sell abroad — lowest cost, lowest control, lowest risk</div></div>
+      <div class="pt"><div class="d"></div><div><b>Licensing:</b> Grant a foreign company rights to use your brand or process for royalties — low investment, low control</div></div>
+      <div class="pt"><div class="d"></div><div><b>Franchising:</b> License a complete business system — consistent global brand with local operators</div></div>
+      <div class="pt"><div class="d"></div><div><b>Joint venture:</b> Partner with a local company — shared risk, shared knowledge, shared profits</div></div>
+      <div class="pt"><div class="d"></div><div><b>Direct investment:</b> Build or buy operations in the foreign market — highest control, highest commitment, highest risk</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Assessing Global Markets</div>
+      <div class="pt"><div class="d"></div><div><b>Cultural environment:</b> Language, religion, customs, attitudes toward foreign brands — underestimating culture is the #1 cause of global marketing failure</div></div>
+      <div class="pt"><div class="d"></div><div><b>Legal environment:</b> Data privacy laws (GDPR), trade regulations, IP protection vary dramatically by country</div></div>
+      <div class="pt"><div class="d"></div><div><b>Economic environment:</b> GDP per capita, income distribution, inflation, infrastructure — determines purchasing power</div></div>
+      <div class="pt"><div class="d"></div><div><b>FCPA (Foreign Corrupt Practices Act):</b> U.S. law prohibiting bribery of foreign officials — applies to all U.S. companies operating abroad</div></div>
+      <div class="pt"><div class="d"></div><div><b>Standardization vs. adaptation:</b> Global consistency vs. local relevance — most companies find a middle path</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">Are global markets something you should consider targeting in your marketing plan? How can you effectively assess global markets?</div>
+      <div class="dq-q">What strategies are used in global competition?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 3 · Ch. 8</div><h4>Diversity Marketing in the U.S.</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">The Shifting U.S. Market</div>
+      <div class="pt"><div class="d"></div><div>The U.S. is becoming more multicultural, multigenerational, and multidimensional — demographics are shifting rapidly</div></div>
+      <div class="pt"><div class="d"></div><div>Hispanic Americans: fastest-growing consumer segment; $2+ trillion in annual purchasing power</div></div>
+      <div class="pt"><div class="d"></div><div>Black consumers: $1.8 trillion in purchasing power; strong brand loyalty when brands show genuine commitment</div></div>
+      <div class="pt"><div class="d"></div><div>Gen Z: First truly digital-native generation — brand values and social responsibility are purchasing criteria, not differentiators</div></div>
+      <div class="pt"><div class="d"></div><div>LGBTQ+ visibility and representation: Significant buying power; highly brand loyal to companies that show authentic support</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Authentic vs. Performative Marketing</div>
+      <div class="pt"><div class="d"></div><div>Diversity marketing acknowledges and embraces the unique values, languages, and needs of different consumer groups</div></div>
+      <div class="pt"><div class="d"></div><div><b>Authenticity is the dividing line:</b> Brands that genuinely commit to communities build loyalty. Brands that adopt causes as trends get called out.</div></div>
+      <div class="pt"><div class="d"></div><div>"Rainbow washing" (LGBTQ+), "greenwashing" (environment), and "woke washing" (social justice) all damage brand trust when detected</div></div>
+      <div class="pt"><div class="d"></div><div>Examples of authentic: Nike (Kaepernick), Dove (Real Beauty), Ben & Jerry's (social advocacy)</div></div>
+      <div class="pt"><div class="d"></div><div>When people see themselves genuinely reflected in a brand's message, trust and loyalty grow — this is both ethical and strategic</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">When should you use diversity marketing as an adaptation strategy? What are the benefits and challenges of a diverse marketplace?</div>
+      <div class="dq-q">How does culture impact marketing?</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 3 ASSIGNMENT -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 3 · Assignment</div><h4>Assignment 3: Current Market Situation / Situation Analysis</h4></div>
+  <div class="a-body">
+    <div class="mp-note"><b>Marketing Plan:</b> Week 3 provides a snapshot of the organization's current market position and competitive landscape.</div>
+    <div class="a-meta">
+      <div class="a-badge">15 Points</div>
+      <div class="a-badge">Due: Wednesday midnight</div>
+      <div class="a-badge">No AI tools permitted</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Required Sections</div>
+      <div class="a-item"><span class="n">1.</span><span>Market Description: Overall target market; size, growth trajectory, and the factors driving change in this market; support with research, data, or citations</span></div>
+      <div class="a-item"><span class="n">2.</span><span>Product Review: Main products or services including key features and benefits, current pricing strategies, sales performance (or projections for startups), and gross margin or profitability assumptions</span></div>
+      <div class="a-item"><span class="n">3.</span><span>Competitive Analysis: Identify top 2-3 competitors; for each describe their products/services, pricing and quality, sales strategies and distribution, and known market share or positioning</span></div>
+      <div class="a-item"><span class="n">4.</span><span>Comparison to Company Offerings: Strengths and differentiators; areas where the company could improve; any market gaps that can be exploited</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ WEEK 4 ══════════ -->
+<div class="slide s-week" id="week-4">
+  <div class="wlabel">Week 4</div>
+  <h2>Product Strategy &amp; Pricing</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading</div>
+    <ul>
+      <li>Ch. 9: Products — Consumer Offerings</li>
+      <li>Ch. 10: Maintaining a Competitive Edge with New Offerings</li>
+      <li>Ch. 11: Services — The Intangible Product</li>
+      <li>Ch. 12: Pricing Products and Services</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 4 · Ch. 9</div><h4>Products, Lifecycle, and Brand Strategy</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Product Classification</div>
+      <div class="pt"><div class="d"></div><div><b>Convenience:</b> Bought frequently with minimal effort — staples (milk, bread), impulse (candy bar), emergency (umbrella in rain)</div></div>
+      <div class="pt"><div class="d"></div><div><b>Shopping:</b> Purchased less frequently, consumers compare options — clothing, electronics, furniture</div></div>
+      <div class="pt"><div class="d"></div><div><b>Specialty:</b> Unique characteristics, brand identity so strong buyers will seek them out — Rolex, Tesla, luxury goods</div></div>
+      <div class="pt"><div class="d"></div><div><b>Unsought:</b> Consumers don't know they need them until a problem occurs — life insurance, fire extinguishers</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Product Lifecycle Strategy</div>
+      <div class="pt"><div class="d"></div><div><b>Introduction:</b> Low sales, high costs — focus on building awareness; promotional spending is high</div></div>
+      <div class="pt"><div class="d"></div><div><b>Growth:</b> Sales accelerate, competitors enter — differentiate, expand distribution, refine messaging</div></div>
+      <div class="pt"><div class="d"></div><div><b>Maturity:</b> Sales peak, market saturates — compete on differentiation, promotions, and brand loyalty programs</div></div>
+      <div class="pt"><div class="d"></div><div><b>Decline:</b> Sales drop as newer solutions emerge — harvest cash, exit, or reinvention</div></div>
+      <div class="pt"><div class="d"></div><div><b>Brand equity:</b> The premium value a brand name adds — Apple charges more than identical hardware because of brand. Protect it obsessively.</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What is the product life cycle? How do companies create brand loyalty?</div>
+      <div class="dq-q">What are some of the issues your text describes about packaging?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 4 · Ch. 10</div><h4>New Product Development</h4></div>
+  <div class="s-body">
+    <div class="pt"><div class="d"></div><div><b>Stage 1 — Idea generation:</b> Internal R&D, customer feedback, competitor analysis, crowdsourcing — the wider the funnel the better</div></div>
+    <div class="pt"><div class="d"></div><div><b>Stage 2 — Screening and evaluation:</b> Filter ideas against strategic fit, resource availability, and market potential — most ideas fail here, and that's good</div></div>
+    <div class="pt"><div class="d"></div><div><b>Stage 3 — Concept testing:</b> Present the idea (not the product) to target customers — do they understand it? Would they buy it?</div></div>
+    <div class="pt"><div class="d"></div><div><b>Stage 4 — Marketing strategy development:</b> Define target market, positioning, pricing, distribution, and promotion plans</div></div>
+    <div class="pt"><div class="d"></div><div><b>Stage 5 — Business analysis:</b> Estimate sales, costs, and profitability — does this make financial sense at scale?</div></div>
+    <div class="pt"><div class="d"></div><div><b>Stage 6 — Product development:</b> Build the actual product — engineering, design, and testing. First time real money is committed.</div></div>
+    <div class="pt"><div class="d"></div><div><b>Stage 7 — Test marketing and commercialization:</b> Limited launch in select markets, then full rollout — skipping this step is a common and costly mistake</div></div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Question</div>
+      <div class="dq-q">What should we know about new product development and marketing? What role does innovation play in maintaining a competitive edge?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 4 · Ch. 11</div><h4>Marketing Services</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Four Characteristics of Services</div>
+      <div class="pt"><div class="d"></div><div><b>Intangibility:</b> Cannot be seen, touched, or tested before purchase — customers buy a promise. Marketing must build trust.</div></div>
+      <div class="pt"><div class="d"></div><div><b>Inseparability:</b> Production and consumption happen simultaneously — the hotel room experience happens while you're staying in it</div></div>
+      <div class="pt"><div class="d"></div><div><b>Perishability:</b> Cannot be stored for later — an empty airplane seat at takeoff is revenue lost forever; hence dynamic pricing</div></div>
+      <div class="pt"><div class="d"></div><div><b>Variability:</b> Quality depends on who delivers it, when, and under what conditions — standardization through training is the solution</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Managing Service Quality</div>
+      <div class="pt"><div class="d"></div><div><b>Gap Model of Service Quality:</b> Identifies 5 gaps between customer expectations and actual service delivery — each gap is a failure point</div></div>
+      <div class="pt"><div class="d"></div><div>Example: Promising "24/7 customer support" but only staffing email during business hours = a trust gap that destroys loyalty</div></div>
+      <div class="pt"><div class="d"></div><div><b>Internal marketing:</b> Marketing to your own employees — engaged, trained employees create better customer experiences</div></div>
+      <div class="pt"><div class="d"></div><div>Employee satisfaction drives customer satisfaction — Ritz-Carlton, Southwest Airlines, and Zappos built their brands on this principle</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">How do we classify services? What are some of the ethical considerations when providing services?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 4 · Ch. 12</div><h4>Pricing Strategy</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Pricing Strategies</div>
+      <div class="pt"><div class="d"></div><div><b>Cost-based:</b> Add a profit margin to cost — simple but ignores what customers are actually willing to pay</div></div>
+      <div class="pt"><div class="d"></div><div><b>Value-based:</b> Price reflects customer's perceived value — can sustain premium prices; requires deep customer understanding</div></div>
+      <div class="pt"><div class="d"></div><div><b>Competition-based:</b> Price relative to what competitors charge — industry benchmarking</div></div>
+      <div class="pt"><div class="d"></div><div><b>Dynamic pricing:</b> Prices change based on demand, time, or customer segment — airlines, Uber, Amazon all use this</div></div>
+      <div class="pt"><div class="d"></div><div><b>Penetration pricing:</b> Enter market with a low price to build share quickly, then raise it</div></div>
+      <div class="pt"><div class="d"></div><div><b>Price skimming:</b> High initial price for innovative product, lower as market matures — recoup R&D investment early</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Psychological Pricing and Ethics</div>
+      <div class="pt"><div class="d"></div><div><b>Odd-even pricing:</b> $9.99 vs $10.00 — the left digit effect makes $9.99 feel significantly cheaper</div></div>
+      <div class="pt"><div class="d"></div><div><b>Prestige pricing:</b> High price signals luxury and quality — lowering the price of a Rolex would destroy the brand</div></div>
+      <div class="pt"><div class="d"></div><div><b>Bundle pricing:</b> Combine products at a discount — increases average transaction value</div></div>
+      <div class="pt"><div class="d"></div><div><b>Price fixing:</b> Agreement between competitors to set prices — illegal per se under antitrust law</div></div>
+      <div class="pt"><div class="d"></div><div><b>Price gouging:</b> Exploiting emergencies to charge excessive prices — illegal in many states, always a reputational disaster</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What elements should we consider when pricing a product or service? Does the strategy for pricing change when something is a new product?</div>
+      <div class="dq-q">What is the promotion mix?</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 4 ASSIGNMENT -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 4 · Assignment</div><h4>Assignment 3B: Pricing and Promotion Strategies</h4></div>
+  <div class="a-body">
+    <div class="mp-note"><b>Marketing Plan:</b> Week 4 adds the Pricing Strategy and Promotion Strategy sections. Write in full paragraphs — not bullet points.</div>
+    <div class="a-meta">
+      <div class="a-badge">15 Points</div>
+      <div class="a-badge">Due: Wednesday midnight</div>
+      <div class="a-badge">No AI tools permitted</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Pricing Strategy Section</div>
+      <div class="a-item"><span class="n">→</span><span>Current or intended pricing strategy and how it compares to competitors</span></div>
+      <div class="a-item"><span class="n">→</span><span>Analysis of how price-sensitive (elastic) the target market is</span></div>
+      <div class="a-item"><span class="n">→</span><span>Select and justify a specific pricing strategy (cost-plus, value-based, penetration, skimming, etc.) with reasoning tied to the market and goals</span></div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Promotion Strategy Section</div>
+      <div class="a-item"><span class="n">→</span><span>List at least 3-4 promotional methods: advertising, social media, influencer marketing, trade shows, PR, content marketing, etc.</span></div>
+      <div class="a-item"><span class="n">→</span><span>For each method: explain its specific advantages and disadvantages in the context of this company and product</span></div>
+      <div class="a-item"><span class="n">→</span><span>Estimate costs or resource requirements for each method and explain why it was chosen over alternatives</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ WEEK 5 ══════════ -->
+<div class="slide s-week" id="week-5">
+  <div class="wlabel">Week 5</div>
+  <h2>Promotion &amp; Distribution</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading</div>
+    <ul>
+      <li>Ch. 13: Integrated Marketing Communications</li>
+      <li>Ch. 14: Advertising and Public Relations</li>
+      <li>Ch. 15: Personal Selling and Sales Promotion</li>
+      <li>Ch. 16: Direct, Online, Social Media, and Mobile Marketing</li>
+      <li>Ch. 17: Distribution — Delivering Customer Value</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 5 · Ch. 13</div><h4>Integrated Marketing Communications (IMC)</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">What IMC Is</div>
+      <div class="pt"><div class="d"></div><div>IMC ensures all promotional tools, messaging, and media work together in harmony — every customer touchpoint tells the same story</div></div>
+      <div class="pt"><div class="d"></div><div>It's more than visual consistency (logo, colors) — it's consistency of tone, promise, and value proposition across every channel</div></div>
+      <div class="pt"><div class="d"></div><div>Without IMC: customers get conflicting messages — a premium brand running a discount ad undermines its positioning</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">The Communication Process</div>
+      <div class="pt"><div class="d"></div><div><b>Sender:</b> The brand or company</div></div>
+      <div class="pt"><div class="d"></div><div><b>Encoding:</b> Translating the idea into words, images, and sounds — creative execution</div></div>
+      <div class="pt"><div class="d"></div><div><b>Message:</b> The actual content delivered</div></div>
+      <div class="pt"><div class="d"></div><div><b>Medium/Channel:</b> TV, social, email, search, OOH, print</div></div>
+      <div class="pt"><div class="d"></div><div><b>Decoding:</b> How the receiver interprets the message — not always what was intended</div></div>
+      <div class="pt"><div class="d"></div><div><b>Noise:</b> Anything that distorts the message — competing messages, poor channel fit, unclear language, cultural differences</div></div>
+      <div class="pt"><div class="d"></div><div><b>Feedback:</b> Purchases, clicks, shares, reviews — how the audience responds tells you whether it worked</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What are some of the ethical issues in marketing communication we should consider?</div>
+      <div class="dq-q">What factors should we consider when implementing a promotion mix?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 5 · Ch. 14</div><h4>Advertising and Public Relations</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Advertising</div>
+      <div class="pt"><div class="d"></div><div>Paid, non-personal communication from an identified source — the company controls the message completely</div></div>
+      <div class="pt"><div class="d"></div><div><b>Ad planning:</b> Set objectives → Determine budget → Choose media → Develop creative → Execute → Measure</div></div>
+      <div class="pt"><div class="d"></div><div><b>Key metrics:</b> Impressions (reach), Click-through rate (CTR), Conversion rate, Cost per acquisition (CPA), Return on ad spend (ROAS)</div></div>
+      <div class="pt"><div class="d"></div><div>Digital advertising allows precise targeting and real-time optimization — the era of "spray and pray" mass advertising is over</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Public Relations</div>
+      <div class="pt"><div class="d"></div><div>Earned media — coverage the brand doesn't pay for directly; more credible because a third party is saying it</div></div>
+      <div class="pt"><div class="d"></div><div>PR tools: Press releases, media pitching, community events, thought leadership, influencer relationships</div></div>
+      <div class="pt"><div class="d"></div><div><b>Crisis communication:</b> How a brand responds to a crisis matters as much as what caused it — speed, transparency, and accountability</div></div>
+      <div class="pt"><div class="d"></div><div>Ethics: Hidden sponsorships, misleading claims, and manipulative imagery all backfire in today's transparent digital environment</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What elements should be considered in advertising?</div>
+      <div class="dq-q">What is the role of public relations in the promotion mix?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 5 · Ch. 15</div><h4>Personal Selling and Sales Promotions</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">The Personal Selling Process</div>
+      <div class="pt"><div class="d"></div><div><b>1. Prospecting:</b> Identify potential customers — research who has the need, budget, and authority to buy</div></div>
+      <div class="pt"><div class="d"></div><div><b>2. Approach:</b> Make initial contact — first impression is critical; know the customer before you call</div></div>
+      <div class="pt"><div class="d"></div><div><b>3. Presentation:</b> Tailor the pitch to this customer's specific needs — show you understand their problem</div></div>
+      <div class="pt"><div class="d"></div><div><b>4. Handle objections:</b> Address concerns without being defensive — objections mean the customer is engaged</div></div>
+      <div class="pt"><div class="d"></div><div><b>5. Close:</b> Ask for the business — many salespeople lose deals by failing to close explicitly</div></div>
+      <div class="pt"><div class="d"></div><div><b>6. Follow up:</b> Ensure satisfaction and build the relationship — the next sale is always in the follow-up</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Sales Promotions</div>
+      <div class="pt"><div class="d"></div><div>Short-term incentives designed to drive immediate action — most effective when coordinated with advertising</div></div>
+      <div class="pt"><div class="d"></div><div><b>Consumer promotions:</b> Coupons, rebates, samples, contests, loyalty programs, bundle deals</div></div>
+      <div class="pt"><div class="d"></div><div><b>Trade promotions:</b> Allowances and discounts to retailers for stocking and featuring products</div></div>
+      <div class="pt"><div class="d"></div><div>Promotions drive volume — but used too frequently they train customers to never pay full price</div></div>
+      <div class="pt"><div class="d"></div><div>Ethics: No hidden fees, no misleading "original" prices, no deceptive expiration dates on offers</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What should be considered in the personal selling process? What are the main types of sales promotions?</div>
+      <div class="dq-q">What are some forms of traditional direct marketing?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 5 · Ch. 16 &amp; 17</div><h4>Digital Marketing and Distribution</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Digital and Social Media Marketing</div>
+      <div class="pt"><div class="d"></div><div><b>Facebook/Instagram:</b> Largest reach; visual storytelling; highly targeted paid ads; strong for B2C</div></div>
+      <div class="pt"><div class="d"></div><div><b>LinkedIn:</b> B2B marketing; thought leadership; professional audience; lead generation</div></div>
+      <div class="pt"><div class="d"></div><div><b>TikTok/YouTube:</b> Video-first; reaches younger audiences; influencer-driven discovery</div></div>
+      <div class="pt"><div class="d"></div><div><b>SEO and SEM:</b> Organic and paid search — captures demand that already exists</div></div>
+      <div class="pt"><div class="d"></div><div><b>Mobile marketing:</b> Geotargeting, push notifications, apps, SMS — real-time, location-aware, always on</div></div>
+      <div class="pt"><div class="d"></div><div>Data ethics and privacy: Transparent opt-in, clear privacy policies, and compliance with GDPR/CCPA are non-negotiable</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Distribution Channels</div>
+      <div class="pt"><div class="d"></div><div>Distribution connects producers to consumers — a great product that customers can't find or buy easily will fail</div></div>
+      <div class="pt"><div class="d"></div><div><b>Direct channels:</b> Manufacturer to consumer — D2C brands, Tesla, most SaaS companies</div></div>
+      <div class="pt"><div class="d"></div><div><b>Indirect channels:</b> Intermediaries (wholesalers, retailers, brokers) add value through logistics, market access, and expertise</div></div>
+      <div class="pt"><div class="d"></div><div>Channel selection affects cost, speed, control, and the customer experience — it is a strategic decision, not an afterthought</div></div>
+      <div class="pt"><div class="d"></div><div>Promotion and distribution must be aligned — advertising a product customers can't find is money wasted</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What are considerations in social media or technology-assisted marketing?</div>
+      <div class="dq-q">What is the role of distribution in a marketing plan?</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 5 ASSIGNMENT -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 5 · Assignment</div><h4>Assignment 4: Product Strategy</h4></div>
+  <div class="a-body">
+    <div class="mp-note"><b>Marketing Plan:</b> Week 5 adds the Product Strategy section. Write in full paragraphs — not bullet points.</div>
+    <div class="a-meta">
+      <div class="a-badge">10 Points</div>
+      <div class="a-badge">Due: Wednesday midnight</div>
+      <div class="a-badge">No AI tools permitted</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Required Sections</div>
+      <div class="a-item"><span class="n">1.</span><span>Company/Brand Overview: What the company does, what it offers, and what makes the brand distinct</span></div>
+      <div class="a-item"><span class="n">2.</span><span>Benefits and Problem-Solving: How the product drives revenue or builds loyalty; what specific customer problem it solves</span></div>
+      <div class="a-item"><span class="n">3.</span><span>Impact on Customers and the Business: What difference it makes in customers' lives; how it contributes to overall business success</span></div>
+      <div class="a-item"><span class="n">4.</span><span>Product Life Cycle Stage: Identify the current stage (Introduction, Growth, Maturity, or Decline) and explain why with evidence</span></div>
+      <div class="a-item"><span class="n">5.</span><span>Alignment with Target Market Values: How well it delivers what the target market values; which specific features matter most to them</span></div>
+      <div class="a-item"><span class="n">6.</span><span>Recommendations for Improvement: What specific changes could make the product a better fit for the target market</span></div>
+      <div class="a-item"><span class="n">7.</span><span>Improvements for Competitive Advantage: What enhancements would help the product compete more effectively in the market</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ WEEK 6 ══════════ -->
+<div class="slide s-week" id="week-6">
+  <div class="wlabel">Week 6</div>
+  <h2>Retailing, Wholesaling &amp;<br>Sustainable Marketing</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading</div>
+    <ul>
+      <li>Ch. 18: Retailing and Wholesaling</li>
+      <li>Ch. 19: Sustainable Marketing — The New Paradigm</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 6 · Ch. 18</div><h4>Retailing — The Front Line of Consumer Access</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">What Retailers Do</div>
+      <div class="pt"><div class="d"></div><div>Retailers are the last link in the distribution chain — they sell directly to end consumers for personal use</div></div>
+      <div class="pt"><div class="d"></div><div>They add value by breaking bulk, offering convenience, providing service, and gathering feedback from consumers</div></div>
+      <div class="pt"><div class="d"></div><div><b>Store-based:</b> Department stores (Nordstrom), Discount (Target, Walmart), Specialty (REI, Apple Store), Supermarkets, Warehouse clubs (Costco)</div></div>
+      <div class="pt"><div class="d"></div><div><b>Non-store:</b> E-commerce, mobile commerce, social commerce, direct mail, vending machines, home shopping TV</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Retailer Strategy Decisions</div>
+      <div class="pt"><div class="d"></div><div><b>Target audience:</b> Who is the core customer? Everything else follows from this decision.</div></div>
+      <div class="pt"><div class="d"></div><div><b>Location:</b> Physical — traffic, visibility, co-tenancy; Digital — SEO, platform presence, user experience</div></div>
+      <div class="pt"><div class="d"></div><div><b>Merchandising:</b> Which products to carry, how to display them, how to manage inventory</div></div>
+      <div class="pt"><div class="d"></div><div><b>Store atmosphere:</b> Layout, lighting, music, scent — all shape perception and purchasing behavior</div></div>
+      <div class="pt"><div class="d"></div><div><b>Pricing and promotions:</b> Everyday low pricing (Walmart) vs. high-low promotions (Macy's) — strategic choice with brand implications</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What are the challenges and opportunities of working with retailers?</div>
+      <div class="dq-q">How can you create an action plan for your marketing plan? What elements should you consider when developing a marketing budget?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 6 · Ch. 18</div><h4>Wholesaling — Behind-the-Scenes Supply Chain</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">What Wholesalers Do</div>
+      <div class="pt"><div class="d"></div><div>Wholesalers connect manufacturers to retailers — they buy in bulk and resell in smaller quantities</div></div>
+      <div class="pt"><div class="d"></div><div>They are invisible to most consumers but essential to the efficiency of supply chains</div></div>
+      <div class="pt"><div class="d"></div><div>Value-added services: Warehousing, transportation, financing and credit, marketing support, risk assumption</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Types of Wholesalers</div>
+      <div class="pt"><div class="d"></div><div><b>Merchant wholesalers:</b> Take title to goods — buy, store, and resell. Full-service (carry full product lines, extend credit) or limited-service (cash and carry)</div></div>
+      <div class="pt"><div class="d"></div><div><b>Brokers and agents:</b> Facilitate transactions without taking title — earn a commission; common in real estate, food, and financial products</div></div>
+      <div class="pt"><div class="d"></div><div><b>Manufacturer sales branches:</b> Wholesaling units owned by the manufacturer — gives more control over distribution</div></div>
+      <div class="pt"><div class="d"></div><div>Costco is a unique hybrid — functions as both a retailer and a wholesaler, selling in bulk directly to consumers and small businesses</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 6 · Ch. 19</div><h4>Sustainable and Purpose-Driven Marketing</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Sustainable Marketing</div>
+      <div class="pt"><div class="d"></div><div>Meeting present consumer needs without compromising future generations' ability to meet theirs — it's strategy, not charity</div></div>
+      <div class="pt"><div class="d"></div><div><b>ESG framework — Environmental:</b> Carbon footprint, resource use, packaging, supply chain emissions</div></div>
+      <div class="pt"><div class="d"></div><div><b>ESG — Social:</b> Labor practices, diversity, community investment, product safety</div></div>
+      <div class="pt"><div class="d"></div><div><b>ESG — Governance:</b> Board composition, executive pay, transparency, anti-corruption practices</div></div>
+      <div class="pt"><div class="d"></div><div>ESG ratings are now used by institutional investors — poor ESG performance raises cost of capital</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Purpose-Driven Brands</div>
+      <div class="pt"><div class="d"></div><div>Purpose-driven brands embed their values into every customer touchpoint — not just their ad campaigns</div></div>
+      <div class="pt"><div class="d"></div><div><b>TOMS Shoes:</b> "One for One" giving model built into the business model itself — not an add-on</div></div>
+      <div class="pt"><div class="d"></div><div><b>Ben & Jerry's:</b> Social and environmental advocacy is core to brand identity — not marketing</div></div>
+      <div class="pt"><div class="d"></div><div><b>IKEA:</b> Committed to being climate-positive by 2030 — solar energy, sustainable forestry, product recyclability</div></div>
+      <div class="pt"><div class="d"></div><div>Gen Z and Millennials increasingly choose brands based on values alignment — sustainability is now a purchase criterion, not a differentiator</div></div>
+    </div>
+    <div class="dq" >
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What factors should be considered to develop a sustainable marketing plan? What is purpose-driven marketing?</div>
+      <div class="dq-q">What items do you need to revise in your marketing plan? What has been your biggest success in this process?</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 6 ASSIGNMENTS -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 6 · Assignment A</div><h4>Assignment 5: Distribution Strategy</h4></div>
+  <div class="a-body">
+    <div class="mp-note"><b>Marketing Plan:</b> Week 6 adds the Distribution Strategy section. Write in full paragraphs.</div>
+    <div class="a-meta">
+      <div class="a-badge">10 Points</div>
+      <div class="a-badge">Due: Wednesday midnight</div>
+      <div class="a-badge">No AI tools permitted</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Required Sections</div>
+      <div class="a-item"><span class="n">1.</span><span>Current Distribution Strategy: Current or planned strategy; how the product is distributed and through what channels today</span></div>
+      <div class="a-item"><span class="n">2.</span><span>Type of Distribution Strategy: Identify as exclusive, selective, or intensive; explain why this approach fits this product and target market</span></div>
+      <div class="a-item"><span class="n">3.</span><span>Distribution Channels: Where and how customers purchase — online, retail, distributors; any intermediaries (wholesalers, brokers, agents) involved</span></div>
+      <div class="a-item"><span class="n">4.</span><span>Costs Involved: Warehousing, shipping, retail fees, website management; how distribution costs affect pricing and profitability</span></div>
+      <div class="a-item"><span class="n">5.</span><span>Justification: Why is this the right distribution strategy? How does it align with marketing goals and target customer behavior?</span></div>
+      <div class="a-item"><span class="n">6.</span><span>Geographical Availability: Where will the product be available? Which regions or markets will be prioritized first and why?</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 6 · Final Assignment</div><h4>Final: Comprehensive Marketing Plan</h4></div>
+  <div class="a-body">
+    <div class="mp-note"><b>Marketing Plan:</b> The final submission compiles and refines all prior sections PLUS adds four new components. This is not a copy-paste of past work — it must be revised, polished, and improved throughout. APA formatting required.</div>
+    <div class="a-meta">
+      <div class="a-badge">50 Points</div>
+      <div class="a-badge">Due: Wednesday midnight</div>
+      <div class="a-badge">APA format required</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Revise All Prior Sections</div>
+      <div class="a-item"><span class="n">→</span><span>Company Profile, Mission Statement, SWOT, Goals and Objectives, Market Segmentation, Target Market, Buyer Personas, Positioning, Situation Analysis, Pricing and Promotion, Product Strategy, Distribution Strategy — all must be updated based on instructor feedback and continued learning</span></div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">New Components Required</div>
+      <div class="a-item"><span class="n">1.</span><span>Executive Summary: 1-2 paragraphs outlining major goals, market focus, and strategies — written last, placed first</span></div>
+      <div class="a-item"><span class="n">2.</span><span>Marketing Budget: Projected budget with reasonable cost estimates for promotions, distribution, technology, and personnel</span></div>
+      <div class="a-item"><span class="n">3.</span><span>Action Items: Chart or list of major marketing actions — who is responsible, timeline, and key milestones</span></div>
+      <div class="a-item"><span class="n">4.</span><span>Controls and Evaluation: How success will be measured using KPIs; when and how the plan will be evaluated and adjusted</span></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end deck -->
+
+<div class="nav">
+  <button onclick="prev()">← Prev</button>
+  <span class="ctr" id="ctr"></span>
+  <button onclick="next()">Next →</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let cur = 0;
+function show(n) {
+  slides[cur].classList.remove('active');
+  cur = (n + slides.length) % slides.length;
+  slides[cur].classList.add('active');
+  document.getElementById('ctr').textContent = (cur+1) + ' / ' + slides.length;
+}
+
+  function goToWeek(id) {
+    const target = document.getElementById(id);
+    if (!target) return;
+    const allSlides = document.querySelectorAll('.slide');
+    allSlides.forEach((s,i) => { if(s === target) show(i); });
+  }
+  function next() { show(cur+1); }
+function prev() { show(cur-1); }
+document.addEventListener('keydown', e => {
+  if (e.key==='ArrowRight'||e.key==='ArrowDown') next();
+  if (e.key==='ArrowLeft'||e.key==='ArrowUp') prev();
+});
+show(0);
+</script>
+</body>
+</html>

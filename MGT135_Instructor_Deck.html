@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MGT-135: Introduction to Leadership — Instructor Deck</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+:root {
+  --red: #7A1219;
+  --red-light: #c0444d;
+  --red-pale: #FBEAEA;
+  --charcoal: #2D2D2D;
+  --gray: #5F5E5A;
+  --gray-light: #E8E8E8;
+  --off-white: #F6F6F4;
+  --white: #FFFFFF;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #111;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+.deck { width: 100%; max-width: 1100px; }
+.slide {
+  display: none;
+  width: 100%;
+  background: var(--white);
+  border-radius: 6px;
+  position: relative;
+  flex-direction: column;
+}
+.slide.active { display: flex; }
+
+/* COURSE TITLE */
+.slide.s-course {
+  background: var(--charcoal);
+  flex-direction: column;
+  justify-content: center;
+  padding: 7% 9%;
+}
+.s-course .eyebrow {
+  font-size: clamp(10px,1.3vw,14px);
+  font-weight: 600;
+  color: var(--red-light);
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  margin-bottom: 3%;
+}
+.s-course h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 38px;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 3%;
+}
+.s-course .sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.9;
+}
+.s-course .accent { position: absolute; bottom: 0; left: 0; right: 0; height: 5px; background: var(--red); }
+
+/* WEEK TITLE */
+.slide.s-week {
+  background: var(--red);
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 7% 8%;
+}
+.s-week .wlabel {
+  font-size: clamp(10px,1.2vw,13px);
+  font-weight: 600;
+  color: rgba(255,255,255,0.65);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  margin-bottom: 2%;
+}
+.s-week h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 36px;
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: 4%;
+}
+.rdg-block {
+  background: rgba(0,0,0,0.22);
+  border-radius: 4px;
+  padding: 2.5% 3.5%;
+  width: 100%;
+}
+.rdg-block .rlabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  margin-bottom: 1.5%;
+}
+.rdg-block ul { list-style: none; display: flex; flex-wrap: wrap; gap: .8% 3%; }
+.rdg-block li { font-size: 13px; color: rgba(255,255,255,0.9); }
+.rdg-block li::before { content: "→ "; color: rgba(255,255,255,0.4); }
+
+/* SECTION BREAK */
+.slide.s-section {
+  background: var(--charcoal);
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 7% 9%;
+}
+.s-section .stag {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--red-light);
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  margin-bottom: 2%;
+}
+.s-section h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px;
+  color: var(--white);
+  line-height: 1.2;
+}
+
+/* CONTENT */
+.slide.s-content { flex-direction: column; }
+.s-hdr {
+  background: var(--charcoal);
+  padding: 2.8% 5%;
+  flex-shrink: 0;
+}
+.s-hdr .htag {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--red-light);
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  margin-bottom: .8%;
+}
+.s-hdr h4 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--white);
+  line-height: 1.2;
+}
+.s-body {
+  flex: 1;
+  padding: 2.5% 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2%;
+  background: var(--white);
+}
+.s-body.cols { flex-direction: column; }
+.cols-row { display: flex; flex-direction: row; gap: 3%; }
+.col { flex: 1; display: flex; flex-direction: column; gap: 1.2%; }
+
+.pt {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.8%;
+  font-size: 14px;
+  color: var(--charcoal);
+  line-height: 1.45;
+}
+.pt .d {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  flex-shrink: 0;
+  margin-top: .35em;
+}
+.pt b { font-weight: 600; color: var(--charcoal); }
+
+.sub-hdr {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--red);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--red);
+  padding-bottom: .4%;
+  margin-bottom: .8%;
+  flex-shrink: 0;
+}
+
+/* discussion callout */
+.dq {
+  background: var(--red-pale);
+  border-left: 4px solid var(--red);
+  border-radius: 0 4px 4px 0;
+  padding: 1.8% 2.5%;
+  flex-shrink: 0;
+  margin-top: auto;
+}
+.dq .dq-lbl {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--red);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: .8%;
+}
+.dq .dq-q {
+  font-size: 13px;
+  color: var(--charcoal);
+  line-height: 1.45;
+  font-style: italic;
+}
+.dq .dq-q + .dq-q { margin-top: .6%; }
+
+/* reflect callout */
+.reflect {
+  background: #EAF3DE;
+  border-left: 4px solid #3B6D11;
+  border-radius: 0 4px 4px 0;
+  padding: 1.8% 2.5%;
+  flex-shrink: 0;
+  margin-top: auto;
+}
+.reflect .reflect-lbl {
+  font-size: 10px;
+  font-weight: 700;
+  color: #3B6D11;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: .8%;
+}
+.reflect .reflect-q {
+  font-size: 13px;
+  color: var(--charcoal);
+  line-height: 1.45;
+}
+
+/* ASSIGNMENT */
+.slide.s-asgn { flex-direction: column; }
+.s-asgn .s-hdr { background: var(--red); }
+.s-asgn .s-hdr .htag { color: rgba(255,255,255,0.6); }
+.s-asgn .s-hdr h4 { color: var(--white); }
+.a-body {
+  flex: 1;
+  padding: 2.5% 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5%;
+  background: var(--white);
+}
+.a-meta { display: flex; gap: 2%; flex-shrink: 0; flex-wrap: wrap; }
+.a-badge {
+  background: var(--red-pale);
+  border: 1px solid rgba(122,18,25,.25);
+  border-radius: 3px;
+  padding: .7% 2%;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--red);
+}
+.a-sec {
+  background: var(--off-white);
+  border-radius: 4px;
+  padding: 1.8% 2.5%;
+  flex-shrink: 0;
+}
+.a-sec .a-lbl {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--gray);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: .8%;
+}
+.a-sec .a-item {
+  font-size: 13px;
+  color: var(--charcoal);
+  line-height: 1.45;
+  padding: .5% 0;
+  border-bottom: 1px solid var(--gray-light);
+  display: flex;
+  gap: 1.5%;
+  align-items: flex-start;
+}
+.a-sec .a-item:last-child { border-bottom: none; }
+.a-sec .a-item .n { color: var(--red); font-weight: 700; flex-shrink: 0; }
+
+/* NAV */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 14px;
+}
+.nav button {
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.2);
+  color: #fff;
+  padding: 8px 22px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+}
+.nav button:hover { background: rgba(255,255,255,.2); }
+.nav .ctr { color: rgba(255,255,255,.45); font-size: 12px; min-width: 70px; text-align: center; }
+
+/* TOC */
+.slide.s-toc { background: var(--white); flex-direction: column; padding: 0; }
+.toc-header { background: var(--charcoal); padding: 28px 48px 24px; flex-shrink: 0; }
+.toc-eyebrow { font-size: 11px; font-weight: 700; color: var(--red-light); letter-spacing: .15em; text-transform: uppercase; margin-bottom: 6px; }
+.toc-heading { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--white); margin-bottom: 4px; }
+.toc-sub { font-size: 12px; color: rgba(255,255,255,0.45); }
+.toc-grid { padding: 20px 40px 28px; display: flex; flex-direction: column; gap: 10px; }
+.toc-item {
+  display: flex; align-items: center; gap: 16px;
+  background: var(--off-white); border: 1px solid var(--gray-light);
+  border-radius: 6px; padding: 14px 20px; cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+.toc-item:hover { background: var(--red-pale); border-color: var(--red); transform: translateX(4px); }
+.toc-num { width: 36px; height: 36px; border-radius: 50%; background: var(--red); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; flex-shrink: 0; }
+.toc-text { flex: 1; }
+.toc-week { font-size: 10px; font-weight: 700; color: var(--red); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 2px; }
+.toc-title { font-size: 14px; font-weight: 600; color: var(--charcoal); }
+.toc-arrow { font-size: 18px; color: var(--red); font-weight: 700; opacity: 0.5; }
+.toc-item:hover .toc-arrow { opacity: 1; }
+
+/* table */
+.tbl { width: 100%; border-collapse: collapse; font-size: 13px; flex-shrink: 0; }
+.tbl th { background: var(--charcoal); color: var(--white); padding: 7px 10px; text-align: left; font-size: 11px; font-weight: 700; }
+.tbl td { padding: 6px 10px; border-bottom: 1px solid var(--gray-light); vertical-align: top; line-height: 1.4; }
+.tbl tr:last-child td { border-bottom: none; }
+.tbl td:first-child { font-weight: 600; color: var(--charcoal); }
+
+/* VIDEO SLIDE */
+.slide.s-video { flex-direction: column; background: var(--charcoal); }
+.s-video .v-hdr {
+  padding: 2.2% 5%;
+  flex-shrink: 0;
+  border-bottom: 3px solid var(--red);
+}
+.s-video .v-hdr .v-tag {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--red-light);
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  margin-bottom: .5%;
+}
+.s-video .v-hdr .v-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px;
+  color: var(--white);
+}
+.s-video .v-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2% 5% 3%;
+}
+.s-video .v-body iframe {
+  width: 100%;
+  max-width: 860px;
+  aspect-ratio: 16/9;
+  border: none;
+  border-radius: 4px;
+}
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- COURSE TITLE -->
+<div class="slide s-course active">
+  <div class="eyebrow">MGT-135</div>
+  <h1>Introduction to Leadership</h1>
+  <div class="sub">
+    Dunlap-Stone University &nbsp;·&nbsp; 3 Credit Hours &nbsp;·&nbsp; 6 Weeks<br>
+    Textbook: The Leadership Challenge, 7th ed. — Kouzes &amp; Posner (Jossey-Bass, 2023)<br>
+    Project-based · Same leadership project applied all 6 weeks · Weekly article reviews + project papers
+  </div>
+  <div class="accent"></div>
+</div>
+
+<!-- TOC -->
+<div class="slide s-toc" id="toc-slide">
+  <div class="toc-header">
+    <div class="toc-eyebrow">MGT-135</div>
+    <div class="toc-heading">Course Contents</div>
+    <div class="toc-sub">Click any week to jump to it</div>
+  </div>
+  <div class="toc-grid">
+    <div class="toc-item" onclick="goToWeek('week-1')">
+      <div class="toc-num">1</div>
+      <div class="toc-text"><div class="toc-week">Week 1</div><div class="toc-title">Defining Leadership and Traits of Successful Leaders</div></div>
+      <div class="toc-arrow">→</div>
+    </div>
+    <div class="toc-item" onclick="goToWeek('week-2')">
+      <div class="toc-num">2</div>
+      <div class="toc-text"><div class="toc-week">Week 2</div><div class="toc-title">Model the Way</div></div>
+      <div class="toc-arrow">→</div>
+    </div>
+    <div class="toc-item" onclick="goToWeek('week-3')">
+      <div class="toc-num">3</div>
+      <div class="toc-text"><div class="toc-week">Week 3</div><div class="toc-title">Inspire a Shared Vision</div></div>
+      <div class="toc-arrow">→</div>
+    </div>
+    <div class="toc-item" onclick="goToWeek('week-4')">
+      <div class="toc-num">4</div>
+      <div class="toc-text"><div class="toc-week">Week 4</div><div class="toc-title">Challenge the Process</div></div>
+      <div class="toc-arrow">→</div>
+    </div>
+    <div class="toc-item" onclick="goToWeek('week-5')">
+      <div class="toc-num">5</div>
+      <div class="toc-text"><div class="toc-week">Week 5</div><div class="toc-title">Enable Others to Act</div></div>
+      <div class="toc-arrow">→</div>
+    </div>
+    <div class="toc-item" onclick="goToWeek('week-6')">
+      <div class="toc-num">6</div>
+      <div class="toc-text"><div class="toc-week">Week 6</div><div class="toc-title">Encourage the Heart and Putting It All Together</div></div>
+      <div class="toc-arrow">→</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- WEEK 1 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="slide s-week" id="week-1">
+  <div class="wlabel">Week 1</div>
+  <h2>Defining Leadership and<br>Traits of Successful Leaders</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading &amp; Watch</div>
+    <ul>
+      <li>The Leadership Challenge: Preface, Ch. 1 &amp; 2</li>
+      <li>Watch: Itay Talgam — Lead Like the Great Conductors (TED)</li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="slide s-video">
+  <div class="v-hdr">
+    <div class="v-tag">Week 1 · Required Watch</div>
+    <div class="v-title">Itay Talgam — Lead Like the Great Conductors</div>
+  </div>
+  <div class="v-body">
+    <iframe src="https://www.youtube.com/embed/R9g3Q-qvtss" allowfullscreen></iframe>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 1 · Ch. 1</div>
+  <h3>What Is Leadership?</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Ch. 1</div><h4>Leadership vs. Management</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Management</div>
+      <div class="pt"><div class="d"></div><div>Focuses on processes, systems, and efficiency — keeping things running correctly</div></div>
+      <div class="pt"><div class="d"></div><div>Driven by plans, budgets, and organizational structure</div></div>
+      <div class="pt"><div class="d"></div><div>Answers the question: Are we doing things right?</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Leadership</div>
+      <div class="pt"><div class="d"></div><div>Focuses on people, vision, and change — moving others toward something better</div></div>
+      <div class="pt"><div class="d"></div><div>Driven by values, influence, and relationships — not authority</div></div>
+      <div class="pt"><div class="d"></div><div>Answers the question: Are we doing the right things?</div></div>
+      <div class="pt"><div class="d"></div><div>Kouzes and Posner define leadership as a process of influence — enabling a group to work toward a shared goal</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">Do you have to be in a leadership position in order to be a leader within your organization? Why or why not?</div>
+      <div class="dq-q">Why are the mission and vision of your organization important to the leadership process?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 1 · Ch. 2</div>
+  <h3>The Five Practices of<br>Exemplary Leadership</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Ch. 2</div><h4>The Five Practices Framework</h4></div>
+  <div class="s-body">
+    <div class="pt"><div class="d"></div><div>Kouzes and Posner studied thousands of leaders across industries and cultures over 30 years — the Five Practices are what consistently separated effective leaders from their peers</div></div>
+    <table class="tbl" style="margin-top:1%;">
+      <thead><tr><th>Practice</th><th>Core Idea</th></tr></thead>
+      <tbody>
+        <tr><td>1. Model the Way</td><td>Set the example by aligning your actions with shared values — show it, don't just say it</td></tr>
+        <tr><td>2. Inspire a Shared Vision</td><td>Paint a compelling picture of the future and unite people around it</td></tr>
+        <tr><td>3. Challenge the Process</td><td>Innovate, experiment, and take smart risks — progress requires stepping outside the familiar</td></tr>
+        <tr><td>4. Enable Others to Act</td><td>Foster collaboration, build trust, and empower others to contribute their best work</td></tr>
+        <tr><td>5. Encourage the Heart</td><td>Recognize contributions, celebrate successes, and create a sense of belonging</td></tr>
+      </tbody>
+    </table>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">Of the five practices, which one are you most drawn to? Which makes the most sense to you and which are you most skeptical about?</div>
+      <div class="dq-q">Surveying your reading and personal experience, how would you define leadership?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Itay Talgam</div><h4>Lead Like the Great Conductors</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">What Talgam Shows</div>
+      <div class="pt"><div class="d"></div><div>Six conductors — six different leadership styles — all leading the same kind of organization toward the same goal</div></div>
+      <div class="pt"><div class="d"></div><div>One leads with strict control and precise demands. Another leads with joy and humor, drawing out creativity. Another is nearly invisible — the music emerges from the group organically</div></div>
+      <div class="pt"><div class="d"></div><div>There is no single "correct" way to lead — effective leadership is about choosing the right approach for the context, the people, and the goal</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">The Lesson</div>
+      <div class="pt"><div class="d"></div><div>A conductor achieves harmony without saying a word — through presence, signals, and trust built over time</div></div>
+      <div class="pt"><div class="d"></div><div>The most effective conductors created space for musicians to bring something — they didn't just execute orders</div></div>
+      <div class="pt"><div class="d"></div><div>Leadership is communication: verbal, nonverbal, structural, and cultural</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Question</div>
+      <div class="dq-q">After watching Talgam's video, what role should fun or control play in organizational leadership? Are there situations where each approach is more appropriate?</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 1 ASSIGNMENTS -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 1 · Assignment 1</div><h4>Article Review: Leadership in the Real World</h4></div>
+  <div class="a-body">
+    <div class="a-meta">
+      <div class="a-badge">5 Points</div>
+      <div class="a-badge">2 pages max</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Four Parts Required</div>
+      <div class="a-item"><span class="n">1</span><span><b>Publication Info:</b> Title, author, publication, date, and link — credible source only (HBR, WSJ, Forbes, The Economist, trade journals)</span></div>
+      <div class="a-item"><span class="n">2</span><span><b>Summary:</b> What happened? Who was involved? What leadership actions were taken?</span></div>
+      <div class="a-item"><span class="n">3</span><span><b>Analysis:</b> Connect the example to Kouzes and Posner's Five Practices. Did the leader model strong qualities or fail in key ways? Which practices do you see illustrated?</span></div>
+      <div class="a-item"><span class="n">4</span><span><b>Personal Insight:</b> What lessons apply to your own leadership development? Cite at least one course source in APA</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 1 · Assignment 2</div><h4>Profile of an Effective Leader</h4></div>
+  <div class="a-body">
+    <div class="a-meta">
+      <div class="a-badge">10 Points</div>
+      <div class="a-badge">500 words max</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Four Parts Required</div>
+      <div class="a-item"><span class="n">1</span><span><b>Select Your Leader:</b> A current or past supervisor, community leader, public figure, peer, coach, or family member — someone you personally view as effective</span></div>
+      <div class="a-item"><span class="n">2</span><span><b>Describe the Leader:</b> Who they are and the context in which they led. Use specific examples of how they exercised leadership — not vague praise</span></div>
+      <div class="a-item"><span class="n">3</span><span><b>Analyze Qualities:</b> Identify 2–3 key qualities or practices. Connect each explicitly to Kouzes and Posner's Five Practices</span></div>
+      <div class="a-item"><span class="n">4</span><span><b>Lessons Learned:</b> What can you take from this leader? Which qualities would you like to develop? What might you approach differently? Cite at least one course source in APA</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- WEEK 2 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="slide s-week" id="week-2">
+  <div class="wlabel">Week 2</div>
+  <h2>Model the Way</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading &amp; Watch</div>
+    <ul>
+      <li>The Leadership Challenge: Ch. 3 &amp; 4</li>
+      <li>Watch: Seth Godin — The Tribes We Lead (TED)</li>
+      <li>Review: Clarifying Core Values (Clemmer Group)</li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="slide s-video">
+  <div class="v-hdr">
+    <div class="v-tag">Week 2 · Required Watch</div>
+    <div class="v-title">Seth Godin — The Tribes We Lead</div>
+  </div>
+  <div class="v-body">
+    <iframe src="https://www.youtube.com/embed/589tH-wtCak" allowfullscreen></iframe>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 2 · Ch. 3</div>
+  <h3>Clarify Values</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 2 · Ch. 3</div><h4>Why Values Come First</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Personal Values</div>
+      <div class="pt"><div class="d"></div><div>Values are the principles that guide decisions — especially under pressure, when no one is watching</div></div>
+      <div class="pt"><div class="d"></div><div>Leaders who cannot clearly articulate their values cannot lead consistently — people don't know what to expect</div></div>
+      <div class="pt"><div class="d"></div><div>Ask yourself: What lines will I not cross, even if it costs me? That answer is your value system</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Organizational Values</div>
+      <div class="pt"><div class="d"></div><div>Every organization has stated values (in mission statements) and practiced values (in daily behavior) — they are often different</div></div>
+      <div class="pt"><div class="d"></div><div>The strongest leaders find where their personal values align with their organization's mission and lead from that overlap</div></div>
+      <div class="pt"><div class="d"></div><div>Alignment creates authenticity. Misalignment creates friction — and eventually, either the leader leaves or the values erode</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What do Kouzes and Posner mean by "Model the Way"? Can you think of an example from your own experience?</div>
+      <div class="dq-q">How do we affirm shared values in an organization? Which ideas from the Clemmer Group reading resonated most with you?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 2 · Ch. 4</div>
+  <h3>Set the Example</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 2 · Ch. 4</div><h4>Credibility Is Built in Small Moments</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">How Leaders Set the Example</div>
+      <div class="pt"><div class="d"></div><div>People watch what you do far more closely than they listen to what you say — inconsistency destroys credibility fast</div></div>
+      <div class="pt"><div class="d"></div><div>Small actions signal values: how you respond to a mistake, how you treat someone with no power over you, whether you follow through on small commitments</div></div>
+      <div class="pt"><div class="d"></div><div>Kouzes and Posner: "You cannot ask others to do what you are unwilling to do yourself"</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Seth Godin: Tribes</div>
+      <div class="pt"><div class="d"></div><div>A tribe is a group connected by a leader, a shared idea, and a common way of communicating</div></div>
+      <div class="pt"><div class="d"></div><div>Anyone can start a movement by clearly living out their values — formal authority is not required</div></div>
+      <div class="pt"><div class="d"></div><div>Leaders model the way for their tribes — consistent behavior is what creates followership, not title</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What are some practical ways leaders set expectations for others?</div>
+      <div class="dq-q">What happens when personal values and organizational values are in conflict? How should leaders respond?</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 2 ASSIGNMENTS -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 2 · Assignment 1 &amp; 2</div><h4>Article Review + Project Description</h4></div>
+  <div class="a-body">
+    <div class="a-meta">
+      <div class="a-badge">15 Points Total</div>
+      <div class="a-badge">Article Review: 5 pts · 2 pages max</div>
+      <div class="a-badge">Project Description: 10 pts · 3–5 pages</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Article Review: Modeling the Way</div>
+      <div class="a-item"><span class="n">1</span><span>Select an article illustrating effective or ineffective leadership. Cover publication info, summary, and analysis connecting to "Model the Way." Did the leader clarify values and set an example? Was there alignment or conflict between personal and organizational values?</span></div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Project Description — commit to the project you will carry through Weeks 3–6</div>
+      <div class="a-item"><span class="n">1</span><span><b>Project Overview:</b> Purpose, scope, and main objectives — why this project?</span></div>
+      <div class="a-item"><span class="n">2</span><span><b>Stakeholders:</b> Who is involved, what their roles are, and why their buy-in matters</span></div>
+      <div class="a-item"><span class="n">3</span><span><b>Desired Change:</b> What you hope to achieve and how you will know the project succeeded</span></div>
+      <div class="a-item"><span class="n">4</span><span><b>Alignment with Values:</b> How the project connects to your personal values and your organization's mission</span></div>
+      <div class="a-item"><span class="n">5</span><span><b>Connection to Model the Way:</b> At least one way this project lets you set an example for others</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- WEEK 3 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="slide s-week" id="week-3">
+  <div class="wlabel">Week 3</div>
+  <h2>Inspire a Shared Vision</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading &amp; Watch</div>
+    <ul>
+      <li>The Leadership Challenge: Ch. 5 &amp; 6</li>
+      <li>Drucker, P. (2004): Drucker on Leadership (Forbes)</li>
+      <li>Watch: Simon Sinek — How Great Leaders Inspire Action (TED)</li>
+      <li>Watch: Derek Sivers — How to Start a Movement (TED)</li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="slide s-video">
+  <div class="v-hdr">
+    <div class="v-tag">Week 3 · Required Watch</div>
+    <div class="v-title">Simon Sinek — How Great Leaders Inspire Action</div>
+  </div>
+  <div class="v-body">
+    <iframe src="https://www.youtube.com/embed/qp0HIF3SfI4" allowfullscreen></iframe>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 3 · Ch. 5</div>
+  <h3>Envision the Future</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 3 · Ch. 5</div><h4>What Vision Actually Is</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Vision Is Not a Goal</div>
+      <div class="pt"><div class="d"></div><div>A vision is a story of possibility — where we are going, why it matters, and what role each person plays in getting there</div></div>
+      <div class="pt"><div class="d"></div><div>Goals are milestones. Vision is the direction that gives those milestones meaning</div></div>
+      <div class="pt"><div class="d"></div><div>Kouzes and Posner: effective leaders are forward-looking — this is consistently the quality followers rank as most important in leaders they admire</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Looking Forward Requires Looking Back</div>
+      <div class="pt"><div class="d"></div><div>Scanning past trends — technological, demographic, social, economic — gives leaders the grounding to chart a realistic bold course</div></div>
+      <div class="pt"><div class="d"></div><div>Drucker's point: vision without organizational context is fantasy. A dream must be rooted in the reality of what the organization can actually do</div></div>
+      <div class="pt"><div class="d"></div><div>What future trends will most affect your project? Demographics, technology, shifts in your organization's priorities?</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What future trends — demographics, technology, regulations, or cultural changes — are likely to influence the direction of your project?</div>
+      <div class="dq-q">Kouzes and Posner say leaders should be forward-looking. Why must leaders also reflect on the past to look ahead effectively?</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="slide s-video">
+  <div class="v-hdr">
+    <div class="v-tag">Week 3 · Required Watch</div>
+    <div class="v-title">Derek Sivers — How to Start a Movement</div>
+  </div>
+  <div class="v-body">
+    <iframe src="https://www.youtube.com/embed/V74AxCqOTvg" allowfullscreen></iframe>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 3 · Ch. 6</div>
+  <h3>Enlist Others</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 3 · Ch. 6</div><h4>Making the Vision Shared</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Simon Sinek: Start with Why</div>
+      <div class="pt"><div class="d"></div><div>The Golden Circle: Why → How → What</div></div>
+      <div class="pt"><div class="d"></div><div>Most leaders communicate from the outside in — What we do, How we do it. Inspiring leaders start from the inside out — Why we exist</div></div>
+      <div class="pt"><div class="d"></div><div>People don't follow because of what you do. They follow because of why you do it</div></div>
+      <div class="pt"><div class="d"></div><div>Applied to your project: lead with purpose before explaining the plan</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Derek Sivers: The First Follower</div>
+      <div class="pt"><div class="d"></div><div>A movement begins not with the leader — it begins when the first person decides to join</div></div>
+      <div class="pt"><div class="d"></div><div>The first follower transforms a lone actor into a leader. Nurturing that person is as important as the vision itself</div></div>
+      <div class="pt"><div class="d"></div><div>Who is your first follower? Who needs to buy in before anyone else will?</div></div>
+      <div class="pt"><div class="d"></div><div>Enlisting others means appealing to their values and interests — not just explaining your plan</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">Describe Simon Sinek's Golden Circle. How does it apply to your leadership approach?</div>
+      <div class="dq-q">Who might be your "first follower," and how can you encourage their commitment?</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 3 ASSIGNMENTS -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 3 · Assignment 1</div><h4>Article Review: Inspiring a Shared Vision</h4></div>
+  <div class="a-body">
+    <div class="a-meta">
+      <div class="a-badge">5 Points</div>
+      <div class="a-badge">2 pages max</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Four Parts Required</div>
+      <div class="a-item"><span class="n">1</span><span><b>Publication Info:</b> Title, author, publication, date, and link</span></div>
+      <div class="a-item"><span class="n">2</span><span><b>Summary:</b> What happened? What leadership actions or decisions stood out?</span></div>
+      <div class="a-item"><span class="n">3</span><span><b>Analysis:</b> Connect to Kouzes and Posner's "Inspire a Shared Vision." Does the example illustrate Sinek's "Start with Why" or Sivers' "first follower"? How do Drucker's principles apply?</span></div>
+      <div class="a-item"><span class="n">4</span><span><b>Reflection:</b> What lessons can you apply to your own project? How might you avoid the pitfalls or replicate the successes? Cite at least one course source in APA</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 3 · Assignment 2</div><h4>Inspiring a Shared Vision for Your Project</h4></div>
+  <div class="a-body">
+    <div class="a-meta">
+      <div class="a-badge">15 Points</div>
+      <div class="a-badge">500–750 words</div>
+      <div class="a-badge">At least two APA course references required</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Five Sections Required</div>
+      <div class="a-item"><span class="n">1</span><span><b>Project Scope and Goals:</b> Define the project, main objectives, and intended outcomes. How does it contribute to positive change?</span></div>
+      <div class="a-item"><span class="n">2</span><span><b>Communicating the Vision:</b> How will you frame purpose and meaning to inspire others? Apply Sinek's Golden Circle — your Why, How, and What</span></div>
+      <div class="a-item"><span class="n">3</span><span><b>Enlisting Others:</b> Who do you need on board? What strategies will you use? How will you identify and engage your first follower?</span></div>
+      <div class="a-item"><span class="n">4</span><span><b>Aligning Values:</b> How does the project align with your personal values and your organization's mission? What will you do if values conflict?</span></div>
+      <div class="a-item"><span class="n">5</span><span><b>Challenges and Opportunities:</b> What obstacles might you face in inspiring others? How do Kouzes and Posner or Drucker guide your response?</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- WEEK 4 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="slide s-week" id="week-4">
+  <div class="wlabel">Week 4</div>
+  <h2>Challenge the Process</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading &amp; Watch</div>
+    <ul>
+      <li>The Leadership Challenge: Ch. 7 &amp; 8</li>
+      <li>Watch: How Do You Challenge the Process???</li>
+      <li>Watch: Ipsita Dasgupta — To Challenge the Status Quo, Find a Co-Conspirator (TED)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 4 · Ch. 7</div>
+  <h3>Search for Opportunities</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 4 · Ch. 7</div><h4>Finding Where to Innovate</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">How Leaders Discover Opportunities</div>
+      <div class="pt"><div class="d"></div><div>Opportunities often come from staying alert to small signals: recurring complaints, workflow inefficiencies, unmet customer needs, or new competitors entering the market</div></div>
+      <div class="pt"><div class="d"></div><div><b>Limiting assumptions</b> are the beliefs a team holds as fixed that quietly prevent them from seeing possibilities — "we've always done it this way" is the most dangerous phrase in any organization</div></div>
+      <div class="pt"><div class="d"></div><div>Effective leaders ask "What if?" — they create space to surface assumptions and test them</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Finding a Co-Conspirator</div>
+      <div class="pt"><div class="d"></div><div>Dasgupta's core insight: change rarely happens in isolation — leaders need partners who share their values and are willing to challenge norms alongside them</div></div>
+      <div class="pt"><div class="d"></div><div>A co-conspirator spreads ownership of the change, makes experimentation feel less risky, and builds credibility through shared commitment</div></div>
+      <div class="pt"><div class="d"></div><div>Who in your project could serve as a co-conspirator? What would it take to bring them in?</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What are some methods of discovering places for innovation in your organization or project?</div>
+      <div class="dq-q">Why should leaders check for "limiting assumptions"? What are they and where do they come from?</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="slide s-video">
+  <div class="v-hdr">
+    <div class="v-tag">Week 4 · Required Watch</div>
+    <div class="v-title">Ipsita Dasgupta — To Challenge the Status Quo, Find a Co-Conspirator</div>
+  </div>
+  <div class="v-body">
+    <iframe src="https://www.youtube.com/embed/3lVNA4aF1lg" allowfullscreen></iframe>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 4 · Ch. 8</div>
+  <h3>Experiment and Take Risks</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 4 · Ch. 8</div><h4>Small Wins and Sustainable Change</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">The Power of Small Wins</div>
+      <div class="pt"><div class="d"></div><div>A small win is a manageable change that demonstrates progress without overwhelming people or requiring massive risk</div></div>
+      <div class="pt"><div class="d"></div><div>Each small win provides evidence that change is possible — it builds momentum and gives the team something to point to</div></div>
+      <div class="pt"><div class="d"></div><div>Example: pilot a new process with one team before rolling it out organization-wide — learn from it before scaling</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Learning from Mistakes</div>
+      <div class="pt"><div class="d"></div><div>Experimentation means some things will not work — leaders who punish failure kill innovation before it starts</div></div>
+      <div class="pt"><div class="d"></div><div>Frame setbacks as data: what did we learn, what do we adjust, what do we try next</div></div>
+      <div class="pt"><div class="d"></div><div>Sustaining change requires: celebrating progress, gathering feedback, staying flexible, and consistently reconnecting the team to the shared values behind the effort</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What does it mean to "generate small wins"? Share an example from your own experience.</div>
+      <div class="dq-q">Kouzes and Posner argue all change requires leadership. What can be done if senior leaders are not engaged in driving change?</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 4 ASSIGNMENTS -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 4 · Assignment 1 &amp; 2</div><h4>Article Review + Challenging the Process in Your Project</h4></div>
+  <div class="a-body">
+    <div class="a-meta">
+      <div class="a-badge">15 Points Total</div>
+      <div class="a-badge">Article Review: 5 pts · 2 pages max</div>
+      <div class="a-badge">Project Paper: 10 pts · 3–5 pages</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Article Review: Challenge the Process</div>
+      <div class="a-item"><span class="n">1</span><span>Select an article about a leader who challenged the status quo — effectively or not. Connect to Kouzes and Posner's framework. Did they innovate, take calculated risks, generate small wins? If leadership was ineffective, what was missing?</span></div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Project Paper — apply Challenge the Process to your project</div>
+      <div class="a-item"><span class="n">1</span><span><b>Opportunities for Innovation:</b> At least two aspects of your project that would benefit from a new approach — explain why they matter</span></div>
+      <div class="a-item"><span class="n">2</span><span><b>Engage Your Team:</b> Specific strategies to involve team members in generating and selecting solutions — how will you encourage creativity while maintaining alignment?</span></div>
+      <div class="a-item"><span class="n">3</span><span><b>Learning from Mistakes:</b> How you will create a culture that treats mistakes as learning. At least one method for gathering feedback</span></div>
+      <div class="a-item"><span class="n">4</span><span><b>Incremental Wins:</b> Specific small wins or milestones built into your plan — explain how celebrating them maintains momentum</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- WEEK 5 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="slide s-week" id="week-5">
+  <div class="wlabel">Week 5</div>
+  <h2>Enable Others to Act</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading &amp; Watch</div>
+    <ul>
+      <li>The Leadership Challenge: Ch. 9 &amp; 10</li>
+      <li>Powell, C.: A Leadership Primer (GovLeaders)</li>
+      <li>Watch: Jim Tamm — First Step to Collaboration? Don't Be So Defensive! (TED)</li>
+      <li>Watch: Patrice Gordon — How Reverse Mentorship Can Help Create Better Leaders (TED)</li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="slide s-video">
+  <div class="v-hdr">
+    <div class="v-tag">Week 5 · Required Watch</div>
+    <div class="v-title">Jim Tamm — Cultivating Collaboration: Don't Be So Defensive!</div>
+  </div>
+  <div class="v-body">
+    <iframe src="https://www.youtube.com/embed/vjSTNv4gyMM" allowfullscreen></iframe>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 5 · Ch. 9</div>
+  <h3>Foster Collaboration</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 5 · Ch. 9</div><h4>Building a Collaborative Environment</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">What Collaboration Requires</div>
+      <div class="pt"><div class="d"></div><div>Collaboration doesn't happen by default — leaders must actively create conditions where people feel safe to share ideas and take risks together</div></div>
+      <div class="pt"><div class="d"></div><div>Break down silos — "us vs. them" thinking between departments, generations, or roles is the enemy of coordinated effort</div></div>
+      <div class="pt"><div class="d"></div><div>Ask questions that invite participation: "What do you think we should try next?" "What barriers are you facing?" These signals matter more than formal structures</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Jim Tamm: Overcoming Defensiveness</div>
+      <div class="pt"><div class="d"></div><div>Defensiveness is one of the biggest threats to collaboration — when people feel attacked or judged, they protect themselves instead of contributing</div></div>
+      <div class="pt"><div class="d"></div><div>Leaders model openness — they respond to challenge with curiosity rather than self-protection</div></div>
+      <div class="pt"><div class="d"></div><div>Colin Powell: "Leadership is solving problems. The day soldiers stop bringing you their problems is the day you have stopped leading them."</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">Why is trust essential to collaboration? What steps can leaders take to build and maintain it?</div>
+      <div class="dq-q">What are your main takeaways from the Powell article? Which principle resonates most with you?</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="slide s-video">
+  <div class="v-hdr">
+    <div class="v-tag">Week 5 · Required Watch</div>
+    <div class="v-title">Patrice Gordon — How Reverse Mentorship Can Help Create Better Leaders</div>
+  </div>
+  <div class="v-body">
+    <iframe src="https://www.youtube.com/embed/NMVgg6zuiB0" allowfullscreen></iframe>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 5 · Ch. 10</div>
+  <h3>Strengthen Others</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 5 · Ch. 10</div><h4>Empowering People to Lead Themselves</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">How Leaders Strengthen Others</div>
+      <div class="pt"><div class="d"></div><div>The best leaders distribute power — they give people stretch assignments, real responsibility, and genuine decision-making authority</div></div>
+      <div class="pt"><div class="d"></div><div><b>Providing opportunities:</b> Let people practice leadership before they have a leadership title</div></div>
+      <div class="pt"><div class="d"></div><div><b>Offering feedback:</b> Specific, honest, and timely — both positive reinforcement and constructive critique help people grow</div></div>
+      <div class="pt"><div class="d"></div><div><b>Mentoring:</b> Share lessons from your own experience, then step back and let them find their own solutions</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Reverse Mentorship</div>
+      <div class="pt"><div class="d"></div><div>Patrice Gordon's concept: pair junior employees with senior leaders so learning flows in both directions</div></div>
+      <div class="pt"><div class="d"></div><div>Junior employees bring fresh perspectives, digital fluency, and unfiltered insight about culture — things senior leaders often lose access to</div></div>
+      <div class="pt"><div class="d"></div><div>Reverse mentorship builds confidence in younger team members and keeps senior leaders connected to ground-level reality</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">Kouzes and Posner list multiple ways leaders can strengthen others. Which strategy resonates most with you, and why?</div>
+      <div class="dq-q">Could a reverse mentorship program work in your organization? What benefits or challenges would it bring?</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 5 ASSIGNMENTS -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 5 · Assignment 1 &amp; 2</div><h4>Article Review + Building Collaboration in Your Project</h4></div>
+  <div class="a-body">
+    <div class="a-meta">
+      <div class="a-badge">15 Points Total</div>
+      <div class="a-badge">Article Review: 5 pts · 2 pages max</div>
+      <div class="a-badge">Collaboration Paper: 10 pts · 5 pages max</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Article Review: Enable Others to Act</div>
+      <div class="a-item"><span class="n">1</span><span>Select an article on leadership and collaboration. Connect to Kouzes and Posner, Powell, or the TED Talks. How does the example illustrate — or fail to illustrate — enabling others to act?</span></div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Collaboration Paper — eight prompts, use bullets where appropriate</div>
+      <div class="a-item"><span class="n">1</span><span><b>Project and Team Overview:</b> Reintroduce your project, team, and intended outcomes</span></div>
+      <div class="a-item"><span class="n">2</span><span><b>Personal Goals:</b> What do you want from this project — both results and your own leadership growth?</span></div>
+      <div class="a-item"><span class="n">3</span><span><b>Supporting Team Members:</b> Specific actions to support and empower each person</span></div>
+      <div class="a-item"><span class="n">4</span><span><b>Current Relationships:</b> What is working well with your team? Where can trust or collaboration be strengthened?</span></div>
+      <div class="a-item"><span class="n">5</span><span><b>Climate of Trust:</b> Structures, behaviors, or norms you will establish to build mutual respect</span></div>
+      <div class="a-item"><span class="n">6</span><span><b>Strengthening Talents:</b> Training, mentoring, reverse mentorship, or stretch assignments</span></div>
+      <div class="a-item"><span class="n">7</span><span><b>Personal Reflections:</b> What do you like most and least about the project so far?</span></div>
+      <div class="a-item"><span class="n">8</span><span><b>Recommendations:</b> Concrete next steps to strengthen collaboration and improve the project</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- WEEK 6 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="slide s-week" id="week-6">
+  <div class="wlabel">Week 6</div>
+  <h2>Encourage the Heart and<br>Putting It All Together</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading &amp; Watch</div>
+    <ul>
+      <li>The Leadership Challenge: Ch. 11, 12 &amp; 13</li>
+      <li>Watch: Stanley McChrystal — Leadership Is a Choice (YouTube)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 6 · Ch. 11 &amp; 12</div>
+  <h3>Encourage the Heart</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 6 · Ch. 11 &amp; 12</div><h4>Recognition That Actually Works</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Why Recognition Matters</div>
+      <div class="pt"><div class="d"></div><div>Kouzes and Posner: leaders must both expect the best from people and recognize them when they deliver — expectation alone is not enough</div></div>
+      <div class="pt"><div class="d"></div><div>Recognition is not about being nice — it is about sustaining the motivation and commitment that drives results over time</div></div>
+      <div class="pt"><div class="d"></div><div>How you acknowledge contributions shapes the team's identity and reinforces shared values more than any policy document</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">How to Recognize Well</div>
+      <div class="pt"><div class="d"></div><div><b>Be specific:</b> "Your attention to detail on that forecast prevented us from missing a critical issue" lands harder than "good job"</div></div>
+      <div class="pt"><div class="d"></div><div><b>Make it personal:</b> Some people thrive on public recognition; others prefer a direct word or note — know your team</div></div>
+      <div class="pt"><div class="d"></div><div><b>Connect to values:</b> Tie recognition to what the team stands for — "This is exactly what we mean when we say we put clients first"</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What does "encouraging the heart" mean to you personally? How does it differ from simply "being nice"?</div>
+      <div class="dq-q">Think of a time when someone recognized your contributions. What made that recognition meaningful — or not?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 6 · Ch. 12 &amp; 13</div><h4>Celebrating Values and Victories</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Celebrations Reinforce Culture</div>
+      <div class="pt"><div class="d"></div><div>Celebrations don't require expense — they require intentionality. Sharing a team win at the start of a meeting, a personal thank-you note, or a small team ritual all count</div></div>
+      <div class="pt"><div class="d"></div><div>What you celebrate signals what you value. Teams observe this closely</div></div>
+      <div class="pt"><div class="d"></div><div>Celebrations should be genuine, frequent, and values-based — not performative or forced</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">McChrystal: Leadership Is a Choice</div>
+      <div class="pt"><div class="d"></div><div>Leadership is not a position you are given — it is a posture you choose to take in each moment</div></div>
+      <div class="pt"><div class="d"></div><div>Anyone can choose to lead — to take responsibility, to model values, to serve others — regardless of formal authority</div></div>
+      <div class="pt"><div class="d"></div><div>This reframes the entire course: the Five Practices are not a checklist for people with titles. They are a set of daily choices available to everyone</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What are some creative, low-cost ways to celebrate team victories in a professional setting?</div>
+      <div class="dq-q">General McChrystal talks about leadership as a choice. How does this perspective change your understanding of leadership?</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="slide s-video">
+  <div class="v-hdr">
+    <div class="v-tag">Week 6 · Required Watch</div>
+    <div class="v-title">Stanley McChrystal — Leadership Is a Choice</div>
+  </div>
+  <div class="v-body">
+    <iframe src="https://www.youtube.com/embed/p7DzQWjXKFI" allowfullscreen></iframe>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 6 · The Five Practices</div>
+  <h3>Putting It All Together</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 6 · Review</div><h4>The Five Practices as a Complete System</h4></div>
+  <div class="s-body">
+    <table class="tbl">
+      <thead><tr><th>Practice</th><th>The Core Question It Answers</th><th>What It Produces</th></tr></thead>
+      <tbody>
+        <tr><td>1. Model the Way</td><td>Do my actions match my words?</td><td>Credibility — people trust me enough to follow</td></tr>
+        <tr><td>2. Inspire a Shared Vision</td><td>Do people see a future worth working toward?</td><td>Commitment — people invest, not just comply</td></tr>
+        <tr><td>3. Challenge the Process</td><td>Are we improving, or just repeating?</td><td>Progress — the team moves forward despite uncertainty</td></tr>
+        <tr><td>4. Enable Others to Act</td><td>Are people growing, or depending on me?</td><td>Capacity — the team is stronger than any one person</td></tr>
+        <tr><td>5. Encourage the Heart</td><td>Do people feel their contributions matter?</td><td>Sustained energy — people stay engaged over time</td></tr>
+      </tbody>
+    </table>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">Looking back over this course, what have you learned about your own leadership style that you didn't know before?</div>
+      <div class="dq-q">As you finalize your project plan, which of the five practices will be most challenging to implement? Why?</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 6 FINAL PROJECT -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 6 · Final Project</div><h4>Leadership in Action</h4></div>
+  <div class="a-body">
+    <div class="a-meta">
+      <div class="a-badge">25 Points</div>
+      <div class="a-badge">7–15 pages, double-spaced</div>
+      <div class="a-badge">2–3 external references in APA</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Five Sections Required</div>
+      <div class="a-item"><span class="n">1</span><span><b>Introduction to the Organization:</b> The organization, team (at least 3 people), background on mission, size, and context — choose somewhere you know well</span></div>
+      <div class="a-item"><span class="n">2</span><span><b>Description of the Project:</b> The specific initiative you will lead — goal, how success is measured, whether the goal is realistic, resources required, timeline</span></div>
+      <div class="a-item"><span class="n">3</span><span><b>Application of the Five Practices:</b> One section per practice — how you will apply each to this project with concrete strategies and examples (2 pts each, 10 pts total)</span></div>
+      <div class="a-item"><span class="n">4</span><span><b>Challenges and Solutions:</b> Anticipate at least 3 realistic obstacles — conflicting personalities, limited resources, resistance to change, unrealistic timelines — and provide a practical solution for each</span></div>
+      <div class="a-item"><span class="n">5</span><span><b>Conclusion and Reflection:</b> What you learned about yourself as a leader. Strengths to build on, weaknesses to address, and next steps for your development</span></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end deck -->
+
+<div class="nav">
+  <button onclick="prev()">← Prev</button>
+  <span class="ctr" id="ctr"></span>
+  <button onclick="next()">Next →</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let cur = 0;
+function show(n) {
+  slides[cur].classList.remove('active');
+  cur = (n + slides.length) % slides.length;
+  slides[cur].classList.add('active');
+  document.getElementById('ctr').textContent = (cur+1) + ' / ' + slides.length;
+}
+function goToWeek(id) {
+  const target = document.getElementById(id);
+  if (!target) return;
+  slides.forEach((s,i) => { if(s === target) show(i); });
+}
+function next() { show(cur+1); }
+function prev() { show(cur-1); }
+document.addEventListener('keydown', e => {
+  if (e.key==='ArrowRight'||e.key==='ArrowDown') next();
+  if (e.key==='ArrowLeft'||e.key==='ArrowUp') prev();
+});
+show(0);
+</script>
+</body>
+</html>

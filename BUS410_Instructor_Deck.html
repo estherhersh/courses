@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BUS-410: Strategy Implementation — Instructor Deck</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+:root {
+  --red: #7A1219;
+  --red-light: #c0444d;
+  --red-pale: #FBEAEA;
+  --charcoal: #2D2D2D;
+  --gray: #5F5E5A;
+  --gray-light: #E8E8E8;
+  --off-white: #F6F6F4;
+  --white: #FFFFFF;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #111;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+.deck { width: 100%; max-width: 1100px; }
+.slide {
+  display: none;
+  width: 100%;
+  background: var(--white);
+  border-radius: 6px;
+  position: relative;
+  flex-direction: column;
+}
+.slide.active { display: flex; }
+
+/* COURSE TITLE */
+.slide.s-course {
+  background: var(--charcoal);
+  flex-direction: column;
+  justify-content: center;
+  padding: 7% 9%;
+}
+.s-course .eyebrow {
+  font-size: clamp(10px,1.3vw,14px);
+  font-weight: 600;
+  color: var(--red-light);
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  margin-bottom: 3%;
+}
+.s-course h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 38px;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 3%;
+}
+.s-course .sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.9;
+}
+.s-course .accent { position: absolute; bottom: 0; left: 0; right: 0; height: 5px; background: var(--red); }
+
+/* WEEK TITLE */
+.slide.s-week {
+  background: var(--red);
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 7% 8%;
+}
+.s-week .wlabel {
+  font-size: clamp(10px,1.2vw,13px);
+  font-weight: 600;
+  color: rgba(255,255,255,0.65);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  margin-bottom: 2%;
+}
+.s-week h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 36px;
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: 4%;
+}
+.rdg-block {
+  background: rgba(0,0,0,0.22);
+  border-radius: 4px;
+  padding: 2.5% 3.5%;
+  width: 100%;
+}
+.rdg-block .rlabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  margin-bottom: 1.5%;
+}
+.rdg-block ul { list-style: none; display: flex; flex-wrap: wrap; gap: .8% 3%; }
+.rdg-block li { font-size: 13px; color: rgba(255,255,255,0.9); }
+.rdg-block li::before { content: "→ "; color: rgba(255,255,255,0.4); }
+
+/* SECTION BREAK */
+.slide.s-section {
+  background: var(--charcoal);
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 7% 9%;
+}
+.s-section .stag {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--red-light);
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  margin-bottom: 2%;
+}
+.s-section h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px;
+  color: var(--white);
+  line-height: 1.2;
+}
+
+/* CONTENT */
+.slide.s-content { flex-direction: column; }
+.s-hdr {
+  background: var(--charcoal);
+  padding: 2.8% 5%;
+  flex-shrink: 0;
+}
+.s-hdr .htag {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--red-light);
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  margin-bottom: .8%;
+}
+.s-hdr h4 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--white);
+  line-height: 1.2;
+}
+.s-body {
+  flex: 1;
+  padding: 2.5% 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2%;
+  background: var(--white);
+}
+.s-body.cols { flex-direction: column; }
+.cols-row { display: flex; flex-direction: row; gap: 3%; }
+.col { flex: 1; display: flex; flex-direction: column; gap: 1.2%; }
+
+.pt {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.8%;
+  font-size: 14px;
+  color: var(--charcoal);
+  line-height: 1.45;
+}
+.pt .d {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  flex-shrink: 0;
+  margin-top: .35em;
+}
+.pt b { font-weight: 600; color: var(--charcoal); }
+
+.sub-hdr {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--red);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--red);
+  padding-bottom: .4%;
+  margin-bottom: .8%;
+  flex-shrink: 0;
+}
+
+/* discussion callout */
+.dq {
+  background: var(--red-pale);
+  border-left: 4px solid var(--red);
+  border-radius: 0 4px 4px 0;
+  padding: 1.8% 2.5%;
+  flex-shrink: 0;
+  margin-top: auto;
+}
+.dq .dq-lbl {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--red);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: .8%;
+}
+.dq .dq-q {
+  font-size: 13px;
+  color: var(--charcoal);
+  line-height: 1.45;
+  font-style: italic;
+}
+.dq .dq-q + .dq-q { margin-top: .6%; }
+
+/* apply-to-company callout */
+.apply {
+  background: #EAF3DE;
+  border-left: 4px solid #3B6D11;
+  border-radius: 0 4px 4px 0;
+  padding: 1.8% 2.5%;
+  flex-shrink: 0;
+  margin-top: auto;
+}
+.apply .apply-lbl {
+  font-size: 10px;
+  font-weight: 700;
+  color: #3B6D11;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: .8%;
+}
+.apply .apply-q {
+  font-size: 13px;
+  color: var(--charcoal);
+  line-height: 1.45;
+}
+
+/* ASSIGNMENT */
+.slide.s-asgn { flex-direction: column; }
+.s-asgn .s-hdr { background: var(--red); }
+.s-asgn .s-hdr .htag { color: rgba(255,255,255,0.6); }
+.s-asgn .s-hdr h4 { color: var(--white); }
+.a-body {
+  flex: 1;
+  padding: 2.5% 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5%;
+  background: var(--white);
+}
+.a-meta { display: flex; gap: 2%; flex-shrink: 0; }
+.a-badge {
+  background: var(--red-pale);
+  border: 1px solid rgba(122,18,25,.25);
+  border-radius: 3px;
+  padding: .7% 2%;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--red);
+}
+.a-sec {
+  background: var(--off-white);
+  border-radius: 4px;
+  padding: 1.8% 2.5%;
+  flex-shrink: 0;
+}
+.a-sec .a-lbl {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--gray);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: .8%;
+}
+.a-sec .a-item {
+  font-size: 13px;
+  color: var(--charcoal);
+  line-height: 1.45;
+  padding: .5% 0;
+  border-bottom: 1px solid var(--gray-light);
+  display: flex;
+  gap: 1.5%;
+  align-items: flex-start;
+}
+.a-sec .a-item:last-child { border-bottom: none; }
+.a-sec .a-item .n { color: var(--red); font-weight: 700; flex-shrink: 0; }
+
+/* NAV */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 14px;
+}
+.nav button {
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.2);
+  color: #fff;
+  padding: 8px 22px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+}
+.nav button:hover { background: rgba(255,255,255,.2); }
+.nav .ctr { color: rgba(255,255,255,.45); font-size: 12px; min-width: 70px; text-align: center; }
+
+/* TOC */
+.slide.s-toc { background: var(--white); flex-direction: column; padding: 0; }
+.toc-header { background: var(--charcoal); padding: 28px 48px 24px; flex-shrink: 0; }
+.toc-eyebrow { font-size: 11px; font-weight: 700; color: var(--red-light); letter-spacing: .15em; text-transform: uppercase; margin-bottom: 6px; }
+.toc-heading { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--white); margin-bottom: 4px; }
+.toc-sub { font-size: 12px; color: rgba(255,255,255,0.45); }
+.toc-grid { padding: 20px 40px 28px; display: flex; flex-direction: column; gap: 10px; }
+.toc-item {
+  display: flex; align-items: center; gap: 16px;
+  background: var(--off-white); border: 1px solid var(--gray-light);
+  border-radius: 6px; padding: 14px 20px; cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+.toc-item:hover { background: var(--red-pale); border-color: var(--red); transform: translateX(4px); }
+.toc-num { width: 36px; height: 36px; border-radius: 50%; background: var(--red); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; flex-shrink: 0; }
+.toc-text { flex: 1; }
+.toc-week { font-size: 10px; font-weight: 700; color: var(--red); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 2px; }
+.toc-title { font-size: 14px; font-weight: 600; color: var(--charcoal); }
+.toc-arrow { font-size: 18px; color: var(--red); font-weight: 700; opacity: 0.5; }
+.toc-item:hover .toc-arrow { opacity: 1; }
+
+/* table */
+.tbl { width: 100%; border-collapse: collapse; font-size: 13px; flex-shrink: 0; }
+.tbl th { background: var(--charcoal); color: var(--white); padding: 7px 10px; text-align: left; font-size: 11px; font-weight: 700; }
+.tbl td { padding: 6px 10px; border-bottom: 1px solid var(--gray-light); vertical-align: top; line-height: 1.4; }
+.tbl tr:last-child td { border-bottom: none; }
+.tbl td:first-child { font-weight: 600; color: var(--charcoal); }
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- COURSE TITLE -->
+<div class="slide s-course active">
+  <div class="eyebrow">BUS-410 · Capstone</div>
+  <h1>Strategy Implementation</h1>
+  <div class="sub">
+    Dunlap-Stone University &nbsp;·&nbsp; 3 Credit Hours &nbsp;·&nbsp; 6 Weeks<br>
+    Textbook: Strategic Management — Kennedy et al. (free at open.umn.edu/opentextbooks/textbooks/73)<br>
+    Project-based · Same company used all 6 weeks · Final strategic plan + executive presentation
+  </div>
+  <div class="accent"></div>
+</div>
+
+<!-- TOC -->
+<div class="slide s-toc" id="toc-slide">
+  <div class="toc-header">
+    <div class="toc-eyebrow">BUS-410</div>
+    <div class="toc-heading">Course Contents</div>
+    <div class="toc-sub">Click any week to jump to it</div>
+  </div>
+  <div class="toc-grid">
+    <div class="toc-item" onclick="goToWeek('week-1')">
+      <div class="toc-num">1</div>
+      <div class="toc-text"><div class="toc-week">Week 1</div><div class="toc-title">Organizational Analysis</div></div>
+      <div class="toc-arrow">→</div>
+    </div>
+    <div class="toc-item" onclick="goToWeek('week-2')">
+      <div class="toc-num">2</div>
+      <div class="toc-text"><div class="toc-week">Week 2</div><div class="toc-title">Strategic Planning and Strategies</div></div>
+      <div class="toc-arrow">→</div>
+    </div>
+    <div class="toc-item" onclick="goToWeek('week-3')">
+      <div class="toc-num">3</div>
+      <div class="toc-text"><div class="toc-week">Week 3</div><div class="toc-title">Financial Analysis, Innovation and International Strategy</div></div>
+      <div class="toc-arrow">→</div>
+    </div>
+    <div class="toc-item" onclick="goToWeek('week-4')">
+      <div class="toc-num">4</div>
+      <div class="toc-text"><div class="toc-week">Week 4</div><div class="toc-title">Change Management, Ethics, and Risk</div></div>
+      <div class="toc-arrow">→</div>
+    </div>
+    <div class="toc-item" onclick="goToWeek('week-5')">
+      <div class="toc-num">5</div>
+      <div class="toc-text"><div class="toc-week">Week 5</div><div class="toc-title">Measurement and Evaluation</div></div>
+      <div class="toc-arrow">→</div>
+    </div>
+    <div class="toc-item" onclick="goToWeek('week-6')">
+      <div class="toc-num">6</div>
+      <div class="toc-text"><div class="toc-week">Week 6</div><div class="toc-title">Finalizing and Presenting Your Strategic Plan</div></div>
+      <div class="toc-arrow">→</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- WEEK 1 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="slide s-week" id="week-1">
+  <div class="wlabel">Week 1</div>
+  <h2>Organizational Analysis</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading</div>
+    <ul>
+      <li>Ch. 1: Mastering Strategy: Art and Science</li>
+      <li>Ch. 2: Assessing Organizational Performance</li>
+      <li>Ch. 3: Evaluating the External Environment</li>
+      <li>Ch. 4: Evaluating the Internal Environment</li>
+      <li>Ch. 5.1–5.2: Synthesis and SWOT</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 1 · Ch. 1</div>
+  <h3>What Is Strategic Management?</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Ch. 1</div><h4>Strategy vs. Strategic Management</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Strategy</div>
+      <div class="pt"><div class="d"></div><div>A long-term, higher-level plan that sets direction without specifying every detail</div></div>
+      <div class="pt"><div class="d"></div><div>Guides how a firm allocates resources to create and sustain a competitive advantage</div></div>
+      <div class="pt"><div class="d"></div><div>Combines analytical rigor (the science) and creative judgment (the art) — neither alone is sufficient</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Strategic Management</div>
+      <div class="pt"><div class="d"></div><div>The ongoing process of analyzing, deciding, and acting to achieve long-term success</div></div>
+      <div class="pt"><div class="d"></div><div>Involves the full leadership team — not just the CEO</div></div>
+      <div class="pt"><div class="d"></div><div>Asks three questions: Where are we now? Where do we want to go? How do we get there?</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What is the difference between strategic management and strategy?</div>
+      <div class="dq-q">What business that you visit regularly seems to have the most successful business model? What makes it work?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Ch. 1</div><h4>Intended, Emergent, and Realized Strategy</h4></div>
+  <div class="s-body">
+    <table class="tbl">
+      <thead><tr><th>Type</th><th>Definition</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Intended</td><td>The strategy the firm planned to execute</td><td>FedEx's original plan to focus on package delivery</td></tr>
+        <tr><td>Deliberate</td><td>The parts of the intended strategy the firm continues to pursue</td><td>FedEx staying committed to overnight delivery</td></tr>
+        <tr><td>Emergent</td><td>An unplanned strategy that arises from responding to opportunities or threats</td><td>FedEx expanding into document services (Zapmail) — which failed</td></tr>
+        <tr><td>Unrealized</td><td>Parts of the intended strategy that were abandoned</td><td>Avon's founder originally intended to be a novelist</td></tr>
+        <tr><td>Realized</td><td>The strategy the firm actually followed — a mix of all of the above</td><td>What the firm did, regardless of what was planned</td></tr>
+      </tbody>
+    </table>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Question</div>
+      <div class="dq-q">Can you think of a company that seems to have abandoned its intended strategy? What changed — and was the shift driven by opportunity or failure?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 1 · Ch. 2</div>
+  <h3>Assessing Organizational<br>Performance</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Ch. 2</div><h4>Vision, Mission, and Values</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">The Three Anchors</div>
+      <div class="pt"><div class="d"></div><div><b>Vision:</b> The organization's aspired future state — where it is ultimately trying to go</div></div>
+      <div class="pt"><div class="d"></div><div><b>Mission:</b> What the company does, for whom, and how — its current purpose and function</div></div>
+      <div class="pt"><div class="d"></div><div><b>Values:</b> The principles that guide behavior and decisions throughout the organization</div></div>
+      <div class="pt"><div class="d"></div><div>A strong mission is specific, actionable, and distinguishable from competitors — not generic</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">What Makes a Strong Mission?</div>
+      <div class="pt"><div class="d"></div><div>States who the customer is and what value the firm provides</div></div>
+      <div class="pt"><div class="d"></div><div>Gives employees a north star for decision-making</div></div>
+      <div class="pt"><div class="d"></div><div>Avoids vague language like "world-class" or "best-in-class" with no concrete meaning</div></div>
+      <div class="pt"><div class="d"></div><div>Example — Nike: "Bring inspiration and innovation to every athlete in the world" — then defines "athlete" as anyone with a body</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Question</div>
+      <div class="dq-q">What are indicators of a strong mission? Find your company's mission statement — does it meet that bar?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Ch. 2</div><h4>Measuring Performance: Beyond Profit</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">The Balanced Scorecard</div>
+      <div class="pt"><div class="d"></div><div>Profit and stock price alone are incomplete — they are lagging indicators that don't show why performance changed</div></div>
+      <div class="pt"><div class="d"></div><div><b>Financial:</b> ROI, revenue growth, profit margin</div></div>
+      <div class="pt"><div class="d"></div><div><b>Customer:</b> Satisfaction scores, retention, market share</div></div>
+      <div class="pt"><div class="d"></div><div><b>Internal processes:</b> Operational efficiency, quality, cycle time</div></div>
+      <div class="pt"><div class="d"></div><div><b>Learning and growth:</b> Employee training, innovation, capability building</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Competitive Advantage</div>
+      <div class="pt"><div class="d"></div><div>A firm has a competitive advantage when it creates more economic value than its rivals</div></div>
+      <div class="pt"><div class="d"></div><div><b>Economic value created</b> = Customer's willingness to pay minus the firm's cost to deliver</div></div>
+      <div class="pt"><div class="d"></div><div>Unlike profit, competitive advantage is not easily distorted by short-term decisions or accounting choices</div></div>
+      <div class="pt"><div class="d"></div><div>A firm can be temporarily unprofitable and still hold a competitive advantage — and vice versa</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">How should executives analyze the performance of their organization? What is competitive advantage and how is it calculated?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 1 · Ch. 3</div>
+  <h3>Evaluating the External<br>Environment</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Ch. 3</div><h4>PESTEL Analysis</h4></div>
+  <div class="s-body">
+    <table class="tbl">
+      <thead><tr><th>Factor</th><th>What to look for</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Political</td><td>Government policies, trade regulations, stability</td><td>Tariffs affecting imported materials</td></tr>
+        <tr><td>Economic</td><td>Interest rates, inflation, unemployment, growth</td><td>Fed rate hikes raising borrowing costs</td></tr>
+        <tr><td>Socio-cultural</td><td>Demographics, values, lifestyle trends</td><td>Demand for sustainable products</td></tr>
+        <tr><td>Technological</td><td>Innovation, automation, digital infrastructure</td><td>AI replacing manual data analysis roles</td></tr>
+        <tr><td>Environmental</td><td>Climate risk, sustainability mandates, resource access</td><td>ESG reporting requirements for public companies</td></tr>
+        <tr><td>Legal</td><td>Labor law, IP protection, compliance requirements</td><td>State-level data privacy laws</td></tr>
+      </tbody>
+    </table>
+    <div class="apply">
+      <div class="apply-lbl">Apply to Your Company</div>
+      <div class="apply-q">Which two or three PESTEL factors most directly affect your selected company right now? What specific opportunity or threat does each create?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Ch. 3</div><h4>Porter's Five Forces</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">The Five Forces</div>
+      <div class="pt"><div class="d"></div><div><b>Rivalry among competitors:</b> How intense is competition in the industry? High rivalry compresses margins</div></div>
+      <div class="pt"><div class="d"></div><div><b>Threat of new entrants:</b> How easy is it for new firms to enter? Low barriers = ongoing competitive threat</div></div>
+      <div class="pt"><div class="d"></div><div><b>Bargaining power of buyers:</b> Can customers force prices down or demand better terms?</div></div>
+      <div class="pt"><div class="d"></div><div><b>Bargaining power of suppliers:</b> Can suppliers raise prices or reduce quality?</div></div>
+      <div class="pt"><div class="d"></div><div><b>Threat of substitutes:</b> Can customers switch to a different product that meets the same need?</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Using the Framework</div>
+      <div class="pt"><div class="d"></div><div>The stronger each force, the harder it is to earn strong profits in that industry</div></div>
+      <div class="pt"><div class="d"></div><div>Identify your industry first — the forces apply differently at the industry level vs. firm level</div></div>
+      <div class="pt"><div class="d"></div><div>Strategic groups map direct competitors by strategy — not all firms in an industry face the same pressure</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">How is Porter's Five Forces used to perform a competitive analysis of an industry?</div>
+      <div class="dq-q">What are strategic groups and how are they useful to evaluate the competitive environment?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 1 · Ch. 4</div>
+  <h3>Evaluating the Internal<br>Environment</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Ch. 4</div><h4>Resources, Capabilities, and VRIO</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Tangible vs. Intangible Resources</div>
+      <div class="pt"><div class="d"></div><div><b>Tangible:</b> Physical assets — property, equipment, cash, inventory. Visible and easy to copy</div></div>
+      <div class="pt"><div class="d"></div><div><b>Intangible:</b> Brand, culture, patents, know-how, relationships. Hard to see, harder to replicate</div></div>
+      <div class="pt"><div class="d"></div><div>Long-term competitive advantage is more often built on intangibles — they are harder for rivals to acquire</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">The VRIO Framework</div>
+      <div class="pt"><div class="d"></div><div><b>Valuable:</b> Does this resource help the firm exploit an opportunity or neutralize a threat?</div></div>
+      <div class="pt"><div class="d"></div><div><b>Rare:</b> Do few or no competitors possess it?</div></div>
+      <div class="pt"><div class="d"></div><div><b>Inimitable:</b> Is it costly or difficult for competitors to copy or substitute?</div></div>
+      <div class="pt"><div class="d"></div><div><b>Organized:</b> Is the firm set up to actually capture the value from this resource?</div></div>
+      <div class="pt"><div class="d"></div><div>Only resources that pass all four tests generate a sustained competitive advantage</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Question</div>
+      <div class="dq-q">What tools can be used to evaluate the internal environment? How is the VRIO framework applied to strategic resources?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Ch. 4</div><h4>Value Chain Analysis</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Primary Activities</div>
+      <div class="pt"><div class="d"></div><div><b>Inbound logistics:</b> Receiving, storing, and distributing inputs</div></div>
+      <div class="pt"><div class="d"></div><div><b>Operations:</b> Transforming inputs into the final product</div></div>
+      <div class="pt"><div class="d"></div><div><b>Outbound logistics:</b> Delivering the product to customers</div></div>
+      <div class="pt"><div class="d"></div><div><b>Marketing and sales:</b> Getting customers to buy</div></div>
+      <div class="pt"><div class="d"></div><div><b>Service:</b> Post-sale support that maintains value</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Support Activities</div>
+      <div class="pt"><div class="d"></div><div><b>Firm infrastructure:</b> Finance, legal, executive management</div></div>
+      <div class="pt"><div class="d"></div><div><b>Human resource management:</b> Hiring, training, compensation</div></div>
+      <div class="pt"><div class="d"></div><div><b>Technology development:</b> R&amp;D, process improvement, IT</div></div>
+      <div class="pt"><div class="d"></div><div><b>Procurement:</b> Purchasing inputs at the best cost and quality</div></div>
+      <div class="pt"><div class="d"></div><div>Value chain analysis identifies where your company creates value and where competitors may have an edge</div></div>
+    </div>
+    <div class="apply">
+      <div class="apply-lbl">Apply to Your Company</div>
+      <div class="apply-q">Where in its value chain does your company create the most value for customers? Where does it have weaknesses a competitor could exploit?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 1 · Ch. 5</div>
+  <h3>SWOT Analysis and<br>Strategic Issues</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 1 · Ch. 5</div><h4>SWOT: Pulling the Analysis Together</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Internal (Firm Controls)</div>
+      <div class="pt"><div class="d"></div><div><b>Strengths:</b> Resources and capabilities that give the firm an advantage — what it does better than rivals</div></div>
+      <div class="pt"><div class="d"></div><div><b>Weaknesses:</b> Internal gaps or vulnerabilities that put the firm at a disadvantage</div></div>
+      <div class="pt"><div class="d"></div><div>Internal factors come from your VRIO and value chain work — not from opinions</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">External (Firm Monitors)</div>
+      <div class="pt"><div class="d"></div><div><b>Opportunities:</b> External trends or conditions the firm could exploit — from PESTEL and Five Forces</div></div>
+      <div class="pt"><div class="d"></div><div><b>Threats:</b> External forces that could harm the firm's competitive position</div></div>
+      <div class="pt"><div class="d"></div><div>SWOT is a decision-making tool, not a checklist — it generates strategic issues that demand a response</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Question</div>
+      <div class="dq-q">How is the SWOT framework developed and used for determining strategic issues and strategies?</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 1 ASSIGNMENTS -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 1 · Assignment 1</div><h4>Company Overview</h4></div>
+  <div class="a-body">
+    <div class="a-meta">
+      <div class="a-badge">8 Points</div>
+      <div class="a-badge">450–550 words</div>
+      <div class="a-badge">Same company used all 6 weeks</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">What to Include</div>
+      <div class="a-item"><span class="n">1</span><span>Organization background, founding story, and key milestones — why this company?</span></div>
+      <div class="a-item"><span class="n">2</span><span>Vision, mission, and values — state them clearly and explain their strategic importance</span></div>
+      <div class="a-item"><span class="n">3</span><span>Size, structure, industry, location(s), and products or services offered</span></div>
+      <div class="a-item"><span class="n">4</span><span>Cite all sources (company website, news, databases) in APA format</span></div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Options</div>
+      <div class="a-item"><span class="n">A</span><span>Choose a real company you know well and can access reliable financial and strategic data for</span></div>
+      <div class="a-item"><span class="n">B</span><span>Design a realistic startup — be specific and detailed; it must hold up through all 6 weeks of analysis</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 1 · Assignment 2</div><h4>Strategic Analysis of Your Organization</h4></div>
+  <div class="a-body">
+    <div class="a-meta">
+      <div class="a-badge">12 Points</div>
+      <div class="a-badge">1,200–1,500 words</div>
+      <div class="a-badge">Must use the same company from Assignment 1</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Five Sections Required</div>
+      <div class="a-item"><span class="n">1</span><span><b>Industry Landscape:</b> Key trends, drivers of change, industry size, regulatory or economic factors — use current sources</span></div>
+      <div class="a-item"><span class="n">2</span><span><b>Competitor Analysis:</b> Main competitors, their strengths and weaknesses, strategies, and market position — how does your company compare?</span></div>
+      <div class="a-item"><span class="n">3</span><span><b>SWOT Analysis:</b> Specific, data-linked Strengths, Weaknesses, Opportunities, and Threats — avoid generic language</span></div>
+      <div class="a-item"><span class="n">4</span><span><b>PESTEL Analysis:</b> Focus on the factors most relevant to your organization — not every category requires equal depth</span></div>
+      <div class="a-item"><span class="n">5</span><span><b>Integration and Insight:</b> What does the combined analysis tell you? What are the key opportunities to pursue and threats to address?</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- WEEK 2 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="slide s-week" id="week-2">
+  <div class="wlabel">Week 2</div>
+  <h2>Strategic Planning<br>and Strategies</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading</div>
+    <ul>
+      <li>Ch. 5.3–5.4: Strategic Issues and SMART Objectives</li>
+      <li>Ch. 6: Selecting Business-Level Strategies</li>
+      <li>Ch. 8: Selecting Corporate-Level Strategies</li>
+      <li>Case Study: Nautica Brand Losing Ground</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 2 · Ch. 5</div>
+  <h3>From Analysis to Action:<br>Strategic Issues and Objectives</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 2 · Ch. 5</div><h4>Identifying Strategic Issues</h4></div>
+  <div class="s-body">
+    <div class="pt"><div class="d"></div><div>A strategic issue is a critical challenge or opportunity revealed by your SWOT, PESTEL, or competitor analysis that requires a deliberate response from leadership</div></div>
+    <div class="pt"><div class="d"></div><div>Strategic issues are not surface problems — they are systemic conditions that affect long-term success if not addressed</div></div>
+    <div class="pt"><div class="d"></div><div>Examples: a key competitor entering your market segment, a regulatory shift that changes your cost structure, a technology that makes your product obsolete</div></div>
+    <div class="pt"><div class="d"></div><div>The right question: Is this issue significant enough that ignoring it could change the firm's competitive position in 3–5 years?</div></div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Question</div>
+      <div class="dq-q">How can we identify a strategic issue? What distinguishes a strategic issue from an operational problem?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 2 · Ch. 5</div><h4>SMART Strategic Objectives</h4></div>
+  <div class="s-body">
+    <table class="tbl">
+      <thead><tr><th>Criterion</th><th>What It Means</th><th>Weak vs. Strong</th></tr></thead>
+      <tbody>
+        <tr><td>Specific</td><td>Clear about what will be achieved</td><td>"Improve customer satisfaction" vs. "Increase NPS score by 15 points"</td></tr>
+        <tr><td>Measurable</td><td>Progress can be tracked with data</td><td>"Grow revenue" vs. "Grow revenue by 20%"</td></tr>
+        <tr><td>Achievable</td><td>Ambitious but realistic given resources</td><td>Doubling revenue in 3 months vs. increasing it 20% in 12 months</td></tr>
+        <tr><td>Relevant</td><td>Directly connected to the mission and strategic issues</td><td>An IT goal that doesn't connect to the customer-facing strategy</td></tr>
+        <tr><td>Time-bound</td><td>Has a clear deadline</td><td>"Eventually" vs. "by Q4 2025"</td></tr>
+      </tbody>
+    </table>
+    <div class="apply">
+      <div class="apply-lbl">Apply to Your Company</div>
+      <div class="apply-q">Write one SMART objective for your company that directly responds to a strategic issue you identified in Week 1.</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 2 · Ch. 6</div>
+  <h3>Business-Level Strategies:<br>How Will We Compete?</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 2 · Ch. 6</div><h4>Porter's Generic Strategies</h4></div>
+  <div class="s-body">
+    <table class="tbl">
+      <thead><tr><th>Strategy</th><th>Competitive Basis</th><th>Market Scope</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Cost Leadership</td><td>Lowest price</td><td>Broad</td><td>Walmart, Aldi, Ryanair</td></tr>
+        <tr><td>Differentiation</td><td>Unique value, premium price</td><td>Broad</td><td>Apple, Nike, Starbucks</td></tr>
+        <tr><td>Focused Cost Leadership</td><td>Lowest price in a niche</td><td>Narrow</td><td>Dollar Tree, Spirit Airlines</td></tr>
+        <tr><td>Focused Differentiation</td><td>Unique value for a niche</td><td>Narrow</td><td>Rolex, Peloton, Lululemon</td></tr>
+        <tr><td>Best-Cost (Hybrid)</td><td>Better value at a reasonable price</td><td>Broad</td><td>Toyota, Target — risky if not executed precisely</td></tr>
+      </tbody>
+    </table>
+    <div class="pt"><div class="d"></div><div>Firms "stuck in the middle" — neither the cheapest nor the most differentiated — typically underperform. Nautica is a case study in this trap</div></div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What are business-level strategies? How are generic strategies used to compete?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 2 · Ch. 6</div><h4>Cost Leadership vs. Differentiation: Tradeoffs</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Cost Leadership</div>
+      <div class="pt"><div class="d"></div><div><b>Advantage:</b> Creates barriers to entry — rivals can't match prices without losing money</div></div>
+      <div class="pt"><div class="d"></div><div><b>Advantage:</b> Protects against buyer power — customers have fewer low-cost alternatives</div></div>
+      <div class="pt"><div class="d"></div><div><b>Risk:</b> Technology or process innovation by a rival can eliminate the cost gap overnight</div></div>
+      <div class="pt"><div class="d"></div><div><b>Risk:</b> A pure price race erodes margins for the whole industry, not just the laggards</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Differentiation</div>
+      <div class="pt"><div class="d"></div><div><b>Advantage:</b> Creates customer loyalty — buyers who value the differentiation are less price-sensitive</div></div>
+      <div class="pt"><div class="d"></div><div><b>Advantage:</b> Commands premium pricing — higher margins offset lower volume</div></div>
+      <div class="pt"><div class="d"></div><div><b>Risk:</b> Customers may decide the premium isn't worth it — especially in economic downturns</div></div>
+      <div class="pt"><div class="d"></div><div><b>Risk:</b> Competitors imitate the differentiating feature and close the gap</div></div>
+    </div>
+    <div class="apply">
+      <div class="apply-lbl">Apply to Your Company</div>
+      <div class="apply-q">Which business-level strategy does your company currently pursue? Is it the right fit for the industry forces you identified in Week 1?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 2 · Ch. 8</div>
+  <h3>Corporate-Level Strategies:<br>Where Will We Compete?</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 2 · Ch. 8</div><h4>Corporate Strategy Options</h4></div>
+  <div class="s-body">
+    <table class="tbl">
+      <thead><tr><th>Strategy</th><th>What It Means</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Related Diversification</td><td>Expand into industries that share resources or capabilities with the core business</td><td>Disney entering streaming (same content, new channel)</td></tr>
+        <tr><td>Unrelated Diversification</td><td>Expand into industries with no strategic connection to the core business</td><td>Berkshire Hathaway (insurance, railroads, candy)</td></tr>
+        <tr><td>Vertical Integration (Backward)</td><td>Acquire a supplier to control inputs</td><td>Tesla building its own battery cells</td></tr>
+        <tr><td>Vertical Integration (Forward)</td><td>Acquire a distributor to control the channel to customers</td><td>Apple operating its own retail stores</td></tr>
+        <tr><td>Geographic Expansion</td><td>Enter new domestic or international markets</td><td>Starbucks expanding into China</td></tr>
+        <tr><td>Retrenchment</td><td>Reduce scope — sell units, cut costs, refocus on core</td><td>GE selling off business units after years of unrelated diversification</td></tr>
+      </tbody>
+    </table>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What is corporate-level strategy and how does it differ from business-level strategy?</div>
+      <div class="dq-q">Given that so many mergers and acquisitions fail, why do executives keep making horizontal integration moves?</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 2 ASSIGNMENT -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 2 · Assignment</div><h4>Strategic Objectives, Strategies, and Tactics</h4></div>
+  <div class="a-body">
+    <div class="a-meta">
+      <div class="a-badge">20 Points</div>
+      <div class="a-badge">1,200–1,500 words</div>
+      <div class="a-badge">Builds directly on Week 1 analysis</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Five Sections Required</div>
+      <div class="a-item"><span class="n">1</span><span><b>Strategic Issues:</b> Identify the major challenges and opportunities from your SWOT, PESTEL, and competitor analysis — be specific about impact</span></div>
+      <div class="a-item"><span class="n">2</span><span><b>SMART Objectives:</b> Write 4–6 objectives that respond to those issues, aligned with your company's mission and values</span></div>
+      <div class="a-item"><span class="n">3</span><span><b>Strategies and Tactics:</b> For each objective, name the business-level or corporate-level strategy, then outline the concrete tactics. Justify each choice</span></div>
+      <div class="a-item"><span class="n">4</span><span><b>Strategic Alignment:</b> Show explicitly how your objectives, strategies, and tactics reflect the organization's mission, vision, and values</span></div>
+      <div class="a-item"><span class="n">5</span><span><b>References:</b> Cite company websites, industry reports, and course readings in APA format</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- WEEK 3 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="slide s-week" id="week-3">
+  <div class="wlabel">Week 3</div>
+  <h2>Financial Analysis,<br>Innovation and International Strategy</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading</div>
+    <ul>
+      <li>Ch. 7: Innovation Strategies</li>
+      <li>Ch. 9: Competing in International Markets</li>
+      <li>Review financial analysis techniques from prior finance courses</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 3 · Ch. 7</div>
+  <h3>Innovation Strategies</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 3 · Ch. 7</div><h4>Types of Innovation</h4></div>
+  <div class="s-body">
+    <table class="tbl">
+      <thead><tr><th>Type</th><th>What It Means</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Incremental</td><td>Small improvements to existing products or processes</td><td>iPhone adding a new camera feature each year</td></tr>
+        <tr><td>Disruptive</td><td>Displaces established technologies or markets — often starts at the low end</td><td>Netflix displacing Blockbuster</td></tr>
+        <tr><td>Architectural</td><td>Reconfigures existing technology components for a new market</td><td>Using smartphone cameras for medical diagnostics</td></tr>
+        <tr><td>Radical</td><td>Creates an entirely new product or market — transformative</td><td>The original iPhone; the first automobile</td></tr>
+      </tbody>
+    </table>
+    <div class="pt"><div class="d"></div><div><b>Entrepreneurial orientation (EO):</b> A firm's tendency to be proactive, risk-taking, and innovative — high EO correlates with stronger long-term performance</div></div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">Why should companies innovate? What is Entrepreneurial Orientation and why does it matter to firm performance?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 3 · Ch. 7</div><h4>First Movers, Fast Followers, and Cooperative Strategies</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">First Mover vs. Fast Follower</div>
+      <div class="pt"><div class="d"></div><div><b>First mover:</b> Enters the market before rivals — builds brand recognition, secures distribution, and sets the standard</div></div>
+      <div class="pt"><div class="d"></div><div><b>First mover risks:</b> High R&amp;D cost, uncertain demand, educating the market at your expense</div></div>
+      <div class="pt"><div class="d"></div><div><b>Fast follower:</b> Learns from the first mover's mistakes, enters with an improved product at lower cost</div></div>
+      <div class="pt"><div class="d"></div><div>Example: Google was not the first search engine — it was a fast follower that outexecuted early movers</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Cooperative Strategies</div>
+      <div class="pt"><div class="d"></div><div><b>Strategic alliances:</b> Two firms share resources or capabilities without merging — reduces risk and cost</div></div>
+      <div class="pt"><div class="d"></div><div><b>Joint ventures:</b> Two firms create a shared entity to pursue a specific opportunity</div></div>
+      <div class="pt"><div class="d"></div><div><b>Co-opetition:</b> Competing firms collaborate on a shared challenge — e.g., auto manufacturers collaborating on charging infrastructure</div></div>
+    </div>
+    <div class="apply">
+      <div class="apply-lbl">Apply to Your Company</div>
+      <div class="apply-q">What type of innovation is your company currently pursuing? Is there an opportunity for a cooperative strategy to accelerate it?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 3 · Ch. 9</div>
+  <h3>Competing in<br>International Markets</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 3 · Ch. 9</div><h4>Why Go International — and the CAGE Framework</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Reasons to Go International</div>
+      <div class="pt"><div class="d"></div><div>Access to new customers in markets where domestic growth has slowed</div></div>
+      <div class="pt"><div class="d"></div><div>Lower production costs through manufacturing in lower-wage countries</div></div>
+      <div class="pt"><div class="d"></div><div>Risk diversification — not all markets move together</div></div>
+      <div class="pt"><div class="d"></div><div>Access to specialized resources, talent, or technology concentrated in certain regions</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">The CAGE Framework</div>
+      <div class="pt"><div class="d"></div><div><b>Cultural:</b> Language, religion, social norms — how different is the target country culturally?</div></div>
+      <div class="pt"><div class="d"></div><div><b>Administrative:</b> Legal systems, trade agreements, colonial ties, regulatory environment</div></div>
+      <div class="pt"><div class="d"></div><div><b>Geographic:</b> Physical distance, time zones, landlocked vs. coastal, climate</div></div>
+      <div class="pt"><div class="d"></div><div><b>Economic:</b> Income levels, consumer purchasing power, cost of labor and capital</div></div>
+      <div class="pt"><div class="d"></div><div>Greater CAGE distance = higher risk of failure. Start with markets closest to home before entering distant ones</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What are the main benefits and risks of competing in international markets?</div>
+      <div class="dq-q">How does the CAGE framework help a firm predict its degree of success in a foreign market?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 3 · Ch. 9</div><h4>International Market Entry Methods</h4></div>
+  <div class="s-body">
+    <table class="tbl">
+      <thead><tr><th>Entry Method</th><th>Control</th><th>Risk</th><th>Investment</th></tr></thead>
+      <tbody>
+        <tr><td>Exporting</td><td>Low</td><td>Low</td><td>Minimal</td></tr>
+        <tr><td>Licensing / Franchising</td><td>Low</td><td>Low-Medium</td><td>Low</td></tr>
+        <tr><td>Strategic Alliance / Joint Venture</td><td>Medium</td><td>Medium</td><td>Medium</td></tr>
+        <tr><td>Acquisition (buying an existing firm)</td><td>High</td><td>High</td><td>Very High</td></tr>
+        <tr><td>Greenfield Investment (build from scratch)</td><td>Highest</td><td>Highest</td><td>Highest</td></tr>
+      </tbody>
+    </table>
+    <div class="pt"><div class="d"></div><div>Higher control = higher commitment. Most firms start with low-commitment modes and escalate as they gain knowledge of the market</div></div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Question</div>
+      <div class="dq-q">What methods of entry are available to firms seeking to compete in international markets? Based on your company's situation, which would be most appropriate and why?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 3 · Financial Analysis</div>
+  <h3>Financial Analysis and<br>Strategic Forecasting</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 3 · Financial Analysis</div><h4>Building a Strategic Financial Analysis</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">What You Need to Build</div>
+      <div class="pt"><div class="d"></div><div><b>Annual budget:</b> Revenue projections, operating expenses, and capital expenditures — presented in a table</div></div>
+      <div class="pt"><div class="d"></div><div><b>3–5 year forecast:</b> Project revenues, expenses, and cash flows — state your assumptions explicitly</div></div>
+      <div class="pt"><div class="d"></div><div><b>Feasibility analysis:</b> Assess whether a key strategic initiative is financially viable</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Key Metrics</div>
+      <div class="pt"><div class="d"></div><div><b>ROI (Return on Investment):</b> Net profit divided by cost of investment — shows efficiency of capital use</div></div>
+      <div class="pt"><div class="d"></div><div><b>NPV (Net Present Value):</b> Present value of future cash flows minus the initial investment — positive NPV means the investment creates value</div></div>
+      <div class="pt"><div class="d"></div><div><b>IRR (Internal Rate of Return):</b> The discount rate that makes NPV equal zero — higher IRR = more attractive investment</div></div>
+      <div class="pt"><div class="d"></div><div><b>Payback period:</b> How long until the investment pays for itself</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Question</div>
+      <div class="dq-q">What type of information do you need to collect to perform a financial analysis? Have your Week 1–2 strategies revealed any need to revise your approach?</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 3 ASSIGNMENT -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 3 · Assignment</div><h4>Financial Analysis and Strategic Forecasting</h4></div>
+  <div class="a-body">
+    <div class="a-meta">
+      <div class="a-badge">10 Points</div>
+      <div class="a-badge">800–1,200 words</div>
+      <div class="a-badge">Use real data or industry benchmarks</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Five Sections Required</div>
+      <div class="a-item"><span class="n">1</span><span><b>Budget:</b> Annual revenue projections, operating expenses, and capital expenditures in a table — use historical data or industry benchmarks</span></div>
+      <div class="a-item"><span class="n">2</span><span><b>3–5 Year Forecast:</b> Project revenues, expenses, and cash flows — state all assumptions clearly</span></div>
+      <div class="a-item"><span class="n">3</span><span><b>Financial Feasibility:</b> Assess the viability of one key strategic initiative from Week 2 — what is the projected financial impact?</span></div>
+      <div class="a-item"><span class="n">4</span><span><b>Investment / Cost / ROI:</b> Calculate ROI and where applicable NPV, IRR, or payback period for that initiative</span></div>
+      <div class="a-item"><span class="n">5</span><span><b>Recommendations:</b> Data-driven recommendations for improving performance and managing financial risk</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- WEEK 4 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="slide s-week" id="week-4">
+  <div class="wlabel">Week 4</div>
+  <h2>Change Management,<br>Ethics, and Risk</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading</div>
+    <ul>
+      <li>Ch. 10: Executing Strategy through Organizational Design</li>
+      <li>Ch. 11: Leading an Ethical Organization</li>
+      <li>Miller (2020): 5 Critical Steps in the Change Management Process</li>
+      <li>Brown et al. (2009): Risk Management in Corporate Governance</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 4 · Ch. 10</div>
+  <h3>Executing Strategy through<br>Organizational Design</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 4 · Ch. 10</div><h4>Organizational Structure and Strategy Execution</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Why Structure Matters</div>
+      <div class="pt"><div class="d"></div><div>Strategy only works when the organization is structured to execute it — structure determines who decides what, and how fast</div></div>
+      <div class="pt"><div class="d"></div><div><b>Division of labor:</b> How tasks are divided to maximize efficiency</div></div>
+      <div class="pt"><div class="d"></div><div><b>Reporting relationships:</b> Who answers to whom</div></div>
+      <div class="pt"><div class="d"></div><div><b>Decision-making authority:</b> Centralized (top-down) vs. decentralized (distributed)</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Common Structures</div>
+      <div class="pt"><div class="d"></div><div><b>Functional:</b> Organized by job function (Marketing, Finance, Operations) — efficient but siloed</div></div>
+      <div class="pt"><div class="d"></div><div><b>Divisional:</b> Organized by product line, geography, or customer — flexible but can duplicate resources</div></div>
+      <div class="pt"><div class="d"></div><div><b>Matrix:</b> Dual reporting — employees report to both a functional manager and a project manager</div></div>
+      <div class="pt"><div class="d"></div><div><b>Boundaryless / Flat:</b> Minimal hierarchy — faster decisions, common in startups and technology firms</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">Why is a firm's organizational structure important? How does structure impact the change management process?</div>
+      <div class="dq-q">Are there changes you will need to make to your organization to execute your strategy?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 4 · Change Management</div><h4>5 Steps of Change Management</h4></div>
+  <div class="s-body">
+    <table class="tbl">
+      <thead><tr><th>Step</th><th>What It Involves</th><th>Key Question</th></tr></thead>
+      <tbody>
+        <tr><td>1. Prepare the Organization</td><td>Build awareness and urgency — why must we change now?</td><td>Do people understand the cost of staying the same?</td></tr>
+        <tr><td>2. Craft a Vision and Plan</td><td>Align strategic goals with a clear execution roadmap</td><td>Does everyone know where we're headed and why?</td></tr>
+        <tr><td>3. Implement the Changes</td><td>Execute new processes, behaviors, and roles</td><td>Do people have the tools and authority to act?</td></tr>
+        <tr><td>4. Embed Changes in Culture</td><td>Reinforce through systems, rewards, and leadership behavior</td><td>Are the new ways becoming the default ways?</td></tr>
+        <tr><td>5. Review and Adjust</td><td>Monitor progress, gather feedback, address resistance</td><td>What is working, what isn't, and what needs to change?</td></tr>
+      </tbody>
+    </table>
+    <div class="apply">
+      <div class="apply-lbl">Apply to Your Company</div>
+      <div class="apply-q">Pick one major change your strategy requires. Who are the key stakeholders? Where will resistance most likely come from and why?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 4 · Ch. 11</div>
+  <h3>Leading an Ethical<br>Organization</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 4 · Ch. 11</div><h4>Corporate Governance and Ethics</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Corporate Governance</div>
+      <div class="pt"><div class="d"></div><div>The system by which companies are directed and controlled — balances the interests of shareholders, executives, employees, and the public</div></div>
+      <div class="pt"><div class="d"></div><div><b>Board of directors:</b> Elected by shareholders to oversee management and protect stakeholder interests</div></div>
+      <div class="pt"><div class="d"></div><div><b>The agency problem:</b> Executives may act in their own interest rather than shareholders' — governance structures exist to align incentives</div></div>
+      <div class="pt"><div class="d"></div><div>Codes of conduct, ethics hotlines, and executive compensation tied to long-term performance are common governance tools</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Corporate Social Responsibility</div>
+      <div class="pt"><div class="d"></div><div><b>CSR (Corporate Social Responsibility):</b> A firm's obligation to act in the interests of society, not just shareholders</div></div>
+      <div class="pt"><div class="d"></div><div><b>Shared value:</b> Michael Porter's argument that business can generate profit and social benefit simultaneously — not a tradeoff</div></div>
+      <div class="pt"><div class="d"></div><div>ESG reporting has become standard for public companies — investors use it to assess long-term risk and responsibility</div></div>
+      <div class="pt"><div class="d"></div><div>Ethical failures (Enron, Wells Fargo, Theranos) destroy value faster than almost any other business risk</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What is corporate social responsibility and its strategic role for a firm?</div>
+      <div class="dq-q">What is the role of the firm's board of directors as it relates to ethical behavior?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 4 · Risk Management</div><h4>Strategic Risk Identification and Mitigation</h4></div>
+  <div class="s-body">
+    <table class="tbl">
+      <thead><tr><th>Risk Category</th><th>Examples</th><th>Mitigation Approach</th></tr></thead>
+      <tbody>
+        <tr><td>Regulatory / Legal</td><td>New compliance requirements, licensing changes</td><td>Monitor regulatory changes; build compliance capacity</td></tr>
+        <tr><td>Financial</td><td>Budget overruns, capital access constraints</td><td>Contingency budgets, diversified funding sources</td></tr>
+        <tr><td>Operational</td><td>Supply chain disruptions, technology failures</td><td>Redundancy planning, supplier diversification</td></tr>
+        <tr><td>Reputational</td><td>Ethics violations, public backlash</td><td>Strong governance, proactive communication</td></tr>
+        <tr><td>Strategic</td><td>Poor fit between goals and capabilities</td><td>Regular strategy reviews, honest internal assessment</td></tr>
+      </tbody>
+    </table>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What are the major risks associated with your industry or organization?</div>
+      <div class="dq-q">What regulations or regulatory bodies within your industry must you comply with? Are there ESG considerations?</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 4 ASSIGNMENTS -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 4 · Assignment 1</div><h4>Change Management Plan</h4></div>
+  <div class="a-body">
+    <div class="a-meta">
+      <div class="a-badge">14 Points</div>
+      <div class="a-badge">800–1,200 words</div>
+      <div class="a-badge">Based on at least one change from your Week 2 strategy</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Six Sections Required</div>
+      <div class="a-item"><span class="n">1</span><span><b>Stakeholder Impact Assessment:</b> Who is affected, how, and what concerns or resistance should you anticipate?</span></div>
+      <div class="a-item"><span class="n">2</span><span><b>Leadership Alignment Plan:</b> How will organizational leadership actively support and drive the change?</span></div>
+      <div class="a-item"><span class="n">3</span><span><b>Stakeholder Engagement Strategy:</b> How will you involve, communicate with, and build support among stakeholders?</span></div>
+      <div class="a-item"><span class="n">4</span><span><b>Communication Plan:</b> What messages, through what channels, at what timing?</span></div>
+      <div class="a-item"><span class="n">5</span><span><b>Training Plan:</b> What skills or knowledge do people need, and how will you provide it?</span></div>
+      <div class="a-item"><span class="n">6</span><span><b>Impact and Readiness Analysis:</b> How ready is the organization for this change? Where will resistance be strongest?</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 4 · Assignment 2</div><h4>Risk Mitigation Plan</h4></div>
+  <div class="a-body">
+    <div class="a-meta">
+      <div class="a-badge">6 Points</div>
+      <div class="a-badge">600–800 words</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Six Sections Required</div>
+      <div class="a-item"><span class="n">1</span><span><b>Introduction:</b> Briefly reintroduce your organization and state the purpose of the risk plan</span></div>
+      <div class="a-item"><span class="n">2</span><span><b>Risk Identification:</b> List 4–6 specific risks across regulatory, financial, operational, reputational, and strategic categories</span></div>
+      <div class="a-item"><span class="n">3</span><span><b>Risk Analysis:</b> Rate each risk by impact and likelihood (high/medium/low) — justify your ratings</span></div>
+      <div class="a-item"><span class="n">4</span><span><b>Mitigation Strategies:</b> Specific, actionable response for each identified risk</span></div>
+      <div class="a-item"><span class="n">5</span><span><b>Ethical Considerations:</b> What ethical risks does your strategy create? How will you address them?</span></div>
+      <div class="a-item"><span class="n">6</span><span><b>Execution Feasibility:</b> Is this plan realistic given your resources, time, and organizational capacity?</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- WEEK 5 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="slide s-week" id="week-5">
+  <div class="wlabel">Week 5</div>
+  <h2>Measurement<br>and Evaluation</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading</div>
+    <ul>
+      <li>Bhatti, Awan, &amp; Razaq (2014): The Key Performance Indicators (KPIs) and Their Impact on Overall Organizational Performance</li>
+      <li>Watch: The Relationship between Strategic Objectives, KPIs and Initiatives (ClearPoint Strategy)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 5 · KPIs</div>
+  <h3>From Strategy to<br>Measurable Performance</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 5 · KPIs</div><h4>What Makes a Good KPI</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Critical Success Factors First</div>
+      <div class="pt"><div class="d"></div><div>A Critical Success Factor (CSF) is an activity the organization must perform well to achieve its mission — it comes before the KPI</div></div>
+      <div class="pt"><div class="d"></div><div>Every KPI should map directly to a CSF, which maps to a strategic objective — if the chain breaks, the metric is noise</div></div>
+      <div class="pt"><div class="d"></div><div>Example chain: Objective "Grow market share" → CSF "Customer retention" → KPI "90% customer satisfaction rating within 12 months"</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">SMART KPIs</div>
+      <div class="pt"><div class="d"></div><div><b>Specific:</b> Precisely defined — no ambiguity about what is being measured</div></div>
+      <div class="pt"><div class="d"></div><div><b>Measurable:</b> Expressed in numbers, percentages, or clear outcomes</div></div>
+      <div class="pt"><div class="d"></div><div><b>Achievable:</b> Realistic given resources and timeframe</div></div>
+      <div class="pt"><div class="d"></div><div><b>Relevant:</b> Directly tied to a strategic objective or CSF</div></div>
+      <div class="pt"><div class="d"></div><div><b>Time-bound:</b> Has a clear measurement deadline</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What is the relationship between strategic objectives and KPIs? What makes a good KPI? What elements should we be tracking to measure firm performance?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 5 · KPIs</div><h4>Building a Measurement and Evaluation Framework</h4></div>
+  <div class="s-body">
+    <table class="tbl">
+      <thead><tr><th>Element</th><th>What to Define</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Data Source</td><td>Where does the data come from?</td><td>CRM system, post-service surveys, financial reports</td></tr>
+        <tr><td>Measurement Frequency</td><td>How often is it tracked?</td><td>Monthly, quarterly, annually</td></tr>
+        <tr><td>Responsibility</td><td>Who collects, analyzes, and reports the data?</td><td>Customer Service Manager, CFO, Operations Director</td></tr>
+        <tr><td>Target / Threshold</td><td>What constitutes success?</td><td>NPS above 50; on-time delivery above 95%</td></tr>
+        <tr><td>Reporting Method</td><td>How is performance communicated?</td><td>Monthly dashboard, quarterly board report</td></tr>
+      </tbody>
+    </table>
+    <div class="pt"><div class="d"></div><div>Poorly chosen KPIs can actively mislead — measuring activity (calls made) instead of outcomes (revenue closed) sends the wrong signals and drives wrong behavior</div></div>
+    <div class="apply">
+      <div class="apply-lbl">Apply to Your Company</div>
+      <div class="apply-q">For one of your Week 2 strategic objectives, build a complete KPI row: the CSF, the KPI, the data source, frequency, owner, and target.</div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 5 ASSIGNMENT -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 5 · Assignment</div><h4>KPI Selection and Measurement Framework</h4></div>
+  <div class="a-body">
+    <div class="a-meta">
+      <div class="a-badge">10 Points</div>
+      <div class="a-badge">1,000–1,400 words</div>
+      <div class="a-badge">Tied to objectives from Week 2</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Three Sections Required</div>
+      <div class="a-item"><span class="n">1</span><span><b>KPI Selection and Justification:</b> Identify 3–5 Critical Success Factors. For each CSF, write at least one SMART KPI. Explain why each KPI was selected and how it connects to the strategic objective</span></div>
+      <div class="a-item"><span class="n">2</span><span><b>Measurement and Evaluation Framework:</b> For each KPI — data source, measurement frequency, responsible party, target/threshold, and how results will be reported and to whom. A table is strongly recommended</span></div>
+      <div class="a-item"><span class="n">3</span><span><b>Reflection:</b> Why are KPIs and measurement frameworks critical to strategic planning? How does performance tracking help your organization stay aligned with its mission?</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- WEEK 6 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="slide s-week" id="week-6">
+  <div class="wlabel">Week 6</div>
+  <h2>Finalizing and Presenting<br>Your Strategic Plan</h2>
+  <div class="rdg-block">
+    <div class="rlabel">Reading</div>
+    <ul>
+      <li>Lancefield (2022): How to Communicate Your Company's Strategy Effectively — Harvard Business Review</li>
+      <li>Spee &amp; Jarzabkowski (2011): Strategic Planning as Communicative Process — Organization Studies</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide s-section">
+  <div class="stag">Week 6</div>
+  <h3>Strategy Is Only as Good<br>as Your Ability to Communicate It</h3>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 6 · Strategic Communication</div><h4>Communicating Strategy Effectively</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">Why Communication Fails</div>
+      <div class="pt"><div class="d"></div><div>Most strategic plans fail not because the strategy is wrong — but because no one in the organization understands or believes in it</div></div>
+      <div class="pt"><div class="d"></div><div>Generic language ("world-class," "customer-centric") communicates nothing — specificity builds credibility</div></div>
+      <div class="pt"><div class="d"></div><div>Strategy communicated once is forgotten. It must be embedded in decisions, meetings, and resource allocation consistently</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">What Strong Strategic Communication Does</div>
+      <div class="pt"><div class="d"></div><div>Tailors the message to the audience — investors, employees, and customers need different things from the same strategy</div></div>
+      <div class="pt"><div class="d"></div><div>Uses narrative — people remember stories, not bullet points</div></div>
+      <div class="pt"><div class="d"></div><div>Makes trade-offs explicit — a good strategy says no to things. That clarity is itself a signal of leadership</div></div>
+      <div class="pt"><div class="d"></div><div>Connects every initiative back to the strategic logic — "we are doing X because it addresses Y, which advances Z"</div></div>
+    </div>
+    <div class="dq">
+      <div class="dq-lbl">Discussion Questions</div>
+      <div class="dq-q">What elements do you think should be in your final presentation that may not be in the submission guidelines?</div>
+      <div class="dq-q">What have you learned through this process? What additional skills do you need to execute your plan?</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s-content">
+  <div class="s-hdr"><div class="htag">Week 6 · Final Presentation</div><h4>Designing Your Executive Presentation</h4></div>
+  <div class="s-body cols">
+    <div class="col">
+      <div class="sub-hdr">What Executives Want to Know</div>
+      <div class="pt"><div class="d"></div><div>What problem are you solving or opportunity are you pursuing?</div></div>
+      <div class="pt"><div class="d"></div><div>What is your strategy and why is it the right one?</div></div>
+      <div class="pt"><div class="d"></div><div>How will it be implemented and what are the risks?</div></div>
+      <div class="pt"><div class="d"></div><div>How will you know if it's working?</div></div>
+      <div class="pt"><div class="d"></div><div>What do you need from them?</div></div>
+    </div>
+    <div class="col">
+      <div class="sub-hdr">Presentation Standards</div>
+      <div class="pt"><div class="d"></div><div><b>Length:</b> 3–5 minutes — concise and well-paced</div></div>
+      <div class="pt"><div class="d"></div><div><b>Slides:</b> One idea per slide — no paragraphs, no walls of text</div></div>
+      <div class="pt"><div class="d"></div><div><b>Visuals:</b> Charts for financial data, tables for comparisons — make data readable at a glance</div></div>
+      <div class="pt"><div class="d"></div><div><b>Delivery:</b> Clear, confident, and conversational — not read from notes</div></div>
+      <div class="pt"><div class="d"></div><div><b>Tools:</b> PowerPoint with voice-over, Zoom recording, Loom, or Google Slides + screen capture</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 6 CAPSTONE -->
+<div class="slide s-asgn">
+  <div class="s-hdr"><div class="htag">Week 6 · Capstone</div><h4>Strategic Business Transformation: From Analysis to Implementation</h4></div>
+  <div class="a-body">
+    <div class="a-meta">
+      <div class="a-badge">50 Points Total</div>
+      <div class="a-badge">Written Plan: 30 pts</div>
+      <div class="a-badge">Presentation: 20 pts</div>
+      <div class="a-badge">1,800–2,500 words + 3–5 min video</div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Written Plan — Six Revised and Integrated Sections</div>
+      <div class="a-item"><span class="n">1</span><span>Business and Industry Analysis (Week 1) — revised with instructor feedback</span></div>
+      <div class="a-item"><span class="n">2</span><span>Strategic Plan: objectives, strategies, and tactics (Week 2) — revised</span></div>
+      <div class="a-item"><span class="n">3</span><span>Financial Analysis: budget, forecast, and ROI (Week 3) — revised</span></div>
+      <div class="a-item"><span class="n">4</span><span>Change Management Plan (Week 4) — revised</span></div>
+      <div class="a-item"><span class="n">5</span><span>Risk Assessment and Mitigation Plan (Week 4) — revised</span></div>
+      <div class="a-item"><span class="n">6</span><span>Measurement and Evaluation Framework with KPIs (Week 5) — revised</span></div>
+    </div>
+    <div class="a-sec">
+      <div class="a-lbl">Executive Presentation</div>
+      <div class="a-item"><span class="n">1</span><span>Slide deck (PowerPoint, Google Slides, or Prezi) — clean, professional, one idea per slide</span></div>
+      <div class="a-item"><span class="n">2</span><span>3–5 minute recorded voice-over or video: problem, strategy, implementation, measurement, and why this approach works</span></div>
+      <div class="a-item"><span class="n">3</span><span>Submit the slide file and the video recording link</span></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end deck -->
+
+<div class="nav">
+  <button onclick="prev()">← Prev</button>
+  <span class="ctr" id="ctr"></span>
+  <button onclick="next()">Next →</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let cur = 0;
+function show(n) {
+  slides[cur].classList.remove('active');
+  cur = (n + slides.length) % slides.length;
+  slides[cur].classList.add('active');
+  document.getElementById('ctr').textContent = (cur+1) + ' / ' + slides.length;
+}
+function goToWeek(id) {
+  const target = document.getElementById(id);
+  if (!target) return;
+  slides.forEach((s,i) => { if(s === target) show(i); });
+}
+function next() { show(cur+1); }
+function prev() { show(cur-1); }
+document.addEventListener('keydown', e => {
+  if (e.key==='ArrowRight'||e.key==='ArrowDown') next();
+  if (e.key==='ArrowLeft'||e.key==='ArrowUp') prev();
+});
+show(0);
+</script>
+</body>
+</html>
