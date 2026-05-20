@@ -192,6 +192,8 @@ body {
   </div>
   <div class="accent"></div>
 
+</div>
+
 <div class="slide s-toc" id="toc-slide">
   <div class="toc-header">
     <div class="toc-eyebrow">BUS-300</div>
@@ -249,8 +251,6 @@ body {
           <div class="toc-arrow">→</div>
         </div>
   </div>
-</div>
-
 </div>
 
 <!-- ══════════ WEEK 1 ══════════ -->
@@ -1014,27 +1014,33 @@ body {
 </div>
 
 <script>
-const slides = document.querySelectorAll('.slide');
+const slides = Array.from(document.querySelectorAll('.slide'));
 let cur = 0;
+
+// Hide all, show only the current one
 function show(n) {
-  slides[cur].classList.remove('active');
-  cur = (n + slides.length) % slides.length;
+  slides.forEach(s => s.classList.remove('active'));
+  cur = ((n % slides.length) + slides.length) % slides.length;
   slides[cur].classList.add('active');
-  document.getElementById('ctr').textContent = (cur+1) + ' / ' + slides.length;
+  document.getElementById('ctr').textContent = (cur + 1) + ' / ' + slides.length;
 }
 
-  function goToWeek(id) {
-    const target = document.getElementById(id);
-    if (!target) return;
-    const allSlides = document.querySelectorAll('.slide');
-    allSlides.forEach((s,i) => { if(s === target) show(i); });
-  }
-  function next() { show(cur+1); }
-function prev() { show(cur-1); }
+function goToWeek(id) {
+  const target = document.getElementById(id);
+  if (!target) return;
+  const idx = slides.indexOf(target);
+  if (idx !== -1) show(idx);
+}
+
+function next() { show(cur + 1); }
+function prev() { show(cur - 1); }
+
 document.addEventListener('keydown', e => {
-  if (e.key==='ArrowRight'||e.key==='ArrowDown') next();
-  if (e.key==='ArrowLeft'||e.key==='ArrowUp') prev();
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next();
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   prev();
 });
+
+// Initialize
 show(0);
 </script>
 </body>
